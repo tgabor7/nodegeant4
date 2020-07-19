@@ -1,0 +1,60 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+.navbar{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  z-index: 2;
+}
+.accordion {
+  position: absolute;
+  width: 40%;
+  left: 0;
+  z-index: 1;
+  top: 25px;
+}
+.buttonbackground{
+  position: fixed;
+  left: 0;
+  z-index: 1;
+  width: 16%;
+  height: 100%;
+  background-color: black;
+}
+.detectoroption:active:focus{
+  background-color: white;
+  color: black;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+.page{
+  z-index: 3;
+  position: fixed;
+  bottom: 2%;
+  left: 50%;
+  background-color: white;
+  border-radius: 0;
+}
+.editButton {
+  background-color: gray;
+  border-radius: 0;
+  border: black;
+}
+

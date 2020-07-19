@@ -1,0 +1,444 @@
+<html>
+<head>
+	<title>Geant4 Example</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+
+
+<body onload="InitDemo();">
+	<p id="scale" style="z-index: 3;position: fixed; bottom: 15%; right: 25%; color: white; font-weight: 500;"> 1.00 cm</p>
+	
+	<main>
+		<!-- graph modal -->
+		<div class="modal fade" id="spectrum" tabindex="-1" role="dialog" aria-labelledby="spectrumlabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="spectrumlabel">Gamma Spectrum</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						<div class="row" id="graph_container">
+								<canvas id="spectrum_graph"></canvas>
+							</div>
+						</div>
+				</div>
+				<div class="modal-footer">
+					
+					<button type="button" id="downloadspectrum"> Save </button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		  <!-- configuration modal -->
+		  <div class="modal fade" id="confiugremodal" tabindex="-1" role="dialog" aria-labelledby="confiugremodallabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="confiugremodallabel">Setup</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div class="modal-body">
+					<textarea type="text" id="setupstring" col=300 rows=10 style="min-width:100%" placeholder="/Detector{1,1,1}{0,0,0}{1,1,1}/Detector{2,2,2}{0,45,0}{1,1,1}/Source{2,2,2}"></textarea> 
+				</div>
+				<div class="modal-footer">
+					
+					<button type="button" class="btn btn-primary" id="generatesetup">OK</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		<!-- selection modal -->
+		<div class="modal fade" id="detectorDialog" tabindex="-1" role="dialog" aria-labelledby="detectorDialogLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="detectorDialogLabel">Choose item to add</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						<div class="row">
+								<div class="selection_container">
+									<div>
+										<img src="cube.PNG" data-toggle="modal" data-target="#detectorProperties" alt="table" id="cube_pic" width="100" height="100"><br>
+									</div>
+									<h3>CUBE</h3>
+								</div>
+								<div class="selection_container">
+									<img src="stl.jpg" alt="table" data-toggle="modal" data-target="#stldetectorProperties"  id="stl_pic" width="100" height="100">
+									<h3>.STL</h3>
+								</div>
+								<div class="selection_container">
+									<img src="gps.PNG" alt="table" data-toggle="modal" data-target="#GPSProperties" id="gps_pic" width="100" height="100">
+									<h3>GPS (General Particle Source)</h3>
+								</div>
+								<div class="selection_container">
+									<img src="cube.PNG" data-toggle="modal" data-target="#GunProperties" alt="table" id="cube_pic" width="100" height="100"><br>
+									<h3>ParticleGun</h3>
+								</div>
+							</div>
+						</div>
+				</div>
+				
+			  </div>
+			</div>
+		  </div>
+		  <!-- stl properties-->
+		  <div class="modal fade" id="stldetectorProperties" tabindex="-1" role="dialog" aria-labelledby="stldetectorPropertiesLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="stldetectorPropertiesLabel">Configure Detector</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div class="modal-body" id="stlmodal">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="field d-flex p-2">
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" id="detectorinput"/>
+									<label class="custom-file-label" for="detectorinput">Choose file</label>
+								</div>
+							</div>
+							<div class="field d-flex p-2">
+								name   <br>
+								<input value="Detector" id="stldetectorid">
+							</div>
+							<div class="field d-flex p-2">
+								position <br>
+								<input type="number" value="0" class="prop-field" id="stldetectorx"> cm 
+								<input type="number" value="0" class="prop-field" id="stldetectory"> cm 
+								<input type="number" value="0" class="prop-field" id="stldetectorz"> cm 
+							</div>
+							<div class="field d-flex p-2">
+								rotation <br>
+								<input type="number" value="0" class="prop-field" id="stlrotx"> deg
+								<input type="number" value="0" class="prop-field" id="stlroty"> deg
+								<input type="number" value="0" class="prop-field" id="stlrotz"> deg
+							</div>
+							<div class="field d-flex p-2">
+								scale <br>
+								<input type="number" value="1" class="prop-field" id="stlscalex">
+								<input type="number" value="1" class="prop-field" id="stlscaley">
+								<input type="number" value="1" class="prop-field" id="stlscalez">
+							</div>
+							<div class="field d-flex p-2">
+								Material <br>
+								<select id="materials">
+									<option value="G4_Pb" selected>Lead</option>
+									<option value="G4_Fe">Iron</option>
+									<option value="G4_Na">Sodium</option>
+									<option value="G4_H">Hidrogen</option>
+									<option value="G4_He">Helium</option>
+									<option value="G4_Li">Litium</option>
+									<option value="G4_Si">Silicon</option>
+									<option value="G4_Mn">Manganese</option>
+									<option value="G4_Cs">Caesium</option>
+									<option value="G4_Au">Gold</option>
+									</select><br>
+							</div>
+							</div>
+						</div>
+						<div class="alert alert-danger" id="stldanger">
+							<strong>No file selected!</strong> Select an STL model to load
+						  </div>
+				</div>
+				<div class="modal-footer">
+					
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+					<button type="button" class="btn btn-primary" id="createSTLDetectorButton">Create</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		  <!-- properties -->
+		  <div class="modal fade" id="detectorProperties" tabindex="-1" role="dialog" aria-labelledby="detectorPropertiesLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="detectorPropertiesLabel">Configure Detector</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="field d-flex p-2">
+								name   <br>
+								<input value="Detector" id="detectorid">
+							</div>
+							<div class="field d-flex p-2">
+								position <br>
+								<input type="number" value="0" class="prop-field" id="detectorx"> cm 
+								<input type="number" value="0" class="prop-field" id="detectory"> cm 
+								<input type="number" value="0" class="prop-field" id="detectorz"> cm 
+							</div>
+							<div class="field d-flex p-2">
+								rotation <br>
+								<input type="number" value="0" class="prop-field" id="rotx"> deg
+								<input type="number" value="0" class="prop-field" id="roty"> deg
+								<input type="number" value="0" class="prop-field" id="rotz"> deg
+							</div>
+							<div class="field d-flex p-2">
+								scale <br>
+								<input type="number" value="1" class="prop-field" id="scalex">
+								<input type="number" value="1" class="prop-field" id="scaley">
+								<input type="number" value="1" class="prop-field" id="scalez">
+							</div>
+							<div class="field d-flex p-2">
+								Material <br>
+								<select id="materials">
+									<option value="G4_Pb" selected>Lead</option>
+									<option value="G4_Fe">Iron</option>
+									<option value="G4_Na">Sodium</option>
+									<option value="G4_H">Hidrogen</option>
+									<option value="G4_He">Helium</option>
+									<option value="G4_Li">Litium</option>
+									<option value="G4_Si">Silicon</option>
+									<option value="G4_Mn">Manganese</option>
+									<option value="G4_Cs">Caesium</option>
+									<option value="G4_Au">Gold</option>
+									</select><br>
+							</div>
+							</div>
+						</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+					<button type="button" class="btn btn-primary" id="createDetectorButton">Create</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		  <!-- spectrum -->
+		  <div class="modal fade" id="gammaproperties" tabindex="-1" role="dialog" aria-labelledby="gammapropertieslabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="gammapropertieslabel">Choose a detector</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						Number of samples: <input type="text" id="numberofsamples"><br>
+						bin size: <input type="text" id="binsize" value="10"><br>
+						<select id="detectorselect">
+
+						</select>
+						</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary" id="spectrumbutton" data-toggle="modal" data-target="#spectrum">OK</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		  <!-- run params -->
+		  <div class="modal fade" id="runparameters" tabindex="-1" role="dialog" aria-labelledby="runparameterslabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="runparameterslabel">Configure run</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						Number of particles: <input type="text" id="numberofparticles"><br>
+						
+						</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary" id="runbutton">OK</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		<!-- GPS properties -->
+		<div class="modal fade" id="GPSProperties" tabindex="-1" role="dialog" aria-labelledby="GPSPropertiesLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="GPSPropertiesLabel">Configure Particle Source</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="field d-flex p-2">
+								name   <br>
+								<input value="Generic Particle Source" id="gpsid">
+							</div>
+							<div class="field d-flex p-2">
+								position <br>
+								<input type="number" value="0" class="prop-field" id="gpsx"> cm 
+								<input type="number" value="0" class="prop-field" id="gpsy"> cm 
+								<input type="number" value="0" class="prop-field" id="gpsz"> cm 
+							</div>
+							
+							<div class="field d-flex p-2">
+								Material <br>
+								
+									<input type="text" value="U235" id="gpsmaterial"><p>  ie. Co60</p>
+									
+							</div>
+							</div>
+						</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+					<button type="button" class="btn btn-primary" id="createGPSButton">Create</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		  <!-- Gun properties -->
+		<div class="modal fade" id="GunProperties" tabindex="-1" role="dialog" aria-labelledby="GunPropertiesLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="GunPropertiesLabel">Configure Particle Gun</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="field d-flex p-2">
+								name   <br>
+								<input value="ParticleGun" id="gunid">
+							</div>
+							<div class="field d-flex p-2">
+								position <br>
+								<input type="number" value="0" class="prop-field" id="gunx"> cm 
+								<input type="number" value="0" class="prop-field" id="guny"> cm 
+								<input type="number" value="0" class="prop-field" id="gunz"> cm 
+							</div>
+							<div class="field d-flex p-2">
+								direction <br>
+								<input type="number" value="0" class="prop-field" id="dirx"> 
+								<input type="number" value="0" class="prop-field" id="diry"> 
+								<input type="number" value="0" class="prop-field" id="dirz"> 
+							</div>
+							
+							<div class="field d-flex p-2">
+								Energy <input type="text" value="1000" id="gunenergy"> keV
+							</div>
+							</div>
+						</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+					<button type="button" class="btn btn-primary" id="createGunButton">Create</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		<input id='console' spellcheck="false"></input>
+		<div class="container">
+			<article id="right_holder">
+				<section>
+					<div id="graph"></div>
+				</section>
+				<section id="particle_data">
+
+				</section>
+			</article>
+			<article id="holder">
+
+				
+
+				<div class="dropdown">
+						<div id="accordion">
+						</div>
+					</div>
+			</article>
+
+			<canvas id="surface">
+				Your browser does not support HTML5
+			</canvas>
+
+		</div>
+
+		<script type="module" src="app.js"></script>
+		<script type="module" src="spectrum.js"></script>
+	</main>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">Geant4</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+		
+		
+				
+		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+		  <div class="navbar-nav">
+			<input type="button" class="btn btn-primary" data-toggle="modal" data-target="#detectorDialog" id="addDetector" value="Add Detector"  />
+			<input type="button" class="btn btn-primary" data-toggle="modal" id="run" value="Run" data-target="#runparameters"></input>
+			<input type="button" class="btn btn-primary" id="configure" value="Configure" data-toggle="modal" data-target="#confiugremodal"></input>
+			
+			<button id="clear" type="button">Clear! </button>
+
+			<button id="screencap" type="button">ScreenShot </button>
+			
+			<input type="file" id="parse" style="display: none;" />
+		<input type="button" id="parse_button" value="Load" onclick="document.getElementById('parse').click();" />
+
+		<input type="file" id="loadScript" style="display: none;" />
+		<input type="button" id="script" value="loadScript" onclick="document.getElementById('loadScript').click();" />
+
+		<button id="export-setup">Export</button>
+		<!-- <button id="gamma_spectrum" class="btn btn-primary" data-toggle="modal" data-target="#spectrum">GetGammaSpectrum</button> -->
+		
+		<button id="gamma_spectrum" class="btn btn-primary" data-toggle="modal" data-target="#gammaproperties">GetGammaSpectrum</button>
+		<div class="checkbox">
+			<label><input id="showtracks" type="checkbox" value="">Show tracks</label>
+		  </div>
+		  <div class="checkbox">
+			<label><input id="showlabels" type="checkbox" value="">Show Labels</label>
+		  </div>
+				
+		  </div>
+		</div>
+	  </nav>
+	<!-- file chooser path-->
+	<script>
+		
+	</script>
+</body>
+
+</html>
