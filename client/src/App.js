@@ -35,6 +35,8 @@ class App extends Component{
     this.setShowParticles = this.setShowParticles.bind(this);
     this.setShowTracks = this.setShowTracks.bind(this);
     this.clearRun = this.clearRun.bind(this);
+    this.clearSetup = this.clearSetup.bind(this);
+
 
     this.accordion = React.createRef();
     this.canvas = React.createRef();
@@ -447,9 +449,22 @@ class App extends Component{
     detector.id = DetectorButton.id;
     detector.name = n;
     this.detectors.push(detector);
-    bs.push(<DetectorButton name={n} removebutton={this.removeDetector} detector={detector} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></DetectorButton>);
+    bs.push(<DetectorButton name={n} removebutton={this.removeDetector} detector={detector} details={details} key={DetectorButton.id} buttons={this.state.buttons}></DetectorButton>);
     this.setState({buttons: bs});
 
+  }
+  clearSetup(){
+    this.setState({buttons: [], gunbuttons: [], sourcebuttons: []});
+    for(let i = 0;i<this.detectors.length;i++){
+      this.canvas.current.removeDetector(this.detectors[i]);
+    }
+    for(let i = 0;i<this.sources.length;i++){
+      this.canvas.current.removeSource(this.sources[i]);
+    }
+    for(let i = 0;i<this.guns.length;i++){
+      this.canvas.current.removeGun(this.guns[i]);
+    }
+    this.clearRun();
   }
   removeSource(source, button){
     this.canvas.current.removeSource(source);
@@ -523,7 +538,7 @@ class App extends Component{
       <Tab.Content>
         <Tab.Pane eventKey="first">
         <Canvas ref={this.canvas} style={{overflow: 'hidden'}}></Canvas>
-    <CodeEditor />
+    <CodeEditor createGun={this.createGun} createSource={this.createSource} createDetector={this.createDetector} canvas={this.canvas} />
 
         <NavigationBar run={this.runSim} 
         className="navbar"
@@ -534,6 +549,7 @@ class App extends Component{
         setshowtracks={this.setShowTracks}
         setshowparticles={this.setShowParticles}
         clearrun={this.clearRun}
+        clearSetup={this.clearSetup}
         detectors={this.detectors}
         buttons={this.state.buttons}></NavigationBar>
         <div className='buttonbackground'>

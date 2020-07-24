@@ -4,7 +4,7 @@ import {Button, Nav, Navbar, FormControl, Container,Col,Row, Form, Dropdown, Ove
 class SpectrumDialog extends Component {
     constructor(props){
         super(props);
-        this.state = {numberofparticles: 1, detector: 0,show: false, loading: false, now: 60, binsize: 1}
+        this.state = {numberofparticles: 1000, detector: 0,show: false, loading: false, now: 60, binsize: 1}
         this.hideDialog = this.hideDialog.bind(this);
         this.showDialog = this.showDialog.bind(this);
         this.setLoading = this.setLoading.bind(this);
@@ -57,6 +57,7 @@ class SpectrumDialog extends Component {
         <Form.Control as="select" value={this.state.detector} onChange={(evt)=>{this.setState({detector: evt.target.value});}}>
             {options}
             </Form.Control>
+            <hr />
             <Row style={{margin: '5px'}}>
                 Number of particles
             </Row>
@@ -68,18 +69,26 @@ class SpectrumDialog extends Component {
         maxLength="10"
         value = {this.state.numberofparticles}
         onChange={(event)=>{this.setState({numberofparticles: event.target.value});}} />
+        <hr />
         <Row style={{margin: '5px'}}>
                 Bin size
             </Row>
-        <Form.Control
+            <Row>
+            <Form.Control
         className="numspinner"
         required
         value='0'
         type="number"
         maxLength="10"
         value = {this.state.binsize}
+        style={{'width':'20%','margin':'15px'}}
         onChange={(event)=>{this.setState({binsize: event.target.value});}} />
+        <span style={{'padding':'20px'}}>
+        keV
 
+        </span>
+            </Row>
+        
         </Form>
         </Modal.Body>
         <Modal.Footer>

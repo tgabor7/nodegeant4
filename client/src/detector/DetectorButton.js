@@ -13,7 +13,7 @@ class DetectorButton extends Component{
     this.editdialog = React.createRef();
     this.updateDetails = this.updateDetails.bind(this);
     this.state = {details: this.props.details};
-    this.id = DetectorButton.id;
+    this.id = ++DetectorButton.id;
   }
   static id = 0;
   updateDetails(d){

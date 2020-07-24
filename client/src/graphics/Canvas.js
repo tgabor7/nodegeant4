@@ -29,6 +29,7 @@ class Canvas extends Component{
     this.particles = [];
     this.drawTracks = false;
     this.drawParticles = true;
+    this.gl = null;
   }
   setShowTracks(b){
     this.renderer.drawTracks = b;
@@ -204,7 +205,10 @@ class Canvas extends Component{
     onMouseDown={()=>{this.down = true;}} 
     onMouseUp={()=>{this.down = false;}}
     onWheel={(e)=>{
-      this.camera.d += (this.camera.d / e.deltaY) * 10;
+      let delta = 0;
+      if(e.deltaY > 0) delta = 1;
+      else delta = -1;
+      this.camera.d += (this.camera.d / (delta*100)) * 10;
       }}/>
   </div>
     

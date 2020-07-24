@@ -29,7 +29,7 @@ class NavigationBar extends Component{
    <RunDialog ref={this.rundialog} runsim={this.props.run}></RunDialog>
    <SpectrumDialog ref={this.spectrumdialog} runsim={this.props.runspectroscopy} detectors={this.props.detectors}></SpectrumDialog>
    
-   <Navbar bg="light" variant="light" style={{position: 'fixed'}}>
+   <Navbar bg="light" variant="light" style={{position: 'fixed', 'z-index': '4'}}>
         <Navbar.Brand>Geant4</Navbar.Brand>
         <Button variant="primary" onClick={()=>{
           this.rundialog.current.showDialog();}} >Run</Button>
@@ -38,7 +38,10 @@ class NavigationBar extends Component{
           this.spectrumdialog.current.showDialog();}}>Spectroscopy</Button>
 
         <Button variant="primary" style={{backgroundColor: 'red'}} onClick={()=>{
-                  this.props.clearrun();}}>Clear</Button>
+                  this.props.clearrun();}}>Clear particles</Button>
+
+        <Button variant="primary" style={{backgroundColor: 'red'}} onClick={()=>{
+                  this.props.clearSetup();}}>Clear setup</Button>
 
         <Nav className="mr-auto">
         <Dropdown>

@@ -23,7 +23,7 @@ class DetectorDialog extends Component{
       detscalez: 10,
       detmat: 'Pb',
       geomrty: 'Cube',
-      stl_disabled: true,
+      display: 'none',
       filelabel: 'Path to STL',
       modeldata: null }
     
@@ -64,14 +64,15 @@ class DetectorDialog extends Component{
             onChange={(event)=>{this.setState({detname: event.target.value});}} />
             </Col>
             </Row>
+            <hr />
             <Row>
               Geometry
             </Row>
 
             <Form.Control as="select" value={this.state.geomrty} onChange={(evt)=>{
               this.setState({geomrty: evt.target.value});
-              if(evt.target.value == "stl") this.setState({stl_disabled: false});
-              else this.setState({stl_disabled: true});}}>
+              if(evt.target.value == "stl") this.setState({display: 'block'});
+              else this.setState({display: 'none'});}}>
             <option value="cube">Cube</option>
             <option value="cylinder">Cylinder</option>
             <option value="sphere">Sphere</option>
@@ -79,6 +80,7 @@ class DetectorDialog extends Component{
             </Form.Control>
 
             <Form.File 
+            style={{'display':this.state.display}}
             id="stl-file"
             label={this.state.filelabel}
             data-browse="Open"
@@ -99,9 +101,8 @@ class DetectorDialog extends Component{
               path = path.split("\\")[path.split("\\").length-1];
               this.setState({filelabel: path});
             }}
-            disabled={this.state.stl_disabled}
           />
-
+            <hr />
             <Row>Position</Row>
           <Row>
             x<Col><Form.Control
@@ -133,6 +134,7 @@ class DetectorDialog extends Component{
             </Col>
           </Row>
           <br/>
+          <hr />
           <Row>Rotation</Row>
           <Row>
             x<Col><Form.Control
@@ -164,6 +166,7 @@ class DetectorDialog extends Component{
             </Col>
           </Row>
           <br/>
+          <hr />
           <Row>Scale</Row>
           <Row>
             x<Col><Form.Control
@@ -195,6 +198,7 @@ class DetectorDialog extends Component{
             </Col>
           </Row>
           <br/>
+          <hr />
           <Row>
           <Form.Group controlId="exampleForm.SelectCustom">
             <Form.Label>Material</Form.Label>
