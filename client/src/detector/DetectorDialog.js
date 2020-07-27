@@ -4,6 +4,8 @@ import '../App.css';
 import {Button, Nav, Navbar, FormControl, Container,Col,Row, Form, Dropdown, OverlayTrigger, Tooltip, Modal} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DetectorButton from './DetectorButton';
+import MaterialList from './MaterialList';
+import { Vector3 } from '../utils/maths';
 
 class DetectorDialog extends Component{
   constructor(props){
@@ -22,14 +24,25 @@ class DetectorDialog extends Component{
       detscaley: 10,
       detscalez: 10,
       detmat: 'Pb',
-      geomrty: 'Cube',
+      geomrty: 'cube',
       display: 'none',
       filelabel: 'Path to STL',
-      modeldata: null }
+      modeldata: null,
+      showError: 'none',
+      color: new Vector3(.5,.5,.5) }
     
   }
   componentDidMount(){
     
+  }
+  hexToRgb(hex) {
+    hex = hex.substr(1);
+    var bigint = parseInt(hex, 16);
+    var r = (bigint >> 16) & 255;
+    var g = (bigint >> 8) & 255;
+    var b = bigint & 255;
+
+    return new Vector3(r / 255, g / 255, b / 255);
   }
   addMaterial(ann, mat){
     this.materials.push(<option value={ann}>{mat}</option>)
@@ -211,17 +224,36 @@ class DetectorDialog extends Component{
             value = {this.state.detmat}
             onChange={(event)=>{this.setState({detmat: event.target.value});}} />
           </Form.Group>
+          <span style={{'display': this.state.showError, 'color' : 'red', 'font-weight': 'bold'}}>
+            No such material
+          </span>
           </Row>
+          <hr />
+          <Row>
+          Color: <span style={{'padding-left':'20px'}}>
+          <input type="color"
+          onInput={(evt)=>{
+            this.setState({color: this.hexToRgb(evt.target.value)});
+          }}></input>
+            </span>
+        </Row>
           </Container>
         </Form>
+      
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={()=>{this.hideDialog();}}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={()=>{this.hideDialog();this.props.createbutton(this.state.detname, this.state.detposx, this.state.detposy,this.state.detposz,
+          <Button variant="primary" onClick={()=>{
+          if(!MaterialList.check(this.state.detmat)){
+            this.setState({showError: 'block'})
+            return;
+          } 
+          this.hideDialog();
+          this.props.createbutton(this.state.detname, this.state.detposx, this.state.detposy,this.state.detposz,
             this.state.detrotx, this.state.detroty, this.state.detrotz, this.state.detscalex, this.state.detscaley, this.state.detscalez, this.state.detmat, this.state.geomrty,
-            this.state.modeldata);}}>
+            this.state.modeldata,this.state.color);}}>
             Create
           </Button>
         </Modal.Footer>

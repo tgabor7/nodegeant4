@@ -128,7 +128,7 @@ class App extends Component{
     message_data.push('end');
     this.sendGamma(message_data, hideDialog, binsize);
   }
-  runSim(number_of_particles){
+  runSim(number_of_particles, hidedialog){
     let message_data = [];
 
     // particle gun stuff
@@ -201,7 +201,7 @@ class App extends Component{
     }
     message_data.push(number_of_particles); //number of particles
     message_data.push('end');
-    this.send(message_data);
+    this.send(message_data, hidedialog);
   }
   sendGamma(data, hideDialog, binsize){
     var message = '';
@@ -209,22 +209,39 @@ class App extends Component{
       message += data[i];
       message += ',';
     }
-    fetch('http://localhost:9000/gammaAPI?message=' + message)
+    fetch('http://localhost:9000/gammaAPI',{
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({data: message})
+    })
     .then(response => response.text())
     .then(response => {
       this.processGammaSpectrum(response, binsize);
       hideDialog();
     this.setState({spectrum: false,page: "second"});});
   }
-  send(data){
+  send(data, hidedialog){
     var message = '';
     for(var i = 0;i<data.length;i++){
       message += data[i];
       message += ',';
     }
-    fetch('http://localhost:9000/gammaAPI?message=' + message)
+    fetch('http://localhost:9000/gammaAPI',{
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({data: message})
+    })
     .then(response => response.text())
-    .then(response => {this.processResponse(response);alert(response);});
+    .then(response => {
+      this.processResponse(response);
+      hidedialog();
+      alert(response);});
   }
   processGammaSpectrum(response, binsize){
     
@@ -311,28 +328,9 @@ class App extends Component{
 
         return max;
     }
-    function getMax(){
-        var max = 0;
-        for(var i = 0;i<this.particles.length;i++){
-            if(max < this.particles[i].totalEnergy){
-                max = this.particles[i].totalEnergy;
-            }
-        }
-        return max;
-    }
     let max = get_average(this.particles) * 2;
 
-    function getMin(){
-        let minX = this.particles[0].position;
-
-        for(let i = 0;i<this.particles.length;i++){
-            if(this.particles[i].position.x < minX.x) minX.x = this.particles[i].position.x;
-            if(this.particles[i].position.y < minX.y) minX.y = this.particles[i].position.y;
-            if(this.particles[i].position.z < minX.z) minX.z = this.particles[i].position.z;
-            
-        }
-        return minX;
-    }
+    
     
     
     for(let i = 0;i<this.particles.length;i++){
@@ -369,7 +367,7 @@ class App extends Component{
     source.id = DetectorButton.id;
     source.name = n;
     this.sources.push(source);
-    bs.push(<SourceButton name={n} removebutton={this.removeSource} detector={source} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></SourceButton>);
+    bs.push(<SourceButton name={n} removebutton={this.removeSource} id={DetectorButton.id} detector={source} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></SourceButton>);
     this.setState({sourcebuttons: bs});
   }
   createGun(n, px, py, pz, dx, dy, dz, energy){
@@ -400,10 +398,10 @@ class App extends Component{
     gun.id = DetectorButton.id;
     gun.name = n;
     this.guns.push(gun);
-    bs.push(<GunButton name={n} removebutton={this.removeGun} detector={gun} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></GunButton>);
+    bs.push(<GunButton name={n} removebutton={this.removeGun} id={DetectorButton.id} detector={gun} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></GunButton>);
     this.setState({gunbuttons: bs});
   }
-  createDetector(n, px, py, pz, rx, ry, rz, sx, sy, sz, material, type, data){
+  createDetector(n, px, py, pz, rx, ry, rz, sx, sy, sz, material, type, data, color){
     let bs = this.state.buttons;
     let details = <Container>
       <Row>
@@ -444,14 +442,14 @@ class App extends Component{
       detector = this.canvas.current.addSTLDetector(px,py,pz,rx,ry,rz,sx,sy,sz,material,modelData);
 
     }else{
-      detector = this.canvas.current.addDetector(px,py,pz,rx,ry,rz,sx,sy,sz,material);
+      detector = this.canvas.current.addDetector(px,py,pz,rx,ry,rz,sx,sy,sz,material, type);
     }
     detector.id = DetectorButton.id;
     detector.name = n;
+    detector.model.color = color;
     this.detectors.push(detector);
-    bs.push(<DetectorButton name={n} removebutton={this.removeDetector} detector={detector} details={details} key={DetectorButton.id} buttons={this.state.buttons}></DetectorButton>);
+    bs.push(<DetectorButton name={n} removebutton={this.removeDetector} id={DetectorButton.id} detector={detector} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></DetectorButton>);
     this.setState({buttons: bs});
-
   }
   clearSetup(){
     this.setState({buttons: [], gunbuttons: [], sourcebuttons: []});
@@ -556,15 +554,15 @@ class App extends Component{
         </div>
         <div className="accordion">
         <Accordion ref={this.accordion} defaultActiveKey="0" className='accordion'>
-          <div style={{color: 'white'}}>
+          <div style={{color: 'white', 'text-align':'center', 'background-color' : 'gray', 'border' : '1px solid white'}}>
           Detectors
           </div>
           {items}
-          <div style={{color: 'white'}}>
+          <div style={{color: 'white', 'text-align':'center', 'background-color' : 'gray', 'border' : '1px solid white'}}>
           Sources
           </div>
           {sourceButtons}
-          <div style={{color: 'white'}}>
+          <div style={{color: 'white', 'text-align':'center', 'background-color' : 'gray', 'border' : '1px solid white'}}>
           Guns
           </div>
           {gunButtons}

@@ -28,7 +28,7 @@ class Model {
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.normals), gl.STATIC_DRAW, 0);
         gl.vertexAttribPointer(1, 3, gl.FLOAT, gl.FALSE, 0, 0);
 
-
+        gl.bindVertexArray(null);
     }
     draw() {
         if(this.drawLines) this.gl.drawArrays(this.gl.LINE_STRIP, 0, this.vertices.length / 3);

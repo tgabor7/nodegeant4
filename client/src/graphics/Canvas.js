@@ -11,6 +11,8 @@ import {ParticleGun} from '../gun/ParticleGun';
 import {GunMesh} from '../gun/gun';
 import {ParticleSource} from '../source/ParticleSource';
 import { InstanceRenderer } from '../rendering/InstanceRenderer';
+import Cylinder from '../entities/cylinder';
+import Sphere from '../entities/sphere';
 
 class Canvas extends Component{
   constructor(props){
@@ -139,8 +141,21 @@ class Canvas extends Component{
     
     return detector;
   }
-  addDetector(x,y,z,rx,ry,rz,sx,sy,sz, mat){
-    let detector = new Detector(new Model(Cube.vertices, Cube.normals, this.gl));
+  addDetector(x,y,z,rx,ry,rz,sx,sy,sz, mat, type){
+    let detector = null;
+    switch(type){
+      case('cube'):
+        detector = new Detector(new Model(Cube.vertices, Cube.normals, this.gl));
+        break;
+      case('cylinder'):
+        detector = new Detector(new Model(Cylinder.vertices, Cylinder.normals, this.gl));
+        break;
+      case('sphere'):
+        detector = new Detector(new Model(Sphere.vertices, Sphere.normals, this.gl));
+        break;
+    }
+    
+    
     detector.model.drawLines = false;
     detector.model.color = new Vector3(1,1,1);
     detector.model.position.x = x;

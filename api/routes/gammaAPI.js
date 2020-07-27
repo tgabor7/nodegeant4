@@ -1,7 +1,9 @@
 var express = require("express");
+var mysql = require("mysql");
 var router = express.Router();
 var id = 0;
 var ids = [];
+
 
 var getNextId = function(){
     let res_id = 0;
@@ -24,7 +26,8 @@ var removeId = function(id){
         }
     }
 }
-router.get("/",async function(req, res, next) {
+router.post("/",async function(req, res, next) {
+    res.connection.setTimeout(1000 * 60 * 60);
     console.log("\nNumber of ids: " + ids.length + "\n");
     if(ids.length > 100){
         console.log("Too many requests");
@@ -36,7 +39,7 @@ router.get("/",async function(req, res, next) {
     let process_id = +id;
     const { exec } = require('child_process');
     const fs = require('fs');
-    fs.writeFile('receive' + process_id, req.query.message, function(err){
+    fs.writeFile('receive' + process_id, req.body.data, function(err){
         if(err) return console.log(err);
     });
     const ls = exec('routes\\server.exe ' + process_id, function (error, stdout, stderr) {

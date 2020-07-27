@@ -5,7 +5,9 @@ import {ParticleSource} from '../source/ParticleSource';
 import Vector3 from '../utils/maths';
 import {ParticleGun} from '../gun/ParticleGun';
 import GunMesh from '../gun/gun';
-import DetectorButton from '../detector/Detektor';
+import DetectorButton from '../detector/DetectorButton';
+import React, { Component, createRef } from 'react';
+
 
 class Parser {
     
@@ -14,7 +16,6 @@ class Parser {
         this.sources = [];
         let gl = canvas.gl;
 
-        var params = "";
         let blocks = text.split("/");
         for(let i = 0;i<blocks.length;i++){
             let words = blocks[i].split("{");
@@ -59,7 +60,7 @@ class Parser {
                                 detector.model.scale.z = parseFloat(params.split(',')[2]);
                                 break;
                             case('material'):
-                                detector.material = params;
+                                detector.material = params.trim();
                                 break;
                             case('name'):
                                 detector.name = params;
@@ -114,8 +115,8 @@ class Parser {
             if(detector != null){
                 createDetector(detector.name, detector.model.position.x,detector.model.position.y,detector.model.position.z,
                     detector.model.rotation.x,detector.model.rotation.y,detector.model.rotation.z,
-                    detector.model.scale.x,detector.model.scale.y,detector.model.scale.z,detector.material,'cube',Cube.vertices);
-                    
+                    detector.model.scale.x,detector.model.scale.y,detector.model.scale.z,detector.material,'cube',Cube.vertices, new Vector3(.1,.1,.1));
+                
             }
         } 
     }

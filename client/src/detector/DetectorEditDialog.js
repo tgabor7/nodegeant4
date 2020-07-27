@@ -3,6 +3,8 @@ import '../App.css';
 
 import {Button, Nav, Navbar, FormControl, Container,Col,Row, Form, Dropdown, OverlayTrigger, Tooltip, Modal} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {Vector3} from '../utils/maths';
+import MaterialList from './MaterialList';
 
 class DetectorEditDialog extends Component{
   constructor(props){
@@ -10,7 +12,7 @@ class DetectorEditDialog extends Component{
     this.showDialog = this.showDialog.bind(this);
     this.hideDialog = this.hideDialog.bind(this);
     this.state = {show: false, 
-      detname: 'Detector',
+      detname: this.props.detector.name,
       detposx: this.props.detector.model.position.x,
       detposy: this.props.detector.model.position.y,
       detposz: this.props.detector.model.position.z,
@@ -20,23 +22,27 @@ class DetectorEditDialog extends Component{
       detscalex: this.props.detector.model.scale.x,
       detscaley: this.props.detector.model.scale.y,
       detscalez: this.props.detector.model.scale.z,
-      detmat: this.props.detector.material}
+      detmat: this.props.detector.material,
+      showError: 'none',
+      color: this.props.detector.model.color }
     this.materials = [];
-    this.addMaterial('G4_H','Hidrogen');
-    this.addMaterial('G4_Fe','Iron');
-    this.addMaterial('G4_Pb','Lead');
-    this.addMaterial('G4_Pb','Lead');
     
+  }
+  hexToRgb(hex) {
+    hex = hex.substr(1);
+    var bigint = parseInt(hex, 16);
+    var r = (bigint >> 16) & 255;
+    var g = (bigint >> 8) & 255;
+    var b = bigint & 255;
+
+    return new Vector3(r / 255, g / 255, b / 255);
   }
   componentDidMount(){
     
   }
-  addMaterial(ann, mat){
-    this.materials.push(<option value={ann}>{mat}</option>)
-  }
   showDialog(){
       this.setState({show: true});
-     
+      this.setState({showError: 'none'});
   }
   hideDialog(){
     this.setState({show: false});
@@ -63,6 +69,7 @@ class DetectorEditDialog extends Component{
             onChange={(event)=>{this.setState({detname: event.target.value});}} />
             </Col>
             </Row>
+            <hr />
             <Row>Position</Row>
           <Row>
             x<Col><Form.Control
@@ -94,6 +101,7 @@ class DetectorEditDialog extends Component{
             </Col>
           </Row>
           <br/>
+          <hr />
           <Row>Rotation</Row>
           <Row>
             x<Col><Form.Control
@@ -125,6 +133,7 @@ class DetectorEditDialog extends Component{
             </Col>
           </Row>
           <br/>
+          <hr />
           <Row>Scale</Row>
           <Row>
             x<Col><Form.Control
@@ -156,6 +165,7 @@ class DetectorEditDialog extends Component{
             </Col>
           </Row>
           <br/>
+          <hr />
           <Row>
           <Form.Group controlId="exampleForm.SelectCustom">
           <Form.Label>Material</Form.Label>
@@ -168,7 +178,19 @@ class DetectorEditDialog extends Component{
             value = {this.state.detmat}
             onChange={(event)=>{this.setState({detmat: event.target.value});}} />
           </Form.Group>
+          <span style={{'display': this.state.showError, 'color' : 'red', 'font-weight': 'bold'}}>
+            No such material
+          </span>
           </Row>
+          <hr />
+          <Row>
+          Color: <span style={{'padding-left':'20px'}}>
+          <input type="color"
+          onInput={(evt)=>{
+            this.setState({color: this.hexToRgb(evt.target.value)});
+          }}></input>
+            </span>
+        </Row>
           </Container>
         </Form>
         </Modal.Body>
@@ -179,7 +201,12 @@ class DetectorEditDialog extends Component{
           }} style={{backgroundColor: 'red', color: 'white'}}>
             Delete
           </Button>
-          <Button variant="primary" onClick={()=>{this.hideDialog();
+          <Button variant="primary" onClick={()=>{
+            if(!MaterialList.check(this.state.detmat)){
+              this.setState({showError: 'block'})
+              return;
+            } 
+            this.hideDialog();
 
             this.props.detector.model.position.x = this.state.detposx;
             this.props.detector.model.position.y = this.state.detposy;
@@ -194,6 +221,8 @@ class DetectorEditDialog extends Component{
             this.props.detector.model.scale.z = this.state.detscalez;
             
             this.props.detector.material = this.state.detmat;
+
+            this.props.detector.model.color = this.state.color;
 
             this.props.updatedetails(
 <>

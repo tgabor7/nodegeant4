@@ -16,6 +16,8 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(express.json({limit: '100mb'}));
+app.use(express.urlencoded({limit: '100mb'}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(cors());

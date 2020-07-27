@@ -14,7 +14,7 @@ class SourceButton extends Component{
     this.editdialog = React.createRef();
     this.updateDetails = this.updateDetails.bind(this);
     this.state = {details: this.props.details};
-    this.id = DetectorButton.id;
+    this.id = this.props.id;
   }
   static id = 0;
   updateDetails(d){

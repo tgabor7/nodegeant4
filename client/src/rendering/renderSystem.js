@@ -2,6 +2,7 @@ import Shader from './shader.js'
 import {MainShader} from '../shaders/mainshader.js';
 import {Maths, Vector3} from '../utils/maths.js';
 import Model from './model';
+import {Cube} from '../entities/cube';
 
 class RenderSystem {
     constructor(gl){
@@ -12,13 +13,16 @@ class RenderSystem {
         this.guns = [];
         this.particles = [];
         this.gl = gl;
+
         this.addModel(new Model([1, 0, 0, -1, 0, 0], [1, 1, 1, 1, 1, 1], gl));
         this.addModel(new Model([0, 1, 0, 0, -1, 0], [1, 1, 1, 1, 1, 1], gl));
+        this.addModel(new Model([0, 0, 1, 0, 0, -1], [1, 1, 1, 1, 1, 1], gl));
         this.addModel(new Model([0, 0, 1, 0, 0, -1], [1, 1, 1, 1, 1, 1], gl));
 
         this.models[0].color = new Vector3(1,0,0);
         this.models[1].color = new Vector3(0,1,0);
         this.models[2].color = new Vector3(0,0,1);
+        this.models[3].color = new Vector3(0,0,1);
         
         
         this.drawTracks = true;
@@ -67,6 +71,13 @@ class RenderSystem {
         this.addModel(new Model([1, 0, 0, -1, 0, 0], [1, 1, 1, 1, 1, 1], this.gl));
         this.addModel(new Model([0, 1, 0, 0, -1, 0], [1, 1, 1, 1, 1, 1], this.gl));
         this.addModel(new Model([0, 0, 1, 0, 0, -1], [1, 1, 1, 1, 1, 1], this.gl));
+        this.addModel(new Model([0, 0, 1, 0, 0, -1], [1, 1, 1, 1, 1, 1], this.gl));
+
+        this.models[0].color = new Vector3(1,0,0);
+        this.models[1].color = new Vector3(0,1,0);
+        this.models[2].color = new Vector3(0,0,1);
+        this.models[3].color = new Vector3(0,0,1);
+        //this is whack
     }
     draw(projection, camera){
         this.gl.disable(this.gl.DEPTH_TEST);
@@ -149,7 +160,30 @@ class RenderSystem {
         this.gl.enable(this.gl.DEPTH_TEST);
 
         this.gl.disable(this.gl.DEPTH_TEST);
-        for(let i = 0;i<3;i++){
+
+        for(let i = 0;i<4;i++){
+            this.gl.enableVertexAttribArray(0);
+            this.gl.enableVertexAttribArray(1);
+            this.gl.bindVertexArray(this.models[i].vao);
+            let mat = Maths.createTransformationMatrix(this.models[i].position.x, this.models[i].position.y, this.models[i].position.z,
+                this.models[i].rotation.x, this.models[i].rotation.y, this.models[i].rotation.z,
+                camera.d,
+                 camera.d,
+                camera.d);
+            this.shader.setUniform3f("color", this.models[i].color.x, this.models[i].color.y, this.models[i].color.z);
+            this.shader.setUniform1i("sampler", 0);
+            this.shader.setUniform4fv("view", Maths.createViewMatrix(camera));
+            this.shader.setUniform4fv("projection", projection);
+            this.shader.setUniform4fv("transformation", mat);
+            this.models[i].draw();
+            this.gl.disableVertexAttribArray(0);
+            this.gl.disableVertexAttribArray(1);
+        }
+        if(!this.drawTracks){
+            this.shader.unBind();
+            return;
+        } 
+        for(let i = 3;i<this.models.length;i++){
             this.gl.enableVertexAttribArray(0);
             this.gl.enableVertexAttribArray(1);
             this.gl.bindVertexArray(this.models[i].vao);
@@ -165,26 +199,8 @@ class RenderSystem {
             this.gl.disableVertexAttribArray(0);
             this.gl.disableVertexAttribArray(1);
         }
-        if(!this.drawTracks) return;
-        for(let i = 2;i<this.models.length;i++){
-            this.gl.enableVertexAttribArray(0);
-            this.gl.enableVertexAttribArray(1);
-            this.gl.bindVertexArray(this.models[i].vao);
-            let mat = Maths.createTransformationMatrix(this.models[i].position.x, this.models[i].position.y, this.models[i].position.z,
-                this.models[i].rotation.x, this.models[i].rotation.y, this.models[i].rotation.z,
-                this.models[i].scale.x, this.models[i].scale.y, this.models[i].scale.z);
-            this.shader.setUniform3f("color", this.models[i].color.x, this.models[i].color.y, this.models[i].color.z);
-            this.shader.setUniform1i("sampler", 0);
-            this.shader.setUniform4fv("view", Maths.createViewMatrix(camera));
-            this.shader.setUniform4fv("projection", projection);
-            this.shader.setUniform4fv("transformation", mat);
-            this.models[i].draw();
-            this.gl.disableVertexAttribArray(0);
-            this.gl.disableVertexAttribArray(1);
-        }
-        
-        
         this.shader.unBind();
+        
     }
 }
 export default RenderSystem;
