@@ -1,6 +1,6 @@
 var express = require("express");
-var mysql = require("mysql");
 var router = express.Router();
+
 var id = 0;
 var ids = [];
 
@@ -26,6 +26,7 @@ var removeId = function(id){
         }
     }
 }
+
 router.post("/",async function(req, res, next) {
     res.connection.setTimeout(1000 * 60 * 60);
     console.log("\nNumber of ids: " + ids.length + "\n");

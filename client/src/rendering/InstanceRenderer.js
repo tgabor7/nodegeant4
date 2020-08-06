@@ -20,6 +20,7 @@ export class InstanceRenderer {
         this.addIntanceAttrib(this.vao, this.vbo, 4, 4, 16, 12, gl);
         this.addIntanceAttrib(this.vao, this.color_vbo, 5, 3, 3, 0, gl);
         
+        this.drawLines = false;
     }  
     render(particles,view, projection,d, gl){
         let vboData = [];
@@ -42,7 +43,12 @@ export class InstanceRenderer {
         }
         this.updateVBO(this.vbo, vboData, gl);
         this.updateVBO(this.color_vbo, colorData, gl);
-        gl.drawArraysInstanced(gl.TRIANGLES, 0, this.vertices.length / 3, particles.length);
+        if(this.drawLines){
+            gl.drawArraysInstanced(gl.LINES, 0, this.vertices.length / 2, particles.length);
+
+        }else{
+            gl.drawArraysInstanced(gl.TRIANGLES, 0, this.vertices.length / 3, particles.length);
+        }
 
         this.shader.setUniform4fv("view", view);
         this.shader.setUniform4fv("projection", projection);

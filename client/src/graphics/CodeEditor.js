@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {Form, Button} from 'react-bootstrap';
 import AceEditor from 'react-ace';
-import 'brace/mode/html';
+import 'brace/mode/elixir';
+import 'brace/theme/monokai';
 import Parser from '../utils/Parser';
 
 class CodeEditor extends Component{
     constructor(props){
         super(props);
-        this.state = {text: '', width: '30%'}
+        this.state = {text: '', width: '20%'}
         this.editor = React.createRef();
     }
     render(){
@@ -25,11 +26,16 @@ onClick={()=>{
                 Parser.parse(this.state.text, this.props.canvas.current, this.props.createDetector, this.props.createSource, this.props.createGun);
                 }}
             style={{'border' : '0','position':'relative','background-color': 'gray', 'z-index':'3', 'bottom':'0', 'border-radius' : '0', 'border':'solid 1px white'}}>Run script</Button>
-            
+            <Button style={{'border' : '0','position':'relative','background-color': 'gray', 'z-index':'3', 'bottom':'0', 'border-radius' : '0', 'border':'solid 1px white'}}
+onClick={()=>{
+    window.location = "Help";
+}}>Help</Button>
             <AceEditor style={{'z-index' : '2','width':'100%', 'height' : '100%'}} 
             ref={this.editor}
             value={this.state.text}
-            mode="html"
+            mode="elixir"
+            theme="monokai"
+            fontSize={16}
             onChange={(evt)=>{
                 this.setState({text: evt});
             }}>

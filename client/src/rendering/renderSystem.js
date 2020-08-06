@@ -27,8 +27,9 @@ class RenderSystem {
         
         this.drawTracks = true;
         this.drawParticles = true;
+        this.drawAxes = true;
     }
-      static acitve_id = 0;
+      static active_id = -1;
 
     removeDetector(detector){
         for(let i = 0;i<this.detectors.length;i++){
@@ -82,9 +83,31 @@ class RenderSystem {
     draw(projection, camera){
         this.gl.disable(this.gl.DEPTH_TEST);
         this.shader.bind();
+
+
         for(let i = 0;i<this.detectors.length;i++){
-            if(this.detectors[i].id != RenderSystem.acitve_id-1) continue;
-            if(this.detectors[i].id == RenderSystem.acitve_id-1){
+            this.gl.enable(this.gl.DEPTH_TEST);
+            this.gl.enableVertexAttribArray(0);
+            this.gl.enableVertexAttribArray(1);
+            this.gl.bindVertexArray(this.detectors[i].model.vao);
+            let mat = Maths.createTransformationMatrix(this.detectors[i].model.position.x, this.detectors[i].model.position.y, this.detectors[i].model.position.z,
+                this.detectors[i].model.rotation.x, this.detectors[i].model.rotation.y, this.detectors[i].model.rotation.z, this.detectors[i].model.scale.x,
+                 this.detectors[i].model.scale.y,
+                this.detectors[i].model.scale.z);
+            this.shader.setUniform3f("color", this.detectors[i].model.color.x, this.detectors[i].model.color.y, this.detectors[i].model.color.z);
+            this.shader.setUniform1i("sampler", 0);
+            this.shader.setUniform4fv("view", Maths.createViewMatrix(camera));
+            this.shader.setUniform4fv("projection", projection);
+            this.shader.setUniform4fv("transformation", mat);
+            this.detectors[i].model.draw();
+            this.gl.disableVertexAttribArray(0);
+            this.gl.disableVertexAttribArray(1);
+        }
+
+        this.gl.disable(this.gl.DEPTH_TEST);
+        for(let i = 0;i<this.detectors.length;i++){
+            if(this.detectors[i].id != RenderSystem.active_id) continue;
+            if(this.detectors[i].id == RenderSystem.active_id){
                 this.gl.enableVertexAttribArray(0);
                 this.gl.enableVertexAttribArray(1);
                 this.gl.bindVertexArray(this.detectors[i].model.vao);
@@ -104,24 +127,7 @@ class RenderSystem {
             }
             
         }
-        for(let i = 0;i<this.detectors.length;i++){
-            this.gl.enable(this.gl.DEPTH_TEST);
-            this.gl.enableVertexAttribArray(0);
-            this.gl.enableVertexAttribArray(1);
-            this.gl.bindVertexArray(this.detectors[i].model.vao);
-            let mat = Maths.createTransformationMatrix(this.detectors[i].model.position.x, this.detectors[i].model.position.y, this.detectors[i].model.position.z,
-                this.detectors[i].model.rotation.x, this.detectors[i].model.rotation.y, this.detectors[i].model.rotation.z, this.detectors[i].model.scale.x,
-                 this.detectors[i].model.scale.y,
-                this.detectors[i].model.scale.z);
-            this.shader.setUniform3f("color", this.detectors[i].model.color.x, this.detectors[i].model.color.y, this.detectors[i].model.color.z);
-            this.shader.setUniform1i("sampler", 0);
-            this.shader.setUniform4fv("view", Maths.createViewMatrix(camera));
-            this.shader.setUniform4fv("projection", projection);
-            this.shader.setUniform4fv("transformation", mat);
-            this.detectors[i].model.draw();
-            this.gl.disableVertexAttribArray(0);
-            this.gl.disableVertexAttribArray(1);
-        }
+        
         
         for (var i = 0; i < this.guns.length; i++) {
             this.gl.enableVertexAttribArray(0);
@@ -160,29 +166,33 @@ class RenderSystem {
         this.gl.enable(this.gl.DEPTH_TEST);
 
         this.gl.disable(this.gl.DEPTH_TEST);
-
-        for(let i = 0;i<4;i++){
-            this.gl.enableVertexAttribArray(0);
-            this.gl.enableVertexAttribArray(1);
-            this.gl.bindVertexArray(this.models[i].vao);
-            let mat = Maths.createTransformationMatrix(this.models[i].position.x, this.models[i].position.y, this.models[i].position.z,
-                this.models[i].rotation.x, this.models[i].rotation.y, this.models[i].rotation.z,
-                camera.d,
-                 camera.d,
-                camera.d);
-            this.shader.setUniform3f("color", this.models[i].color.x, this.models[i].color.y, this.models[i].color.z);
-            this.shader.setUniform1i("sampler", 0);
-            this.shader.setUniform4fv("view", Maths.createViewMatrix(camera));
-            this.shader.setUniform4fv("projection", projection);
-            this.shader.setUniform4fv("transformation", mat);
-            this.models[i].draw();
-            this.gl.disableVertexAttribArray(0);
-            this.gl.disableVertexAttribArray(1);
+        if(this.drawAxes){
+            for(let i = 0;i<4;i++){
+                this.gl.enableVertexAttribArray(0);
+                this.gl.enableVertexAttribArray(1);
+                this.gl.bindVertexArray(this.models[i].vao);
+                let mat = Maths.createTransformationMatrix(this.models[i].position.x, this.models[i].position.y, this.models[i].position.z,
+                    this.models[i].rotation.x, this.models[i].rotation.y, this.models[i].rotation.z,
+                    camera.d,
+                     camera.d,
+                    camera.d);
+                this.shader.setUniform3f("color", this.models[i].color.x, this.models[i].color.y, this.models[i].color.z);
+                this.shader.setUniform1i("sampler", 0);
+                this.shader.setUniform4fv("view", Maths.createViewMatrix(camera));
+                this.shader.setUniform4fv("projection", projection);
+                this.shader.setUniform4fv("transformation", mat);
+                this.models[i].draw();
+                this.gl.disableVertexAttribArray(0);
+                this.gl.disableVertexAttribArray(1);
+            }
+            console.log(this.drawAxes);
         }
+        
         if(!this.drawTracks){
             this.shader.unBind();
             return;
-        } 
+        }
+        
         for(let i = 3;i<this.models.length;i++){
             this.gl.enableVertexAttribArray(0);
             this.gl.enableVertexAttribArray(1);

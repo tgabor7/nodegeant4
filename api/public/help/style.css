@@ -1,0 +1,19 @@
+textarea {
+    width: 200px;
+    height: 150px;
+    position: relative;
+    left: 0;
+}
+h2 {
+    margin: 10px;
+}
+.container {
+    margin: 0;
+}
+article {
+    border: 1px black solid;
+    padding: 5px;
+}
+h1 {
+    text-align: center;
+}

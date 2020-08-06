@@ -60,10 +60,10 @@ class Parser {
                                 detector.model.scale.z = parseFloat(params.split(',')[2]);
                                 break;
                             case('material'):
-                                detector.material = params.trim();
+                                detector.material = params.trim().substring(1,params.trim().length-1);
                                 break;
                             case('name'):
-                                detector.name = params;
+                                detector.name = params.trim().substring(1,params.trim().length-1);
                                 break;
                         }
                     }
@@ -75,10 +75,10 @@ class Parser {
                                 source.model.position.z = parseFloat(params.split(',')[2]);
                                 break;
                             case('material'):
-                                source.material = params;
+                                source.material = params.trim().substring(1,params.trim().length-1);
                                 break;
                             case('name'):
-                                source.name = params;
+                                source.name = params.trim().substring(1,params.trim().length-1);
                                 break;
                         }
                     }
@@ -98,7 +98,7 @@ class Parser {
                                 gun.material = parseFloat(params);
                                 break;
                             case('name'):
-                                gun.name = params;
+                                gun.name = params.trim().substring(1,params.trim().length-1);
                                 break;
                         }
                     }

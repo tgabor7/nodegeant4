@@ -4,13 +4,22 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+var mongoose = require('mongoose');
+require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testAPIRouter = require("./routes/testAPI");
 var gammaAPIRouter = require("./routes/gammaAPI");
+var databaseRouter = require("./routes/database");
 
 var app = express();
+
+//connect to mondo
+mongoose.connect(process.env.DB_CONNECTION,{useNewUrlParser: true}, ()=>{
+  console.log("Connected to DB");
+});
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,6 +38,9 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use("/testAPI", testAPIRouter);
 app.use("/gammaAPI", gammaAPIRouter);
+app.use("/database", databaseRouter);
+app.use('/', express.static('./public'));
+app.use('/Help', express.static('./public/help'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -29,11 +29,11 @@ class DetectorButton extends Component{
     <Card className='button'>
       <Card.Header>
         <Accordion.Toggle as={Button} onClick={()=>{
-          if(RenderSystem.acitve_id == this.id){
-            RenderSystem.acitve_id = -1;
+          if(RenderSystem.active_id == this.props.detector.id){
+            RenderSystem.active_id = -1;
             return;
           }
-          RenderSystem.acitve_id = this.id;
+          RenderSystem.active_id = this.props.detector.id;
           }} variant="link" eventKey={this.id}>
           {this.props.name}
         </Accordion.Toggle>

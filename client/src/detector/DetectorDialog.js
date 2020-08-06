@@ -29,10 +29,13 @@ class DetectorDialog extends Component{
       filelabel: 'Path to STL',
       modeldata: null,
       showError: 'none',
-      color: new Vector3(.5,.5,.5) }
-    
+      color: new Vector3(.5,.5,.5),
+      options: []
+     }
+     
   }
   componentDidMount(){
+   
     
   }
   hexToRgb(hex) {
@@ -47,11 +50,26 @@ class DetectorDialog extends Component{
   addMaterial(ann, mat){
     this.materials.push(<option value={ann}>{mat}</option>)
   }
-  showDialog(){
+  async showDialog(){
       this.setState({show: true});
       let detectorName = 'Detector' + this.props.buttons.length;
       this.setState({detname: detectorName});
-  }
+
+      let response = await fetch("http://localhost/database", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({name: ""})
+      });
+      let json = await response.json();
+      let opt = [];
+      for(var i = 0;i<json.length;i++){
+        opt.push(<option value={json[i].name}>{json[i].name}</option>);
+      }
+      this.setState({options: opt});
+    }
   hideDialog(){
     this.setState({show: false});
   }
@@ -86,9 +104,12 @@ class DetectorDialog extends Component{
               this.setState({geomrty: evt.target.value});
               if(evt.target.value == "stl") this.setState({display: 'block'});
               else this.setState({display: 'none'});}}>
-            <option value="cube">Cube</option>
+
+            {/* <option value="cube">Cube</option>
             <option value="cylinder">Cylinder</option>
-            <option value="sphere">Sphere</option>
+            <option value="sphere">Sphere</option> */}
+            {this.state.options}
+
             <option value="stl">Custom (.STL)</option>
             </Form.Control>
 

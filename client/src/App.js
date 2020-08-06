@@ -20,6 +20,7 @@ class App extends Component{
   constructor(props){
     super(props);
     this.spectrum = React.createRef();
+    this.navbar = React.createRef();
     this.state = {buttons: [], gunbuttons: [], sourcebuttons: [], spectrum: true, page: 'first'}
     this.createDetector = this.createDetector.bind(this);
     this.createSource = this.createSource.bind(this);
@@ -34,6 +35,9 @@ class App extends Component{
 
     this.setShowParticles = this.setShowParticles.bind(this);
     this.setShowTracks = this.setShowTracks.bind(this);
+    this.setShowAxes = this.setShowAxes.bind(this);
+    this.setShowGrid = this.setShowGrid.bind(this);
+
     this.clearRun = this.clearRun.bind(this);
     this.clearSetup = this.clearSetup.bind(this);
 
@@ -209,7 +213,7 @@ class App extends Component{
       message += data[i];
       message += ',';
     }
-    fetch('http://localhost:9000/gammaAPI',{
+    fetch('http://localhost:80/gammaAPI',{
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -229,7 +233,7 @@ class App extends Component{
       message += data[i];
       message += ',';
     }
-    fetch('http://localhost:9000/gammaAPI',{
+    fetch('http://localhost:80/gammaAPI',{
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -347,6 +351,7 @@ class App extends Component{
     
   }
   createSource(n,x,y,z,mat){
+    if(this.detectors.length > 0) this.navbar.current.showRun(true);
     let bs = this.state.sourcebuttons;
     let details = <Container>
       <Row>
@@ -371,6 +376,7 @@ class App extends Component{
     this.setState({sourcebuttons: bs});
   }
   createGun(n, px, py, pz, dx, dy, dz, energy){
+    if(this.detectors.length > 0) this.navbar.current.showRun(true);
     let bs = this.state.gunbuttons;
     let details = <Container>
       <Row>
@@ -402,6 +408,7 @@ class App extends Component{
     this.setState({gunbuttons: bs});
   }
   createDetector(n, px, py, pz, rx, ry, rz, sx, sy, sz, material, type, data, color){
+    if(this.sources.length > 0 || this.guns.length > 0) this.navbar.current.showRun(true);
     let bs = this.state.buttons;
     let details = <Container>
       <Row>
@@ -435,21 +442,27 @@ class App extends Component{
         <Col>{material}</Col>
       </Row>
       </Container>;
-
+    let paramterize = (detector) => {
+      detector.id = DetectorButton.id;
+      detector.name = n;
+      detector.model.color = color;
+      this.detectors.push(detector);
+      bs.push(<DetectorButton name={n} removebutton={this.removeDetector} id={DetectorButton.id} detector={detector} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></DetectorButton>);
+      this.setState({buttons: bs});
+    }
     let detector = null;
     if(type=="stl"){
       let modelData = STLParser.parseData(data);
       detector = this.canvas.current.addSTLDetector(px,py,pz,rx,ry,rz,sx,sy,sz,material,modelData);
+      paramterize(detector);
 
     }else{
-      detector = this.canvas.current.addDetector(px,py,pz,rx,ry,rz,sx,sy,sz,material, type);
+      this.canvas.current.addDetector(px,py,pz,rx,ry,rz,sx,sy,sz,material, type).then(det => {
+        alert(det);
+        paramterize(det);
+      });
     }
-    detector.id = DetectorButton.id;
-    detector.name = n;
-    detector.model.color = color;
-    this.detectors.push(detector);
-    bs.push(<DetectorButton name={n} removebutton={this.removeDetector} id={DetectorButton.id} detector={detector} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></DetectorButton>);
-    this.setState({buttons: bs});
+    
   }
   clearSetup(){
     this.setState({buttons: [], gunbuttons: [], sourcebuttons: []});
@@ -465,9 +478,11 @@ class App extends Component{
     this.clearRun();
   }
   removeSource(source, button){
+    if(this.detectors.length < 1 || (this.sources.length < 0 && this.guns.length < 0)) this.navbar.current.showRun(false);
+
     this.canvas.current.removeSource(source);
     for(var i = 0;i<this.state.sourcebuttons.length;i++){
-      if(this.state.sourcebuttons[i].key == button.id){
+      if(this.state.sourcebuttons[i].key-1 == button.id){
         let bs = this.state.sourcebuttons;
         bs.splice(i,1);
         this.sources.splice(i,1);
@@ -477,9 +492,11 @@ class App extends Component{
     }
   }
   removeGun(gun, button){
+    if(this.detectors.length < 1 || (this.sources.length < 0 && this.guns.length < 0)) this.navbar.current.showRun(false);
+
     this.canvas.current.removeGun(gun);
     for(var i = 0;i<this.state.gunbuttons.length;i++){
-      if(this.state.gunbuttons[i].key == button.id){
+      if(this.state.gunbuttons[i].key-1 == button.id){
         let bs = this.state.gunbuttons;
         bs.splice(i,1);
         this.guns.splice(i,1);
@@ -489,9 +506,10 @@ class App extends Component{
     }
   }
   removeDetector(detector, button){
+    if(this.detectors.length < 1 || (this.sources.length < 0 && this.guns.length < 0)) this.navbar.current.showRun(false);
     this.canvas.current.removeDetector(detector);
     for(var i = 0;i<this.state.buttons.length;i++){
-      if(this.state.buttons[i].key == button.id){
+      if(this.state.buttons[i].key-1 == button.id){
         let bs = this.state.buttons;
         bs.splice(i,1);
         this.detectors.splice(i,1);
@@ -506,6 +524,12 @@ class App extends Component{
   }
   setShowParticles(b){
     this.canvas.current.drawParticles = !b;
+  }
+  setShowAxes(b){
+    this.canvas.current.setShowAxes(!b);
+  }
+  setShowGrid(b){
+    this.canvas.current.drawGrid = !b;
   }
   componentDidMount(){
     
@@ -539,6 +563,7 @@ class App extends Component{
     <CodeEditor createGun={this.createGun} createSource={this.createSource} createDetector={this.createDetector} canvas={this.canvas} />
 
         <NavigationBar run={this.runSim} 
+        ref={this.navbar}
         className="navbar"
         runspectroscopy={this.runSpectroscopy}
         createbutton={this.createDetector} 
@@ -546,6 +571,8 @@ class App extends Component{
         createsourcebutton={this.createSource} 
         setshowtracks={this.setShowTracks}
         setshowparticles={this.setShowParticles}
+        setshowaxes={this.setShowAxes}
+        setshowgrid={this.setShowGrid}
         clearrun={this.clearRun}
         clearSetup={this.clearSetup}
         detectors={this.detectors}

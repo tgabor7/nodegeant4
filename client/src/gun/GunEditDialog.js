@@ -3,12 +3,15 @@ import '../App.css';
 
 import {Button, Nav, Navbar, FormControl, Container,Col,Row, Form, Dropdown, OverlayTrigger, Tooltip, Modal} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ConfirmDialog from '../graphics/ConfirmDialog';
 
 class GunEditDialog extends Component{
   constructor(props){
     super(props);
     this.showDialog = this.showDialog.bind(this);
     this.hideDialog = this.hideDialog.bind(this);
+    this.confirmDialog = React.createRef();
+
     this.state = {show: false, 
       detname: this.props.detector.name,
       detposx: this.props.detector.model.position.x,
@@ -32,8 +35,13 @@ class GunEditDialog extends Component{
   
   static id = 0;
   render(){
-    
+    const handleDelete = ()=>{
+      this.hideDialog();
+      this.props.removebutton(this.props.detector, this.props.button);
+    }
     return <>
+    <ConfirmDialog ref={this.confirmDialog} title="Confirm" content="Are you sure you want to delete this component?" fun={handleDelete}></ConfirmDialog>
+
         <Modal show={this.state.show} onHide={()=>{this.hideDialog();}}>
         <Modal.Header closeButton>
           <Modal.Title>Modify Detector</Modal.Title>
@@ -130,8 +138,7 @@ class GunEditDialog extends Component{
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={()=>{
-            this.hideDialog();
-            this.props.removebutton(this.props.detector, this.props.button);
+            this.confirmDialog.current.showDialog();
           }} style={{backgroundColor: 'red', color: 'white'}}>
             Delete
           </Button>

@@ -1,7 +1,7 @@
 class Detector {
     constructor(m) {
         this.model = m;
-        this.material = '';
+        this.material = 'Pb';
         this.active = false;
         this.deposit = 0;
         this.name = "";

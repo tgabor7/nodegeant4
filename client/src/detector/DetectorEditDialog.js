@@ -5,12 +5,15 @@ import {Button, Nav, Navbar, FormControl, Container,Col,Row, Form, Dropdown, Ove
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Vector3} from '../utils/maths';
 import MaterialList from './MaterialList';
+import ConfirmDialog from '../graphics/ConfirmDialog';
 
 class DetectorEditDialog extends Component{
   constructor(props){
     super(props);
     this.showDialog = this.showDialog.bind(this);
     this.hideDialog = this.hideDialog.bind(this);
+    this.confirmDialog = React.createRef();
+
     this.state = {show: false, 
       detname: this.props.detector.name,
       detposx: this.props.detector.model.position.x,
@@ -50,8 +53,12 @@ class DetectorEditDialog extends Component{
   
   static id = 0;
   render(){
-    
+    const handleDelete = ()=>{
+      this.hideDialog();
+      this.props.removebutton(this.props.detector, this.props.button);
+    }
     return <>
+    <ConfirmDialog ref={this.confirmDialog} title="Confirm" content="Are you sure you want to delete this component?" fun={handleDelete}></ConfirmDialog>
         <Modal show={this.state.show} onHide={()=>{this.hideDialog();}}>
         <Modal.Header closeButton>
           <Modal.Title>Modify Detector</Modal.Title>
@@ -196,8 +203,7 @@ class DetectorEditDialog extends Component{
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={()=>{
-            this.hideDialog();
-            this.props.removebutton(this.props.detector, this.props.button);
+            this.confirmDialog.current.showDialog();
           }} style={{backgroundColor: 'red', color: 'white'}}>
             Delete
           </Button>

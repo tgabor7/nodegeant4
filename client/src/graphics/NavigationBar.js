@@ -8,6 +8,7 @@ import GunDialog from '../gun/GunDialog';
 import SourceDialog from '../source/SourceDialog';
 import RunDialog from './RunDialog';
 import SpectrumDialog from './SpectrumDialog';
+import ConfirmDialog from './ConfirmDialog';
 
 class NavigationBar extends Component{
   constructor(props){
@@ -17,12 +18,25 @@ class NavigationBar extends Component{
     this.sourcedialog = React.createRef();
     this.rundialog = React.createRef();
     this.spectrumdialog = React.createRef();
-    this.state = {showTracks: true, showParticles: true};
+    this.confirmDialog = React.createRef();
+    this.showRun = this.showRun.bind(this);
+    this.state = {showTracks: true, showParticles: true, showAxes: true, showGrid: true, showrun: "none"};
   }
   static id = 0;
+  showRun(b){
+    if(b) this.setState({showrun: "block"});
+    else this.setState({showrun: "none"});
+  }
   render(){
 
+    const handleDelete = ()=>{
+      this.props.clearSetup();
+    }
+
     return <>
+    <ConfirmDialog ref={this.confirmDialog} title="Confirm" content="Are you sure you want to delete all components?" fun={handleDelete}>
+
+    </ConfirmDialog>
    <DetectorDialog ref={this.dialog} createbutton={this.props.createbutton} buttons={this.props.buttons}></DetectorDialog>
    <GunDialog ref={this.gundialog} createbutton={this.props.creategunbutton} buttons={this.props.buttons}></GunDialog>
    <SourceDialog ref={this.sourcedialog} createbutton={this.props.createsourcebutton} buttons={this.props.buttons}></SourceDialog>
@@ -31,17 +45,18 @@ class NavigationBar extends Component{
    
    <Navbar bg="light" variant="light" style={{position: 'fixed', 'z-index': '4'}}>
         <Navbar.Brand>Geant4</Navbar.Brand>
-        <Button variant="primary" onClick={()=>{
+        <Button style={{"display": this.state.showrun}} variant="primary" onClick={()=>{
           this.rundialog.current.showDialog();}} >Run</Button>
 
-        <Button variant="primary" style={{backgroundColor: 'green'}} onClick={()=>{
+        <Button variant="primary" style={{backgroundColor: 'green', "display" : this.state.showrun}} onClick={()=>{
           this.spectrumdialog.current.showDialog();}}>Spectroscopy</Button>
 
         <Button variant="primary" style={{backgroundColor: 'red'}} onClick={()=>{
                   this.props.clearrun();}}>Clear particles</Button>
 
         <Button variant="primary" style={{backgroundColor: 'red'}} onClick={()=>{
-                  this.props.clearSetup();}}>Clear setup</Button>
+                  this.confirmDialog.current.showDialog();
+                  }}>Clear setup</Button>
 
         <Nav className="mr-auto">
         <Dropdown>
@@ -81,6 +96,16 @@ class NavigationBar extends Component{
         <Form.Check type="checkbox" label="Show Particles" checked={this.state.showParticles} onChange={(evt)=>{
           this.setState({showParticles: evt.target.checked});
           this.props.setshowparticles(this.state.showParticles);}}
+          style={{margin: '12px'}}/>
+
+<Form.Check type="checkbox" label="Show Axes" checked={this.state.showAxes} onChange={(evt)=>{
+          this.setState({showAxes: evt.target.checked});
+          this.props.setshowaxes(this.state.showAxes);}}
+          style={{margin: '12px'}}/>
+
+<Form.Check type="checkbox" label="Show Grid" checked={this.state.showGrid} onChange={(evt)=>{
+          this.setState({showGrid: evt.target.checked});
+          this.props.setshowgrid(this.state.showGrid);}}
           style={{margin: '12px'}}/>
         
 

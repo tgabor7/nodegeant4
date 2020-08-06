@@ -11,12 +11,14 @@ import {ParticleGun} from '../gun/ParticleGun';
 import {GunMesh} from '../gun/gun';
 import {ParticleSource} from '../source/ParticleSource';
 import { InstanceRenderer } from '../rendering/InstanceRenderer';
-import Cylinder from '../entities/cylinder';
-import Sphere from '../entities/sphere';
+
+import STLParser from '../utils/STLParser';
+
 
 class Canvas extends Component{
   constructor(props){
     super(props);
+    this.state = ({hint: "1 cm"});
     this.canvas = createRef();
     this.camera = new Camera(0, 0, 100, new Vector3(0, 0, 0), new Vector3(0, 0, 0));
     this.oldX = 0;
@@ -31,10 +33,18 @@ class Canvas extends Component{
     this.particles = [];
     this.drawTracks = false;
     this.drawParticles = true;
+    this.drawGrid = true;
     this.gl = null;
+    this.updateHint = this.updateHint.bind(this);
+  }
+  updateHint(s){
+    this.setState({hint: s});
   }
   setShowTracks(b){
     this.renderer.drawTracks = b;
+  }
+  setShowAxes(b){
+    this.renderer.drawAxes = b;
   }
   getMouseXd(){
     return this.oldX - this.x;
@@ -98,7 +108,7 @@ class Canvas extends Component{
       }
       }
       
-      //gridRenderer.draw(projection, this.camera, this.canvas.current.offsetWidth,this.canvas.current.offsetHeight, this.camera.d);
+      if(this.drawGrid) gridRenderer.draw(projection, this.camera, this.canvas.current.offsetWidth,this.canvas.current.offsetHeight, this.camera.d, this.updateHint);
       this.renderer.draw(projection, this.camera);
       if(this.drawParticles) this.instanceRenderer.render(this.particles, Maths.createViewMatrix(this.camera),projection, this.camera.d, this.gl);
       updateCamera(this.camera);
@@ -141,41 +151,47 @@ class Canvas extends Component{
     
     return detector;
   }
-  addDetector(x,y,z,rx,ry,rz,sx,sy,sz, mat, type){
+  async addDetector(x,y,z,rx,ry,rz,sx,sy,sz, mat, type){
     let detector = null;
-    switch(type){
-      case('cube'):
-        detector = new Detector(new Model(Cube.vertices, Cube.normals, this.gl));
-        break;
-      case('cylinder'):
-        detector = new Detector(new Model(Cylinder.vertices, Cylinder.normals, this.gl));
-        break;
-      case('sphere'):
-        detector = new Detector(new Model(Sphere.vertices, Sphere.normals, this.gl));
-        break;
-    }
-    
-    
-    detector.model.drawLines = false;
-    detector.model.color = new Vector3(1,1,1);
-    detector.model.position.x = x;
-    detector.model.position.y = y;
-    detector.model.position.z = z;
-
-    detector.model.rotation.x = rx;
-    detector.model.rotation.y = ry;
-    detector.model.rotation.z = rz;
-
-    detector.model.scale.x = sx;
-    detector.model.scale.y = sy;
-    detector.model.scale.z = sz;
-    
-    detector.material = mat;
-
-    this.renderer.addDetector(detector);
-    
+    let parameterize = ()=>{
+      detector.model.drawLines = false;
+      detector.model.color = new Vector3(1,1,1);
+      detector.model.position.x = x;
+      detector.model.position.y = y;
+      detector.model.position.z = z;
+  
+      detector.model.rotation.x = rx;
+      detector.model.rotation.y = ry;
+      detector.model.rotation.z = rz;
+  
+      detector.model.scale.x = sx;
+      detector.model.scale.y = sy;
+      detector.model.scale.z = sz;
+      
+      detector.material = mat;
+  
+      this.renderer.addDetector(detector);
+    };
+    alert(type);
+    let response = await fetch("http://localhost/database", {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: 'POST',
+          body: JSON.stringify({name: type})
+        });
+        let json = await response.json();
+        let data = new String(json[0].data.data);
+        var str='';
+        for (let i = 0;i < json[0].data.data.length;i++){
+          str+=String.fromCharCode(json[0].data.data[i]);
+        }
+        let modeldata = STLParser.parseData(str);
+        detector = new Detector(new Model(modeldata.vertices, modeldata.normals, this.gl));
+    parameterize();
     return detector;
-
+    
   }
   addModel(vertices, normals){
     let model = new Model(vertices, normals, this.gl);
@@ -204,6 +220,7 @@ class Canvas extends Component{
   }
   render(){
     return <div>
+      <p ref={this.hint} style={{"position":"fixed", "bottom" : "10%", "left" : "20%", "z-index" : "4", "color" : "white"}}>{this.state.hint}</p>
     <canvas ref={this.canvas} onMouseMove={(e)=>{ 
       this.move = true;
       this.oldX = this.x;
@@ -227,6 +244,7 @@ class Canvas extends Component{
       }}/>
   </div>
     
+   
   }
 }
 
