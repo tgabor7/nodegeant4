@@ -33,7 +33,7 @@ class Canvas extends Component{
     this.particles = [];
     this.drawTracks = false;
     this.drawParticles = true;
-    this.drawGrid = true;
+    this.drawGrid = false;
     this.gl = null;
     this.updateHint = this.updateHint.bind(this);
   }

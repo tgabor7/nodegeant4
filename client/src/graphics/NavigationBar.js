@@ -20,12 +20,20 @@ class NavigationBar extends Component{
     this.spectrumdialog = React.createRef();
     this.confirmDialog = React.createRef();
     this.showRun = this.showRun.bind(this);
-    this.state = {showTracks: true, showParticles: true, showAxes: true, showGrid: true, showrun: "none"};
+    this.state = {showTracks: true, showParticles: true, showAxes: true, showGrid: false, showrun: "none", showclearsetup: "none", showclearparticles: "none"};
   }
   static id = 0;
   showRun(b){
     if(b) this.setState({showrun: "block"});
     else this.setState({showrun: "none"});
+  }
+  showClearParticles(b){
+    if(b) this.setState({showclearparticles: "block"});
+    else this.setState({showclearparticles: "none"});
+  }
+  showClearSetup(b){
+    if(b) this.setState({showclearsetup: "block"});
+    else this.setState({showclearsetup: "none"});
   }
   render(){
 
@@ -51,11 +59,14 @@ class NavigationBar extends Component{
         <Button variant="primary" style={{backgroundColor: 'green', "display" : this.state.showrun}} onClick={()=>{
           this.spectrumdialog.current.showDialog();}}>Spectroscopy</Button>
 
-        <Button variant="primary" style={{backgroundColor: 'red'}} onClick={()=>{
-                  this.props.clearrun();}}>Clear particles</Button>
+        <Button variant="primary" style={{"display" : this.state.showclearparticles, backgroundColor: 'red'}} onClick={()=>{
+                  this.props.clearrun();
+                  this.showClearParticles(false);
+                  }}>Clear particles</Button>
 
-        <Button variant="primary" style={{backgroundColor: 'red'}} onClick={()=>{
+        <Button variant="primary" style={{"display" : this.state.showclearsetup, backgroundColor: 'red'}} onClick={()=>{
                   this.confirmDialog.current.showDialog();
+                  this.showClearSetup(false);
                   }}>Clear setup</Button>
 
         <Nav className="mr-auto">

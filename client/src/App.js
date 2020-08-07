@@ -345,12 +345,15 @@ class App extends Component{
         this.particles[i].scale = new Vector3(d,d,d);
         this.canvas.current.addParticle(this.particles[i]);
     }
+    if(this.particles.length > 0) this.navbar.current.showClearParticles(true);
   }
   modifyDetector(detector){
     
   }
   createSource(n,x,y,z,mat){
     if(this.detectors.length > 0) this.navbar.current.showRun(true);
+    this.navbar.current.showClearSetup(true);
+
     let bs = this.state.sourcebuttons;
     let details = <Container>
       <Row>
@@ -376,6 +379,9 @@ class App extends Component{
   }
   createGun(n, px, py, pz, dx, dy, dz, energy){
     if(this.detectors.length > 0) this.navbar.current.showRun(true);
+    this.navbar.current.showClearSetup(true);
+
+
     let bs = this.state.gunbuttons;
     let details = <Container>
       <Row>
@@ -408,6 +414,9 @@ class App extends Component{
   }
   createDetector(n, px, py, pz, rx, ry, rz, sx, sy, sz, material, type, data, color){
     if(this.sources.length > 0 || this.guns.length > 0) this.navbar.current.showRun(true);
+    this.navbar.current.showClearSetup(true);
+
+
     let bs = this.state.buttons;
     let details = <Container>
       <Row>
@@ -477,6 +486,7 @@ class App extends Component{
   }
   removeSource(source, button){
     if(this.detectors.length < 1 || (this.sources.length < 0 && this.guns.length < 0)) this.navbar.current.showRun(false);
+    if(this.sourceslength == 0 || this.guns.length == 0 || this.guns.length == 0) this.navbar.current.showClearSetup(false);
 
     this.canvas.current.removeSource(source);
     for(var i = 0;i<this.state.sourcebuttons.length;i++){
@@ -491,6 +501,7 @@ class App extends Component{
   }
   removeGun(gun, button){
     if(this.detectors.length < 1 || (this.sources.length < 0 && this.guns.length < 0)) this.navbar.current.showRun(false);
+    if(this.sourceslength == 0 || this.guns.length == 0 || this.guns.length == 0) this.navbar.current.showClearSetup(false);
 
     this.canvas.current.removeGun(gun);
     for(var i = 0;i<this.state.gunbuttons.length;i++){
@@ -505,6 +516,8 @@ class App extends Component{
   }
   removeDetector(detector, button){
     if(this.detectors.length < 1 || (this.sources.length < 0 && this.guns.length < 0)) this.navbar.current.showRun(false);
+    if(this.sourceslength == 0 || this.guns.length == 0 || this.guns.length == 0) this.navbar.current.showClearSetup(false);
+
     this.canvas.current.removeDetector(detector);
     for(var i = 0;i<this.state.buttons.length;i++){
       if(this.state.buttons[i].key-1 == button.id){
