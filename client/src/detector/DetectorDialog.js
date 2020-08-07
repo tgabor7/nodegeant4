@@ -121,7 +121,6 @@ class DetectorDialog extends Component{
             custom
             onChange={(evt)=>{
 
-              alert(evt.target.files[0]);
 
               var r = new FileReader();
 

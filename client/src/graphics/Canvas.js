@@ -172,7 +172,7 @@ class Canvas extends Component{
   
       this.renderer.addDetector(detector);
     };
-    alert(type);
+    
     let response = await fetch("http://localhost/database", {
           headers: {
             'Accept': 'application/json',

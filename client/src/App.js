@@ -245,7 +245,7 @@ class App extends Component{
     .then(response => {
       this.processResponse(response);
       hidedialog();
-      alert(response);});
+     });
   }
   processGammaSpectrum(response, binsize){
     
@@ -260,7 +260,7 @@ class App extends Component{
   }
   processResponse(response){
     var message = response;
-    alert(message);
+    
     var floats = message.split(' ');
     var index = 0;
     var j = 0;
@@ -321,7 +321,6 @@ class App extends Component{
         tmp_particles.push(this.particles[i]);
     }
     this.particles = tmp_particles.slice();
-    alert(this.particles.length);
 
     function get_average(particles){
         var max = 0;
@@ -458,7 +457,6 @@ class App extends Component{
 
     }else{
       this.canvas.current.addDetector(px,py,pz,rx,ry,rz,sx,sy,sz,material, type).then(det => {
-        alert(det);
         paramterize(det);
       });
     }
