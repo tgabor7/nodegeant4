@@ -64,7 +64,6 @@ class Parser {
         let gl = canvas.gl;
         let blocks = text.split("\\");
         clearSetup();
-        Parser.chunks = [];
         for(let i = 0;i<blocks.length;i++){
             let words = blocks[i].split("{");
             words[0] = words[0].replace(' ', '');

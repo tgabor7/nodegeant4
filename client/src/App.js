@@ -516,6 +516,7 @@ class App extends Component{
     
   }
   clearSetup(){
+    Parser.chunks = [];
     this.codeeditor.current.updateText(" ");
     DetectorButton.id = 0;
     this.setState({buttons: [], gunbuttons: [], sourcebuttons: []});
