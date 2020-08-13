@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import '../App.css';
 
-import {Button, Card, Accordion, Figure} from 'react-bootstrap';
+import {Button, Card, Accordion, Figure, Row, Col, Container} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import image from '../images/editicon.png';
 import GunEditDialog from './GunEditDialog';
@@ -22,7 +22,7 @@ class GunButton extends Component{
   }
   render(){
     return <div>
-    <GunEditDialog updatedetails={this.updateDetails} button={this} removebutton={this.props.removebutton}
+    <GunEditDialog buttonid={this.id} codeeditor={this.props.codeeditor} name={this.props.name} updatedetails={this.updateDetails} button={this} removebutton={this.props.removebutton}
       detector={this.props.detector} ref={this.editdialog} buttons={this.props.buttons} details={this.props.details}></GunEditDialog>
     <Card className='button'>
       <Card.Header>
@@ -38,7 +38,27 @@ class GunButton extends Component{
         <Button onClick={()=>{this.editdialog.current.showDialog();}} className="editButton">EDIT</Button>
       </Card.Header>
       <Accordion.Collapse eventKey={this.id}>
-        <Card.Body>{this.state.details}</Card.Body>
+        <Card.Body><Container>
+      <Row>
+      <Col>Position: </Col>
+      </Row>
+      <Row>
+        <Col>x: {this.props.detector.model.position.x} cm</Col>
+        <Col>y: {this.props.detector.model.position.y} cm</Col>
+        <Col>z: {this.props.detector.model.position.z} cm</Col>
+      </Row>
+      <Row>
+      <Col>Direction: </Col>
+      </Row>
+      <Row>
+        <Col>x: {this.props.detector.direction.x} </Col>
+        <Col>y: {this.props.detector.direction.y} </Col>
+        <Col>z: {this.props.detector.direction.z} </Col>
+      </Row>
+      <Row>
+      <Col>Energy: {this.props.detector.energy} keV</Col>
+      </Row>
+      </Container></Card.Body>
       </Accordion.Collapse>
     </Card>
   </div>

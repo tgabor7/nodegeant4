@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import '../App.css';
 
-import {Button, Card, Accordion, Figure} from 'react-bootstrap';
+import {Button, Card, Accordion, Figure, Row, Container, Col} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import image from '../images/editicon.png';
 import SourceEditDialog from './SourceEditDialog';
@@ -17,12 +17,14 @@ class SourceButton extends Component{
     this.id = this.props.id;
   }
   static id = 0;
+  componentDidMount(){
+  }
   updateDetails(d){
     this.setState({details: d});
   }
   render(){
     return <div>
-    <SourceEditDialog updatedetails={this.updateDetails} button={this} removebutton={this.props.removebutton}
+    <SourceEditDialog codeeditor={this.props.codeeditor} name={this.props.name} buttonid={this.id} updatedetails={this.updateDetails} button={this} removebutton={this.props.removebutton}
       detector={this.props.detector} ref={this.editdialog} buttons={this.props.buttons} details={this.props.details}></SourceEditDialog>
     <Card className='button'>
       <Card.Header>
@@ -38,7 +40,20 @@ class SourceButton extends Component{
         <Button onClick={()=>{this.editdialog.current.showDialog();}} className="editButton">EDIT</Button>
       </Card.Header>
       <Accordion.Collapse eventKey={this.id}>
-        <Card.Body>{this.state.details}</Card.Body>
+        <Card.Body><Container>
+      <Row>
+      <Col>Position: </Col>
+      </Row>
+      <Row>
+        <Col>x: {this.props.detector.model.position.x} cm</Col>
+        <Col>y: {this.props.detector.model.position.y} cm</Col>
+        <Col>z: {this.props.detector.model.position.z} cm</Col>
+      </Row>
+      <Row>
+      <Col>Material: {this.props.detector.material}</Col>
+      </Row>
+      </Container>
+      </Card.Body>
       </Accordion.Collapse>
     </Card>
   </div>

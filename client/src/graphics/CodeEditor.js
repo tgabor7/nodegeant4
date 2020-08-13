@@ -11,6 +11,9 @@ class CodeEditor extends Component{
         this.state = {text: '', width: '20%'}
         this.editor = React.createRef();
     }
+    updateText(s){
+        this.setState({text: s});
+    }
     render(){
         return <div 
         style={{'width':this.state.width,'height':'100%', 'top':'50px',
@@ -18,19 +21,21 @@ class CodeEditor extends Component{
 
 <Button style={{'border' : '0','position':'relative','background-color': 'gray', 'z-index':'3', 'bottom':'0', 'border-radius' : '0', 'border':'solid 1px white'}}
 onClick={()=>{
-    this.setState({text: ''});
+   this.setState({text: "Write your code here"});
 }}>New</Button>
 <Button style={{'border' : '0','position':'relative','background-color': 'gray', 'z-index':'3', 'bottom':'0', 'border-radius' : '0', 'border':'solid 1px white'}}>Open</Button>
             <Button 
             onClick={()=>{
-                Parser.parse(this.state.text, this.props.canvas.current, this.props.createDetector, this.props.createSource, this.props.createGun);
+                let tmp = this.state.text;
+                Parser.parse(this.state.text,this.props.canvas.current, this.props.clearSetup,this.props.createDetector, this.props.createSource, this.props.createGun);
+                this.setState({text: tmp});
                 }}
             style={{'border' : '0','position':'relative','background-color': 'gray', 'z-index':'3', 'bottom':'0', 'border-radius' : '0', 'border':'solid 1px white'}}>Run script</Button>
             <Button style={{'border' : '0','position':'relative','background-color': 'gray', 'z-index':'3', 'bottom':'0', 'border-radius' : '0', 'border':'solid 1px white'}}
 onClick={()=>{
     window.location = "Help";
 }}>Help</Button>
-            <AceEditor style={{'z-index' : '2','width':'100%', 'height' : '100%'}} 
+            <AceEditor style={{'z-index' : '2','width':'100%'}} 
             ref={this.editor}
             value={this.state.text}
             mode="elixir"

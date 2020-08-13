@@ -24,7 +24,7 @@ class DetectorButton extends Component{
   }
   render(){
     return <div>
-    <DetectorEditDialog updatedetails={this.updateDetails} button={this} removebutton={this.props.removebutton}
+    <DetectorEditDialog name={this.props.name} buttonid={this.id} codeeditor={this.props.codeeditor} updatedetails={this.updateDetails} button={this} removebutton={this.props.removebutton}
       detector={this.props.detector} ref={this.editdialog} buttons={this.props.buttons} details={this.props.details}></DetectorEditDialog>
     <Card className='button'>
       <Card.Header>

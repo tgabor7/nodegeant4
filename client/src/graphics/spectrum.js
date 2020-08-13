@@ -80,8 +80,12 @@ class Spectrum extends Component {
         }
         return -1;
     }
-    sort(){
+    sort(bin){
         var list = [];
+        let max = this.energies[this.energies.length - 1];
+        for(let i = 0;i<max;i+=bin){
+            this.add(i);
+        }
         for (var j = 0; j < this.energies.length; j++)
             list.push({ 'hit': this.energies[j], 'no': this.numberofenergies[j] });
 
@@ -94,8 +98,10 @@ class Spectrum extends Component {
             this.numberofenergies[k] = list[k].no;
         }
         for(var i = 0;i<this.energies.length;i++){
-            this.addData(this.energies[i],this.numberofenergies[i]);
+            this.addData("[" + this.energies[i] + "-" + (this.energies[i]+ +bin).toString() + "]",this.numberofenergies[i]-1);
         }
+        
+        
     }
     clear(){
         this.chart.destroy();
@@ -117,6 +123,20 @@ class Spectrum extends Component {
         
             // Configuration options go here
             options: { responsive: true,
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'counts'
+                        }
+                    }],
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'bins'
+                        }
+                    }]
+                },
                 plugins: {
                     zoom: {
                         // Container for pan options

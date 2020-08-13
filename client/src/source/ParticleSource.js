@@ -9,5 +9,6 @@ export class ParticleSource {
         this.model = model;
         this.model.color = new Vector3(0,1,0);
         this.active = false;
+        this.id = 0;
     }
 }

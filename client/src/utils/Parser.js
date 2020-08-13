@@ -2,21 +2,69 @@ import Detector from '../detector/Detektor';
 import Model from '../rendering/model';
 import {Cube} from '../entities/cube';
 import {ParticleSource} from '../source/ParticleSource';
-import Vector3 from '../utils/maths';
+import {Vector3} from '../utils/maths';
 import {ParticleGun} from '../gun/ParticleGun';
 import GunMesh from '../gun/gun';
 import DetectorButton from '../detector/DetectorButton';
 import React, { Component, createRef } from 'react';
 
-
+//TO-DO
+//position[cm]
+var m = 100;
+var dm = 10;
+var cm = 1;
+var mm = .1;
+var eV = .001;
+var keV = 1;
+var MeV = 1000;
+var GeV = 1000000;
+var deg = 0.0174527777777778;
+var rad = 1;
 class Parser {
-    
-    static parse(text, canvas, createDetector, createSource, createGun){
+    static checkString(s){
+        s = s.trim();
+        if(s.split('"').length % 2 == 0){
+            return false;
+        }
+        if(s[0] != '"') return false;
+        if(s[s.length-1] != '"') return false;
+        return true;
+    }
+    static chunks = [];
+
+    static removeChunk(id){
+        let result = " ";
+        
+        for(let i = 0;i<Parser.chunks.length;i++){
+            if(Parser.chunks[i].id == id){
+                Parser.chunks.splice(i, 1);
+                break;
+            } 
+        }
+        alert(id);
+        for(let i = 0;i<Parser.chunks.length;i++){
+            alert(Parser.chunks[i].code);
+            alert(Parser.chunks[i].id);
+            result += Parser.chunks[i].code;
+        }
+        return result;
+    }
+    static checkFloat(s, v, me){
+        if(isNaN(parseFloat(s.split(',')[0]))) return false;
+        if(isNaN(parseFloat(s.split(',')[1]))) return false;
+        if(isNaN(parseFloat(s.split(',')[2]))) return false;
+        v.x = parseFloat(s.split(',')[0]) * me;
+        v.y = parseFloat(s.split(',')[1]) * me;
+        v.z = parseFloat(s.split(',')[2]) * me;
+        return true;
+    }
+    static parse(text, canvas, clearSetup, createDetector, createSource, createGun){
         this.detectors = [];
         this.sources = [];
         let gl = canvas.gl;
-
-        let blocks = text.split("/");
+        let blocks = text.split("\\");
+        clearSetup();
+        Parser.chunks = [];
         for(let i = 0;i<blocks.length;i++){
             let words = blocks[i].split("{");
             words[0] = words[0].replace(' ', '');
@@ -41,64 +89,105 @@ class Parser {
                     }
                     if(lines[k].split(":").length == 1) continue;
                     let attribute = lines[k].split(":")[0].trim();
+                    let measurement = cm;
+                    switch(attribute.substring(attribute.indexOf("[")+1,attribute.indexOf("]"))){
+                        case("eV"):
+                            measurement = eV;
+                            break;
+                        case("keV"):
+                            measurement = keV;
+                            break;
+                        case("MeV"):
+                            measurement = MeV;
+                            break;
+                        case("GeV"):
+                            measurement = GeV;
+                            break;
+                        case("mm"):
+                            measurement = mm;
+                            break;
+                        case("deg"):
+                            measurement = deg;
+                            break;
+                        case("rad"):
+                            measurement = rad;
+                            break;
+                        case("cm"):
+                            measurement = cm;
+                            break;
+                        case("dm"):
+                            measurement = dm;
+                            break;
+                        case("m"):
+                            measurement = m;
+                            break;
+                        default:
+                            measurement = cm;
+                    }
+                    if(attribute.includes("[")) attribute = attribute.substr(0, attribute.indexOf("["));
                     let params = lines[k].split(":")[1].replace(/\n/g, '');
                     if(words[0] == 'Detector'){
                         switch(attribute){
                             case('position'):
-                                detector.model.position.x = parseFloat(params.split(',')[0]);
-                                detector.model.position.y = parseFloat(params.split(',')[1]);
-                                detector.model.position.z = parseFloat(params.split(',')[2]);
+                                if(!this.checkFloat(params, detector.model.position, measurement)) alert("position incorrec format");
                                 break;
                             case('rotation'):
-                                detector.model.rotation.x = parseFloat(params.split(',')[0]);
-                                detector.model.rotation.y = parseFloat(params.split(',')[1]);
-                                detector.model.rotation.z = parseFloat(params.split(',')[2]);
+                                if(!this.checkFloat(params, detector.model.rotation, measurement)) alert("rotation incorrec format");
+
                                 break;
                             case('scale'):
-                                detector.model.scale.x = parseFloat(params.split(',')[0]);
-                                detector.model.scale.y = parseFloat(params.split(',')[1]);
-                                detector.model.scale.z = parseFloat(params.split(',')[2]);
+                                if(!this.checkFloat(params, detector.model.scale, measurement)) alert("scale incorrec format");
+
                                 break;
                             case('material'):
+                                if(!this.checkString(params)) alert("meterial incorrect format");
                                 detector.material = params.trim().substring(1,params.trim().length-1);
                                 break;
                             case('name'):
+                                if(!this.checkString(params)) alert("name incorrect format");
                                 detector.name = params.trim().substring(1,params.trim().length-1);
+                                break;
+                            default:
+                                alert("No such property: " + attribute);
                                 break;
                         }
                     }
                     if(words[0] == 'Source'){
                         switch(attribute){
                             case('position'):
-                                source.model.position.x = parseFloat(params.split(',')[0]);
-                                source.model.position.y = parseFloat(params.split(',')[1]);
-                                source.model.position.z = parseFloat(params.split(',')[2]);
+                                if(!this.checkFloat(params, source.model.position, measurement)) alert("position incorrec format");
                                 break;
                             case('material'):
+                                if(!this.checkString(params)) alert("material incorrect format");
                                 source.material = params.trim().substring(1,params.trim().length-1);
                                 break;
                             case('name'):
+                                if(!this.checkString(params)) alert("name incorrect format");
                                 source.name = params.trim().substring(1,params.trim().length-1);
                                 break;
-                        }
+                            default:
+                                alert("No such property: " + attribute);
+                                break;
+                        }   
                     }
                     if(words[0] == 'Gun'){
                         switch(attribute){
                             case('position'):
-                                gun.model.position.x = parseFloat(params.split(',')[0]);
-                                gun.model.position.y = parseFloat(params.split(',')[1]);
-                                gun.model.position.z = parseFloat(params.split(',')[2]);
+                                if(!this.checkFloat(params, gun.model.position, measurement)) alert("position incorrec format");
                                 break;
                             case('direction'):
-                                gun.direction.x = parseFloat(params.split(',')[0]);
-                                gun.direction.y = parseFloat(params.split(',')[1]);
-                                gun.direction.z = parseFloat(params.split(',')[2]);
+                                if(!this.checkFloat(params, gun.direction, measurement)) alert("direction incorrec format");
                                 break;
                             case('energy'):
-                                gun.material = parseFloat(params);
+                                alert(measurement);
+                                gun.energy = parseFloat(params) * measurement;
                                 break;
                             case('name'):
+                                if(!this.checkString(params)) alert("name incorrect format");
                                 gun.name = params.trim().substring(1,params.trim().length-1);
+                                break;
+                            default:
+                                alert("No such property: " + attribute);
                                 break;
                         }
                     }
@@ -106,16 +195,20 @@ class Parser {
                 }
                 
             }
+
             if(gun != null){
-                createGun(gun.name, gun.model.position.x,gun.model.position.y,gun.model.position.z,gun.direction.x,gun.direction.y, gun.direction.z,gun.energy);
+
+                createGun(gun.name, gun.model.position.x,gun.model.position.y,gun.model.position.z,gun.direction.x,gun.direction.y, gun.direction.z,gun.energy, false);
             }
             if(source != null) {
-                createSource(source.name,source.model.position.x, source.model.position.y,source.model.position.z,source.material);
+
+                createSource(source.name,source.model.position.x, source.model.position.y,source.model.position.z,source.material,false);
             }
             if(detector != null){
+
                 createDetector(detector.name, detector.model.position.x,detector.model.position.y,detector.model.position.z,
                     detector.model.rotation.x,detector.model.rotation.y,detector.model.rotation.z,
-                    detector.model.scale.x,detector.model.scale.y,detector.model.scale.z,detector.material,'cube',Cube.vertices, new Vector3(.1,.1,.1));
+                    detector.model.scale.x,detector.model.scale.y,detector.model.scale.z,detector.material,'cube',Cube.vertices, new Vector3(.5,.5,.5), false);
                 
             }
         } 

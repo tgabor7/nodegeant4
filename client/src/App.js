@@ -1,5 +1,4 @@
 import React, { Component, createRef } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import Canvas from './graphics/Canvas.js';
@@ -15,12 +14,14 @@ import Model from './rendering/model';
 import Spectrum from './graphics/spectrum';
 import STLParser from './utils/STLParser';
 import CodeEditor from './graphics/CodeEditor';
+import Parser from './utils/Parser';
 
 class App extends Component{
   constructor(props){
     super(props);
     this.spectrum = React.createRef();
     this.navbar = React.createRef();
+    this.codeeditor = React.createRef();
     this.state = {buttons: [], gunbuttons: [], sourcebuttons: [], spectrum: true, page: 'first'}
     this.createDetector = this.createDetector.bind(this);
     this.createSource = this.createSource.bind(this);
@@ -208,6 +209,7 @@ class App extends Component{
     this.send(message_data, hidedialog);
   }
   sendGamma(data, hideDialog, binsize){
+    alert(data);
     var message = '';
     for(var i = 0;i<data.length;i++){
       message += data[i];
@@ -256,7 +258,7 @@ class App extends Component{
     for(var i = 0;i<message.length;i++){
         this.spectrum.current.add(Math.floor(parseFloat(message[i]) / binsize) * binsize);
     }
-    this.spectrum.current.sort();
+    this.spectrum.current.sort(binsize);
   }
   processResponse(response){
     var message = response;
@@ -350,10 +352,18 @@ class App extends Component{
   modifyDetector(detector){
     
   }
-  createSource(n,x,y,z,mat){
+  createSource(n,x,y,z,mat, code){
     if(this.detectors.length > 0) this.navbar.current.showRun(true);
     this.navbar.current.showClearSetup(true);
-
+    if(!code)this.codeeditor.current.updateText(
+      this.codeeditor.current.state.text + 
+      "\\Source{\n" +
+        "\tname: " + '"' + n + '";\n' + 
+        "\tposition[cm]: " + x + ", " + y + ", " + z + ";\n" + 
+        "\tmaterial: " + '"' + mat + '";\n' + 
+      "}\n"
+    );
+    
     let bs = this.state.sourcebuttons;
     let details = <Container>
       <Row>
@@ -364,23 +374,35 @@ class App extends Component{
         <Col>y: {y} cm</Col>
         <Col>z: {z} cm</Col>
       </Row>
-      
       <Row>
       <Col>Material: {mat}</Col>
       </Row>
       </Container>;
-
     let source = this.canvas.current.addSource(x,y,z,mat);
-    source.id = DetectorButton.id;
+    source.id = +DetectorButton.id;
+    Parser.chunks.push({id: source.id, code:  "\\Source{\n" +
+    "\tname: " + '"' + n + '";\n' + 
+    "\tposition[cm]: " + x + ", " + y + ", " + z + ";\n" + 
+    "\tmaterial: " + '"' + mat + '";\n' + 
+  "}\n"});
     source.name = n;
     this.sources.push(source);
-    bs.push(<SourceButton name={n} removebutton={this.removeSource} id={DetectorButton.id} detector={source} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></SourceButton>);
+    bs.push(<SourceButton codeeditor={this.codeeditor} name={n} removebutton={this.removeSource} id={DetectorButton.id} detector={source} details={details} key={++DetectorButton.id} buttons={this.state.sourcebuttons}></SourceButton>);
     this.setState({sourcebuttons: bs});
   }
-  createGun(n, px, py, pz, dx, dy, dz, energy){
+  createGun(n, px, py, pz, dx, dy, dz, energy, code){
     if(this.detectors.length > 0) this.navbar.current.showRun(true);
     this.navbar.current.showClearSetup(true);
 
+    if(!code) this.codeeditor.current.updateText(
+      this.codeeditor.current.state.text + 
+      "\\Gun{\n" +
+        "\tname: " + '"' + n + '";\n' + 
+        "\tposition[cm]: " + px + ", " + py + ", " + pz + ";\n" + 
+        "\tdirection: " + dx + ", " + dy + ", " + dz + ";\n" + 
+        "\tenergy[keV]: " + energy + ';\n' + 
+      "}\n"
+    );
 
     let bs = this.state.gunbuttons;
     let details = <Container>
@@ -406,17 +428,32 @@ class App extends Component{
       </Container>;
 
     let gun = this.canvas.current.addGun(px,py,pz,dx,dy,dz,energy);
-    gun.id = DetectorButton.id;
+    gun.id = +DetectorButton.id;
+    Parser.chunks.push({id: gun.id, code: "\\Gun{\n" +
+"\tname: " + '"' + n + '";\n' + 
+"\tposition[cm]: " + px + ", " + py + ", " + pz + ";\n" + 
+"\tdirection: " + dx + ", " + dy + ", " + dz + ";\n" + 
+"\tenergy[keV]: " + energy + ';\n' + 
+"}\n"});
     gun.name = n;
     this.guns.push(gun);
-    bs.push(<GunButton name={n} removebutton={this.removeGun} id={DetectorButton.id} detector={gun} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></GunButton>);
+    bs.push(<GunButton codeeditor={this.codeeditor} name={n} removebutton={this.removeGun} id={DetectorButton.id} detector={gun} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></GunButton>);
     this.setState({gunbuttons: bs});
   }
-  createDetector(n, px, py, pz, rx, ry, rz, sx, sy, sz, material, type, data, color){
+  createDetector(n, px, py, pz, rx, ry, rz, sx, sy, sz, material, type, data, color, code){
     if(this.sources.length > 0 || this.guns.length > 0) this.navbar.current.showRun(true);
     this.navbar.current.showClearSetup(true);
-
-
+    if(!code)this.codeeditor.current.updateText(
+      this.codeeditor.current.state.text + 
+      "\\Detector{\n" +
+        "\tname: " + '"' + n + '";\n' + 
+        "\tposition[cm]: " + px + ", " + py + ", " + pz + ";\n" + 
+        "\trotation[rad]: " + rx + ", " + ry + ", " + rz + ";\n" +
+        "\tscale[cm]: " + sx + ", " + sy + ", " + sz + ";\n" + 
+        "\tmaterial: " + '"' + material + '";\n' + 
+      "}\n"
+    );
+    
     let bs = this.state.buttons;
     let details = <Container>
       <Row>
@@ -451,11 +488,18 @@ class App extends Component{
       </Row>
       </Container>;
     let paramterize = (detector) => {
-      detector.id = DetectorButton.id;
+      detector.id = +DetectorButton.id;
+      Parser.chunks.push({id: detector.id, code: "\\Detector{\n" +
+    "\tname: " + '"' + n + '";\n' + 
+    "\tposition[cm]: " + px + ", " + py + ", " + pz + ";\n" + 
+    "\trotation[rad]: " + rx + ", " + ry + ", " + rz + ";\n" +
+    "\tscale[cm]: " + sx + ", " + sy + ", " + sz + ";\n" + 
+    "\tmaterial: " + '"' + material + '";\n' + 
+  "}\n"});
       detector.name = n;
       detector.model.color = color;
       this.detectors.push(detector);
-      bs.push(<DetectorButton name={n} removebutton={this.removeDetector} id={DetectorButton.id} detector={detector} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></DetectorButton>);
+      bs.push(<DetectorButton codeeditor={this.codeeditor} name={n} removebutton={this.removeDetector} id={DetectorButton.id} detector={detector} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></DetectorButton>);
       this.setState({buttons: bs});
     }
     let detector = null;
@@ -472,6 +516,8 @@ class App extends Component{
     
   }
   clearSetup(){
+    this.codeeditor.current.updateText(" ");
+    DetectorButton.id = 0;
     this.setState({buttons: [], gunbuttons: [], sourcebuttons: []});
     for(let i = 0;i<this.detectors.length;i++){
       this.canvas.current.removeDetector(this.detectors[i]);
@@ -482,13 +528,23 @@ class App extends Component{
     for(let i = 0;i<this.guns.length;i++){
       this.canvas.current.removeGun(this.guns[i]);
     }
+    this.detectors = [];
+    this.sources = [];
+    this.guns = [];
+    this.state.buttons = [];
+    this.state.gunbuttons = [];
+    this.state.sourcebuttons = [];
     this.clearRun();
+    
   }
   removeSource(source, button){
-    if(this.detectors.length < 1 || (this.sources.length < 0 && this.guns.length < 0)) this.navbar.current.showRun(false);
+    if(this.detectors.length < 1 || (this.sources.length < 1 && this.guns.length < 1)) this.navbar.current.showRun(false);
+
     if(this.sourceslength == 0 || this.guns.length == 0 || this.guns.length == 0) this.navbar.current.showClearSetup(false);
 
     this.canvas.current.removeSource(source);
+    this.codeeditor.current.updateText(Parser.removeChunk(source.id));
+
     for(var i = 0;i<this.state.sourcebuttons.length;i++){
       if(this.state.sourcebuttons[i].key-1 == button.id){
         let bs = this.state.sourcebuttons;
@@ -500,10 +556,13 @@ class App extends Component{
     }
   }
   removeGun(gun, button){
-    if(this.detectors.length < 1 || (this.sources.length < 0 && this.guns.length < 0)) this.navbar.current.showRun(false);
+    if(this.detectors.length < 1 || (this.sources.length < 1 && this.guns.length < 1)) this.navbar.current.showRun(false);
+
     if(this.sourceslength == 0 || this.guns.length == 0 || this.guns.length == 0) this.navbar.current.showClearSetup(false);
 
     this.canvas.current.removeGun(gun);
+    this.codeeditor.current.updateText(Parser.removeChunk(gun.id));
+
     for(var i = 0;i<this.state.gunbuttons.length;i++){
       if(this.state.gunbuttons[i].key-1 == button.id){
         let bs = this.state.gunbuttons;
@@ -515,10 +574,13 @@ class App extends Component{
     }
   }
   removeDetector(detector, button){
-    if(this.detectors.length < 1 || (this.sources.length < 0 && this.guns.length < 0)) this.navbar.current.showRun(false);
+    if(this.detectors.length < 1 || (this.sources.length < 1 && this.guns.length < 1)) this.navbar.current.showRun(false);
     if(this.sourceslength == 0 || this.guns.length == 0 || this.guns.length == 0) this.navbar.current.showClearSetup(false);
-
+    
+    
     this.canvas.current.removeDetector(detector);
+    this.codeeditor.current.updateText(Parser.removeChunk(detector.id));
+
     for(var i = 0;i<this.state.buttons.length;i++){
       if(this.state.buttons[i].key-1 == button.id){
         let bs = this.state.buttons;
@@ -543,9 +605,11 @@ class App extends Component{
     this.canvas.current.drawGrid = !b;
   }
   componentDidMount(){
+    this.createDetector("Cube",0,0,0,0,0,0,1,1,1,"Pb",'cube',null,new Vector3(1,1,1));
     
   }
   render(){
+
 
     const items = this.state.buttons.map(function(item){
       return <div> {item} </div>;
@@ -571,10 +635,11 @@ class App extends Component{
       <Tab.Content>
         <Tab.Pane eventKey="first">
         <Canvas ref={this.canvas} style={{overflow: 'hidden'}}></Canvas>
-    <CodeEditor createGun={this.createGun} createSource={this.createSource} createDetector={this.createDetector} canvas={this.canvas} />
+    <CodeEditor ref={this.codeeditor} createGun={this.createGun} clearSetup={this.clearSetup} createSource={this.createSource} createDetector={this.createDetector} canvas={this.canvas} />
 
         <NavigationBar run={this.runSim} 
         ref={this.navbar}
+        canvas={this.canvas}
         className="navbar"
         runspectroscopy={this.runSpectroscopy}
         createbutton={this.createDetector} 

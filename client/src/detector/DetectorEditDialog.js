@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Vector3} from '../utils/maths';
 import MaterialList from './MaterialList';
 import ConfirmDialog from '../graphics/ConfirmDialog';
+import Parser from '../utils/Parser';
 
 class DetectorEditDialog extends Component{
   constructor(props){
@@ -229,7 +230,23 @@ class DetectorEditDialog extends Component{
             this.props.detector.material = this.state.detmat;
 
             this.props.detector.model.color = this.state.color;
+            
+            let text = "";
+            for(let i = 0;i<Parser.chunks.length;i++){
+              if(this.props.buttonid == Parser.chunks[i].id){
+                Parser.chunks[i].code = "\\Detector{\n" +
+                "\tname: " + '"' + this.props.name + '";\n' + 
+                "\tposition[cm]: " + this.state.detposx + ", " + this.state.detposy + ", " + this.state.detposz + ";\n" + 
+                "\trotation[rad]: " + this.state.detrotx + ", " + this.state.detroty + ", " + this.state.detrotz + ";\n" +
+                "\tscale[cm]: " + this.state.detscalex + ", " + this.state.detscaley + ", " + this.state.detscalez + ";\n" + 
+                "\tmaterial: " + '"' +  this.state.detmat + '";\n' + 
+              "}\n";
+              }
+              text += Parser.chunks[i].code;
+            }
 
+            this.props.codeeditor.current.updateText(text);
+            
             this.props.updatedetails(
 <>
               <Row>

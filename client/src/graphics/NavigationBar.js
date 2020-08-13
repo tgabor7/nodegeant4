@@ -39,6 +39,7 @@ class NavigationBar extends Component{
 
     const handleDelete = ()=>{
       this.props.clearSetup();
+      this.showClearSetup(false);
     }
 
     return <>
@@ -66,7 +67,7 @@ class NavigationBar extends Component{
 
         <Button variant="primary" style={{"display" : this.state.showclearsetup, backgroundColor: 'red'}} onClick={()=>{
                   this.confirmDialog.current.showDialog();
-                  this.showClearSetup(false);
+                  
                   }}>Clear setup</Button>
 
         <Nav className="mr-auto">
@@ -116,6 +117,7 @@ class NavigationBar extends Component{
 
 <Form.Check type="checkbox" label="Show Grid" checked={this.state.showGrid} onChange={(evt)=>{
           this.setState({showGrid: evt.target.checked});
+          if(this.state.showGrid) this.props.canvas.current.updateHint(" ");
           this.props.setshowgrid(this.state.showGrid);}}
           style={{margin: '12px'}}/>
         

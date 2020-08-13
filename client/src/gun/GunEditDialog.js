@@ -4,6 +4,7 @@ import '../App.css';
 import {Button, Nav, Navbar, FormControl, Container,Col,Row, Form, Dropdown, OverlayTrigger, Tooltip, Modal} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ConfirmDialog from '../graphics/ConfirmDialog';
+import Parser from '../utils/Parser';
 
 class GunEditDialog extends Component{
   constructor(props){
@@ -156,6 +157,21 @@ class GunEditDialog extends Component{
             
             
             this.props.detector.energy = this.state.energy;
+
+            let text = "";
+            for(let i = 0;i<Parser.chunks.length;i++){
+              if(this.props.buttonid == Parser.chunks[i].id){
+                Parser.chunks[i].code = "\\Gun{\n" +
+                "\tname: " + '"' + this.props.name + '";\n' + 
+                "\tposition[cm]: " + this.state.detposx + ", " + this.state.detposy + ", " + this.state.detposz + ";\n" + 
+                "\tdirection: " + this.state.detdirx + ", " + this.state.detdiry + ", " + this.state.detdirz + ";\n" + 
+                "\tenergy[keV]: " +  this.state.energy + ';\n' + 
+                "}\n";
+              }
+              text += Parser.chunks[i].code;
+            }
+
+            this.props.codeeditor.current.updateText(text);
 
             this.props.updatedetails(
             <Container>

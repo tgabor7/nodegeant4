@@ -1,5 +1,12 @@
 ﻿# nodegeant4
 
+2020/08/13
+- Fixed spectrum bins
+- Synchronized detector list and language
+- Fixed gun direction
+- Added measurement units to language
+- Fixed minor bugs
+
 2020/08/06
 - Added database for storing geometries
 - Added custom language

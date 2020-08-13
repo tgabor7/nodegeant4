@@ -4,6 +4,7 @@ import '../App.css';
 import {Button, Nav, Navbar, FormControl, Container,Col,Row, Form, Dropdown, OverlayTrigger, Tooltip, Modal} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ConfirmDialog from '../graphics/ConfirmDialog';
+import Parser from '../utils/Parser';
 
 class SourceEditDialog extends Component{
   constructor(props){
@@ -120,6 +121,20 @@ class SourceEditDialog extends Component{
             
             
             this.props.detector.material = this.state.material;
+
+            let text = "";
+            for(let i = 0;i<Parser.chunks.length;i++){
+              if(this.props.buttonid == Parser.chunks[i].id){
+                Parser.chunks[i].code = "\\Source{\n" +
+                "\tname: " + '"' + this.props.name + '";\n' + 
+                "\tposition[cm]: " + this.state.detposx + ", " + this.state.detposy + ", " + this.state.detposz + ";\n" + 
+                "\tmaterial: " + '"' + this.state.material + '";\n' + 
+              "}\n";
+              }
+              text += Parser.chunks[i].code;
+            }
+
+            this.props.codeeditor.current.updateText(text);
 
             this.props.updatedetails(<Container>
                 <Row>

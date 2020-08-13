@@ -18,9 +18,9 @@ import STLParser from '../utils/STLParser';
 class Canvas extends Component{
   constructor(props){
     super(props);
-    this.state = ({hint: "1 cm"});
+    this.state = ({hint: " "});
     this.canvas = createRef();
-    this.camera = new Camera(0, 0, 100, new Vector3(0, 0, 0), new Vector3(0, 0, 0));
+    this.camera = new Camera(10, 10, 100, new Vector3(0, 0, 0), new Vector3(0, 0, 0));
     this.oldX = 0;
     this.oldY = 0;
     this.move = false;
@@ -201,7 +201,9 @@ class Canvas extends Component{
     return model;
   }
   addGun(x,y,z,dx,dy,dz,energy){
-    let gun = new ParticleGun(new Model(GunMesh.vertices, GunMesh.normals, this.gl),new Vector3(x,y,z),new Vector3(dx,dy,dz),energy);
+    let gun_model = new Model(GunMesh.vertices, GunMesh.normals, this.gl);
+    gun_model.drawLines = false;
+    let gun = new ParticleGun(gun_model,new Vector3(x,y,z),new Vector3(dx,dy,dz),energy);
     gun.model.position = new Vector3(x,y,z);
     
     this.renderer.addGun(gun);

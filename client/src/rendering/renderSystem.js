@@ -133,9 +133,18 @@ class RenderSystem {
             this.gl.enableVertexAttribArray(0);
             this.gl.enableVertexAttribArray(1);
             this.gl.bindVertexArray(this.guns[i].model.vao);
-            let mat = Maths.createTransformationMatrix(this.guns[i].model.position.x, this.guns[i].model.position.y, this.guns[i].model.position.z,
-                this.guns[i].model.rotation.x, this.guns[i].model.rotation.y, this.guns[i].model.rotation.z, camera.d*0.01,camera.d*0.01,camera.d*0.01);
+            
+            
+            let rotation = new Vector3(0,0,0);
+            rotation.x = Math.atan2(-this.guns[i].direction.y, this.guns[i].direction.z);
+            rotation.z = Math.atan2(this.guns[i].direction.x, -this.guns[i].direction.y);
+            rotation.y = Math.atan2(this.guns[i].direction.x, this.guns[i].direction.z);
 
+            let mat = Maths.createTransformationMatrix(this.guns[i].model.position.x, this.guns[i].model.position.y, this.guns[i].model.position.z,
+                rotation.x, rotation.y, rotation.z, camera.d*0.01,camera.d*0.01,camera.d*0.01);
+
+
+            
             this.shader.setUniform3f("color", this.guns[i].model.color.x, this.guns[i].model.color.y, this.guns[i].model.color.z);
             this.shader.setUniform1i("sampler", 0);
             this.shader.setUniform4fv("view", Maths.createViewMatrix(camera));
