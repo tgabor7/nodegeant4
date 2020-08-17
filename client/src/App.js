@@ -128,7 +128,8 @@ class App extends Component{
 
         message_data.push(this.guns[i].energy);
     }
-    message_data.push(detector); //selected detector id
+    alert(this.detectors[detector].id);
+    message_data.push(this.detectors[detector].id); //selected detector id
     message_data.push(number_of_particles); //number of particles
     message_data.push('end');
     this.sendGamma(message_data, hideDialog, binsize);
@@ -606,7 +607,7 @@ class App extends Component{
     this.canvas.current.drawGrid = !b;
   }
   componentDidMount(){
-    this.createDetector("Cube",0,0,0,0,0,0,1,1,1,"Pb",'cube',null,new Vector3(1,1,1));
+    this.createDetector("Cube",0,0,0,0,0,0,10,10,10,"Pb",'cube',null,new Vector3(1,1,1));
     
   }
   render(){

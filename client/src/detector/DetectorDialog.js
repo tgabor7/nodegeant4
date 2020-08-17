@@ -6,12 +6,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import DetectorButton from './DetectorButton';
 import MaterialList from './MaterialList';
 import { Vector3 } from '../utils/maths';
+import MaterialTable from '../graphics/MaterialTable';
 
 class DetectorDialog extends Component{
   constructor(props){
     super(props);
     this.showDialog = this.showDialog.bind(this);
     this.hideDialog = this.hideDialog.bind(this);
+    this.updateMaterial = this.updateMaterial.bind(this);
+    this.table = React.createRef();
     this.state = {show: false, 
       detname: 'Detector',
       detposx: 0,
@@ -33,6 +36,9 @@ class DetectorDialog extends Component{
       options: []
      }
      
+  }
+  updateMaterial(m){
+    this.setState({detmat: m});
   }
   componentDidMount(){
    
@@ -76,8 +82,18 @@ class DetectorDialog extends Component{
   
   static id = 0;
   render(){
-    
+    let mat = [];
+    if(MaterialList.get(this.state.detmat) == this.state.detmat){
+      mat = <th className="tablebutton" onClick={()=>{this.table.current.showDialog();}}><h1 style={{"font-size":'10px',"font-weight":"bold"}}>{this.state.detmat}</h1></th>;
+    }else{
+      mat = <th className="tablebutton" onClick={()=>{this.table.current.showDialog();}}>
+      <p style={{"font-size":'12px'}}>{MaterialList.get(this.state.detmat).z}</p>
+      <h1 style={{"font-size":'15px',"font-weight":"bold"}}>{MaterialList.get(this.state.detmat).symbol}</h1>
+      <p style={{"font-size":'12px'}}>{MaterialList.get(this.state.detmat).name}</p></th>;
+    }
     return <>
+        <MaterialTable ref={this.table} updatematerial={this.updateMaterial}></MaterialTable>
+
         <Modal show={this.state.show} onHide={()=>{this.hideDialog();}}>
         <Modal.Header closeButton>
           <Modal.Title>Create detector</Modal.Title>
@@ -233,20 +249,15 @@ class DetectorDialog extends Component{
           <br/>
           <hr />
           <Row>
+            
           <Form.Group controlId="exampleForm.SelectCustom">
+            
             <Form.Label>Material</Form.Label>
-            <Form.Control
-            className="material"
-            required
-            value='0'
-            type="text"
-            maxLength="10"
-            value = {this.state.detmat}
-            onChange={(event)=>{this.setState({detmat: event.target.value});}} />
+           {mat}
+            <Button onClick={()=>{this.table.current.showDialog();}}>Choose</Button>
+            
           </Form.Group>
-          <span style={{'display': this.state.showError, 'color' : 'red', 'font-weight': 'bold'}}>
-            No such material
-          </span>
+          
           </Row>
           <hr />
           <Row>
@@ -266,10 +277,7 @@ class DetectorDialog extends Component{
             Cancel
           </Button>
           <Button variant="primary" onClick={()=>{
-          if(!MaterialList.check(this.state.detmat)){
-            this.setState({showError: 'block'})
-            return;
-          } 
+          
           this.hideDialog();
           this.props.createbutton(this.state.detname, this.state.detposx, this.state.detposy,this.state.detposz,
             this.state.detrotx, this.state.detroty, this.state.detrotz, this.state.detscalex, this.state.detscaley, this.state.detscalez, this.state.detmat, this.state.geomrty,

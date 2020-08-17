@@ -5,15 +5,17 @@ import {Button, Nav, Navbar, FormControl, Container,Col,Row, Form, Dropdown, Ove
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ConfirmDialog from '../graphics/ConfirmDialog';
 import Parser from '../utils/Parser';
+import SourceTable from '../graphics/SourceTable';
 
 class SourceEditDialog extends Component{
   constructor(props){
     super(props);
     this.showDialog = this.showDialog.bind(this);
     this.hideDialog = this.hideDialog.bind(this);
+    this.updateMaterial = this.updateMaterial.bind(this);
+
     this.confirmDialog = React.createRef();
-
-
+    this.table = React.createRef();
     this.state = {show: false, 
       detname: this.props.detector.name,
       detposx: this.props.detector.model.position.x,
@@ -21,6 +23,9 @@ class SourceEditDialog extends Component{
       detposz: this.props.detector.model.position.z,
       material: this.props.detector.material}
     
+  }
+  updateMaterial(m){
+    this.setState({material: m});
   }
   componentDidMount(){
     
@@ -39,6 +44,8 @@ class SourceEditDialog extends Component{
       this.props.removebutton(this.props.detector, this.props.button);
     }
     return <>
+        <SourceTable ref={this.table} updatematerial={this.updateMaterial}></SourceTable>
+
     <ConfirmDialog ref={this.confirmDialog} title="Confirm" content="Are you sure you want to delete this component?" fun={handleDelete}></ConfirmDialog>
 
         <Modal show={this.state.show} onHide={()=>{this.hideDialog();}}>
@@ -58,6 +65,7 @@ class SourceEditDialog extends Component{
             onChange={(event)=>{this.setState({detname: event.target.value});}} />
             </Col>
             </Row>
+            <hr />
             <Row>Position</Row>
           <Row>
             x<Col><Form.Control
@@ -91,17 +99,13 @@ class SourceEditDialog extends Component{
           <br/>
           
           <br/>
-          <Row>
-            Material <Col><Form.Control
-            className="numspinner"
-            required
-            value='0'
-            type="text"
-            maxLength="10"
-            value = {this.state.material}
-            onChange={(event)=>{this.setState({material: event.target.value});}} />
-            </Col>
-          </Row>
+          <hr />
+          <Form.Group>
+          Material 
+                <th className="tablebutton" onClick={e=>{this.table.current.showDialog();}}>
+                <h1 style={{"font-size":'15px',"font-weight":"bold","vertical-align":"middle"}}>{this.state.material}</h1>
+                </th>
+          </Form.Group>
           </Container>
         </Form>
         </Modal.Body>

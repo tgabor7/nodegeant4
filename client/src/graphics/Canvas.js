@@ -20,7 +20,7 @@ class Canvas extends Component{
     super(props);
     this.state = ({hint: " "});
     this.canvas = createRef();
-    this.camera = new Camera(10, 10, 100, new Vector3(0, 0, 0), new Vector3(0, 0, 0));
+    this.camera = new Camera(45, -45, 100, new Vector3(0, 0, 0), new Vector3(0, 0, 0));
     this.oldX = 0;
     this.oldY = 0;
     this.move = false;

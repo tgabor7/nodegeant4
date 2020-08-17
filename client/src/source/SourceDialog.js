@@ -4,12 +4,15 @@ import '../App.css';
 import {Button, Nav, Navbar, FormControl, Container,Col,Row, Form, Dropdown, OverlayTrigger, Tooltip, Modal} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SourceButton from '../source/SourceButton';
+import SourceTable from '../graphics/SourceTable';
 
 class SourceDialog extends Component{
   constructor(props){
     super(props);
     this.showDialog = this.showDialog.bind(this);
     this.hideDialog = this.hideDialog.bind(this);
+    this.updateMaterial = this.updateMaterial.bind(this);
+    this.table = React.createRef();
     this.state = {show: false, 
       detname: 'Detector',
       detposx: 0,
@@ -20,6 +23,9 @@ class SourceDialog extends Component{
   }
   componentDidMount(){
     
+  }
+  updateMaterial(m){
+    this.setState({material: m});
   }
   showDialog(){
       this.setState({show: true});
@@ -34,6 +40,8 @@ class SourceDialog extends Component{
   render(){
     
     return <>
+        <SourceTable ref={this.table} updatematerial={this.updateMaterial}></SourceTable>
+
         <Modal show={this.state.show} onHide={()=>{this.hideDialog();}}>
         <Modal.Header closeButton>
           <Modal.Title>Create Particle Source</Modal.Title>
@@ -51,6 +59,7 @@ class SourceDialog extends Component{
             onChange={(event)=>{this.setState({detname: event.target.value});}} />
             </Col>
             </Row>
+            <hr />
             <Row>Position</Row>
           <Row>
             x<Col><Form.Control
@@ -83,18 +92,15 @@ class SourceDialog extends Component{
           </Row>
           
           <br/>
-          
-          <Row>
-            Material <Col><Form.Control
-            className="numspinner"
-            required
-            value='0'
-            type="text"
-            maxLength="10"
-            value = {this.state.material}
-            onChange={(event)=>{this.setState({material: event.target.value});}} />
-            </Col>
-          </Row>
+          <br/>
+          <hr />
+          <Form.Group>
+          Material 
+                <th className="tablebutton" onClick={e=>{this.table.current.showDialog();}}>
+                <h1 style={{"font-size":'15px',"font-weight":"bold","vertical-align":"middle"}}>{this.state.material}</h1>
+                </th>
+          </Form.Group>
+           
           </Container>
         </Form>
         </Modal.Body>

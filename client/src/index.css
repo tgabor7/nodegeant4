@@ -57,4 +57,19 @@ input[type=number]::-webkit-outer-spin-button {
   border-radius: 0;
   border: black;
 }
-
+.tablebutton{
+  background-color: white;
+  text-align: center;
+  vertical-align: middle;
+  width: 80px;
+  height: 80px;
+  border: solid black 1px;
+}
+.tablebutton:hover{
+  background-color: gray;
+  text-align: center;
+  border: solid black 1px;
+  color: black;
+  box-shadow: black;
+  cursor: pointer;
+}

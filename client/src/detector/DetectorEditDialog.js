@@ -7,6 +7,7 @@ import {Vector3} from '../utils/maths';
 import MaterialList from './MaterialList';
 import ConfirmDialog from '../graphics/ConfirmDialog';
 import Parser from '../utils/Parser';
+import MaterialTable from '../graphics/MaterialTable';
 
 class DetectorEditDialog extends Component{
   constructor(props){
@@ -14,6 +15,8 @@ class DetectorEditDialog extends Component{
     this.showDialog = this.showDialog.bind(this);
     this.hideDialog = this.hideDialog.bind(this);
     this.confirmDialog = React.createRef();
+    this.table = React.createRef();
+    this.updateMaterial = this.updateMaterial.bind(this);
 
     this.state = {show: false, 
       detname: this.props.detector.name,
@@ -31,6 +34,9 @@ class DetectorEditDialog extends Component{
       color: this.props.detector.model.color }
     this.materials = [];
     
+  }
+  updateMaterial(m){
+    this.setState({detmat: m});
   }
   hexToRgb(hex) {
     hex = hex.substr(1);
@@ -58,7 +64,17 @@ class DetectorEditDialog extends Component{
       this.hideDialog();
       this.props.removebutton(this.props.detector, this.props.button);
     }
+    let mat = [];
+    if(MaterialList.get(this.state.detmat) == this.state.detmat){
+      mat = <th className="tablebutton" onClick={()=>{this.table.current.showDialog();}}><h1 style={{"font-size":'10px',"font-weight":"bold"}}>{this.state.detmat}</h1></th>;
+    }else{
+      mat = <th className="tablebutton" onClick={()=>{this.table.current.showDialog();}}>
+      <p style={{"font-size":'12px'}}>{MaterialList.get(this.state.detmat).z}</p>
+      <h1 style={{"font-size":'15px',"font-weight":"bold"}}>{MaterialList.get(this.state.detmat).symbol}</h1>
+      <p style={{"font-size":'12px'}}>{MaterialList.get(this.state.detmat).name}</p></th>;
+    }
     return <>
+    <MaterialTable ref={this.table} updatematerial={this.updateMaterial}></MaterialTable>
     <ConfirmDialog ref={this.confirmDialog} title="Confirm" content="Are you sure you want to delete this component?" fun={handleDelete}></ConfirmDialog>
         <Modal show={this.state.show} onHide={()=>{this.hideDialog();}}>
         <Modal.Header closeButton>
@@ -177,18 +193,10 @@ class DetectorEditDialog extends Component{
           <Row>
           <Form.Group controlId="exampleForm.SelectCustom">
           <Form.Label>Material</Form.Label>
-            <Form.Control
-            className="material"
-            required
-            value='0'
-            type="text"
-            maxLength="10"
-            value = {this.state.detmat}
-            onChange={(event)=>{this.setState({detmat: event.target.value});}} />
+           {mat}
+            <Button onClick={()=>{this.table.current.showDialog();}}>Choose</Button>
           </Form.Group>
-          <span style={{'display': this.state.showError, 'color' : 'red', 'font-weight': 'bold'}}>
-            No such material
-          </span>
+          
           </Row>
           <hr />
           <Row>
@@ -209,10 +217,7 @@ class DetectorEditDialog extends Component{
             Delete
           </Button>
           <Button variant="primary" onClick={()=>{
-            if(!MaterialList.check(this.state.detmat)){
-              this.setState({showError: 'block'})
-              return;
-            } 
+            
             this.hideDialog();
 
             this.props.detector.model.position.x = this.state.detposx;

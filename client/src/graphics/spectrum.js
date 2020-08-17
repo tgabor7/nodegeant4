@@ -83,6 +83,7 @@ class Spectrum extends Component {
     sort(bin){
         var list = [];
         let max = this.energies[this.energies.length - 1];
+        alert(max);
         for(let i = 0;i<max;i+=bin){
             this.add(i);
         }
@@ -98,7 +99,7 @@ class Spectrum extends Component {
             this.numberofenergies[k] = list[k].no;
         }
         for(var i = 0;i<this.energies.length;i++){
-            this.addData("[" + this.energies[i] + "-" + (this.energies[i]+ +bin).toString() + "]",this.numberofenergies[i]-1);
+            this.addData("[" + this.energies[i] + "-" + (parseInt(this.energies[i]) + parseInt(bin)) + "]",this.numberofenergies[i]-1);
         }
         
         
@@ -123,20 +124,6 @@ class Spectrum extends Component {
         
             // Configuration options go here
             options: { responsive: true,
-                scales: {
-                    yAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'counts'
-                        }
-                    }],
-                    xAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'bins'
-                        }
-                    }]
-                },
                 plugins: {
                     zoom: {
                         // Container for pan options

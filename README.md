@@ -1,5 +1,9 @@
 ﻿# nodegeant4
 
+2020/08/17
+- Fixed minor bugs
+- Added material table
+
 2020/08/13
 - Fixed spectrum bins
 - Synchronized detector list and language
