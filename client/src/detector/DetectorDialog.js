@@ -56,24 +56,15 @@ class DetectorDialog extends Component{
   addMaterial(ann, mat){
     this.materials.push(<option value={ann}>{mat}</option>)
   }
-  async showDialog(){
+  async showDialog(volumes){
       this.setState({show: true});
       let detectorName = 'Detector' + this.props.buttons.length;
       this.setState({detname: detectorName});
 
-      let response = await fetch("http://localhost/database", {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify({name: ""})
+      
+      let opt = volumes.map(e=>{
+      return <option value={e.name}>{e.name}</option>;
       });
-      let json = await response.json();
-      let opt = [];
-      for(var i = 0;i<json.length;i++){
-        opt.push(<option value={json[i].name}>{json[i].name}</option>);
-      }
       this.setState({options: opt});
     }
   hideDialog(){

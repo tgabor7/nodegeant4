@@ -7,6 +7,7 @@ class Detector {
         this.name = "";
         this.id = 0;
         this.hits = [];
+        this.geometry = 'cube';
         this.numberOfHits = [];
     }
     contains(f) {

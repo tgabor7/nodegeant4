@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <title>Help</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
@@ -13,9 +14,12 @@
 </head>
 
 <body>
-    <h1>
-        Declearing detectors, sources and particle guns
-    </h1>
+    <div>
+        <h1>
+            Declearing detectors, sources and particle guns
+        </h1>
+    </div>
+    
     <hr />
     <div class="container">
         <div class="d-flex flex-row">
@@ -25,13 +29,14 @@
             <article>
                 <div class="col-lg-6">
 
-                    <textarea id="textarea">
+                    <textarea id="textarea" style="width: 400px; height: 200px">
 /Detector {
-    position: 0,0,0;
-    rotation: 0,0,0;
-    scale:  1,1,1;
+    position[cm]: 0,0,0;
+    rotation[deg]: 0,0,0;
+    scale[cm]:  1,1,1;
     name:   Detector;
-    material: Pb;
+    material: "Pb";
+    geometry: "cube";
 }
                         </textarea>
                 </div>
@@ -44,7 +49,11 @@
                         seperated by commas</li>
                     <li> rotation: Rotation of the detector in euler angles, the angles should be in radians</li>
                     <li> scale: Scale of the detector on the x/y/z axes</li>
-                    <li> material: Material of the detector.Must be enclosed in quotation marks.</li>
+                    <li> material: Material of the detector. Must be enclosed in quotation marks.</li>
+                    <li> geometry: Shape of the detector. This parameter has to be the name of a volume in the volumes list. Default volume is "cube".</li>
+                    <li> Additionally the user can set the unit of measurement for each parameter. Valid units are: mm, cm, dm, m, deg, rad. Default measurement
+                        for position and scale are "cm" and "rad" for rotation. 
+                    </li>
                 </ul>
             </article>
         </div>
@@ -58,22 +67,24 @@
 
                     <textarea id="textarea">
 /Source {
-	postion: 0,0,0;
-	material: Co60;
+	postion[cm]: 0,0,0;
+	material: "Co60";
 	name: Cobalt;
 }
                         </textarea>
                 </div>
                 <p>
-                    The user can describe a detector using the following syntax.
+                    The user can describe a general particle source using the following syntax.
                 </p>
                 <ul>
-                    <li> name: The name of the detector </li>
-                    <li> position: Position of the detector given in x/y/z coordinates. The coordinates should be
-                        seperated by commas</li>
-                    <li> rotation: Rotation of the detector in euler angles, the angles should be in radians</li>
-                    <li> scale: Scale of the detector on the x/y/z axes</li>
-                    <li> material: Material of the detector</li>
+                    <li> name: The name of the source. </li>
+                    <li> position: Position of the source given in x/y/z coordinates. The coordinates should be
+                        seperated by commas.</li>
+                    <li> material: Material of the source.</li>
+                    <li> Additionally the user can set the unit of measurement for the position parameter. Valid units are: mm, cm, dm, m.
+                        Default unit of measurement is "cm".
+                    </li>
+
                 </ul>
             </article>
         </div>
@@ -87,23 +98,25 @@
 
                     <textarea id="textarea">
 /Gun {
-    position: 10,0,0;
+    position[cm]: 10,0,0;
     direction: -1,0,0;
     name: Gun;
-    energy: 1000;
+    energy[keV]: 1000;
 }
                         </textarea>
                 </div>
                 <p>
-                    The user can describe a detector using the following syntax.
+                    The user can describe a particle gun using the following syntax.
                 </p>
                 <ul>
-                    <li> name: The name of the detector </li>
-                    <li> position: Position of the detector given in x/y/z coordinates. The coordinates should be
-                        seperated by commas</li>
-                    <li> rotation: Rotation of the detector in euler angles, the angles should be in radians</li>
-                    <li> scale: Scale of the detector on the x/y/z axes</li>
-                    <li> material: Material of the detector</li>
+                    <li> name: The name of the particle gun. </li>
+                    <li> position: Position of the gun given in x/y/z coordinates. The coordinates should be
+                        seperated by commas.</li>
+                    <li> direction: The direction in which the gun is aimed at.</li>
+                    <li> energy: Energy of the emmited gamma particle.</li>
+                    <li>Additionally the user can set the unit of measurement for the position and energy parameters. Valid units are: mm, cm, dm, m for
+                        position and eV, keV, MeV, GeV for energy.
+                        Default unit of measurement is "cm" for position and "keV" for energy.</li>
                 </ul>
             </article>
         </div>

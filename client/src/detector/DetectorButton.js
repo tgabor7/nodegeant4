@@ -12,7 +12,8 @@ class DetectorButton extends Component{
     super(props);
     this.editdialog = React.createRef();
     this.updateDetails = this.updateDetails.bind(this);
-    this.state = {details: this.props.details};
+    this.setName = this.setName.bind(this);
+    this.state = {details: this.props.details,name: this.props.name};
     this.id = this.props.id;
   }
   static id = 0;
@@ -22,9 +23,12 @@ class DetectorButton extends Component{
   updateDetails(d){
     this.setState({details: d});
   }
+  setName(n){
+    this.setState({name: n});
+  }
   render(){
     return <div>
-    <DetectorEditDialog name={this.props.name} buttonid={this.id} codeeditor={this.props.codeeditor} updatedetails={this.updateDetails} button={this} removebutton={this.props.removebutton}
+    <DetectorEditDialog setname={this.setName} canvas={this.props.canvas} name={this.props.name} buttonid={this.id} codeeditor={this.props.codeeditor} updatedetails={this.updateDetails} button={this} removebutton={this.props.removebutton}
       detector={this.props.detector} ref={this.editdialog} buttons={this.props.buttons} details={this.props.details}></DetectorEditDialog>
     <Card className='button'>
       <Card.Header>
@@ -35,9 +39,9 @@ class DetectorButton extends Component{
           }
           RenderSystem.active_id = this.props.detector.id;
           }} variant="link" eventKey={this.id}>
-          {this.props.name}
+          {this.state.name}
         </Accordion.Toggle>
-        <Button onClick={()=>{this.editdialog.current.showDialog();}} className="editButton">EDIT</Button>
+        <Button onClick={()=>{this.editdialog.current.showDialog(this.props.volumes);}} className="editButton">EDIT</Button>
       </Card.Header>
       <Accordion.Collapse eventKey={this.id}>
         <Card.Body>{this.state.details}</Card.Body>

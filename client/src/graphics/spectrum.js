@@ -133,7 +133,7 @@ class Spectrum extends Component {
         
                             // Panning directions. Remove the appropriate direction to disable 
                             // Eg. 'y' would only allow panning in the y direction
-                            mode: 'xy'
+                            mode: 'x'
                         },
         
                         // Container for zoom options

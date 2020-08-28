@@ -151,7 +151,7 @@ class Canvas extends Component{
     
     return detector;
   }
-  async addDetector(x,y,z,rx,ry,rz,sx,sy,sz, mat, type){
+  async addDetector(x,y,z,rx,ry,rz,sx,sy,sz, mat, type, volumes){
     let detector = null;
     let parameterize = ()=>{
       detector.model.drawLines = false;
@@ -172,20 +172,9 @@ class Canvas extends Component{
   
       this.renderer.addDetector(detector);
     };
-    
-    let response = await fetch("http://localhost/database", {
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          method: 'POST',
-          body: JSON.stringify({name: type})
-        });
-        let json = await response.json();
-        let data = new String(json[0].data.data);
-        var str='';
-        for (let i = 0;i < json[0].data.data.length;i++){
-          str+=String.fromCharCode(json[0].data.data[i]);
+      let str = "";
+        for(let i = 0;i<volumes.length;i++){
+          if(type==volumes[i].name) str = volumes[i].data;
         }
         let modeldata = STLParser.parseData(str);
         detector = new Detector(new Model(modeldata.vertices, modeldata.normals, this.gl));

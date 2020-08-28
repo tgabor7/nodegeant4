@@ -1,5 +1,12 @@
 ﻿# nodegeant4
 
+2020/08/28
+- Fixed scroll
+- Detector geometry and name can be edited
+- Adjusted spectrum diagram
+- Added "volumes"
+
+
 2020/08/17
 - Fixed minor bugs
 - Added material table

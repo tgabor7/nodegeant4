@@ -20,10 +20,10 @@ code {
 }
 .accordion {
   position: absolute;
-  width: 40%;
+  width: 16%;
   left: 0;
   z-index: 1;
-  top: 25px;
+  top: 50px;
 }
 .buttonbackground{
   position: fixed;
@@ -72,4 +72,8 @@ input[type=number]::-webkit-outer-spin-button {
   color: black;
   box-shadow: black;
   cursor: pointer;
+}
+::-webkit-scrollbar {
+  width: 0px;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
 }

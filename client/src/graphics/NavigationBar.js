@@ -9,6 +9,7 @@ import SourceDialog from '../source/SourceDialog';
 import RunDialog from './RunDialog';
 import SpectrumDialog from './SpectrumDialog';
 import ConfirmDialog from './ConfirmDialog';
+import VolumeDialog from '../volume/VolumeDialog';
 
 class NavigationBar extends Component{
   constructor(props){
@@ -19,6 +20,7 @@ class NavigationBar extends Component{
     this.rundialog = React.createRef();
     this.spectrumdialog = React.createRef();
     this.confirmDialog = React.createRef();
+    this.volumedialog = React.createRef();
     this.showRun = this.showRun.bind(this);
     this.state = {showTracks: true, showParticles: true, showAxes: true, showGrid: false, showrun: "none", showclearsetup: "none", showclearparticles: "none"};
   }
@@ -51,7 +53,8 @@ class NavigationBar extends Component{
    <SourceDialog ref={this.sourcedialog} createbutton={this.props.createsourcebutton} buttons={this.props.buttons}></SourceDialog>
    <RunDialog ref={this.rundialog} runsim={this.props.run}></RunDialog>
    <SpectrumDialog ref={this.spectrumdialog} runsim={this.props.runspectroscopy} detectors={this.props.detectors}></SpectrumDialog>
-   
+   <VolumeDialog ref={this.volumedialog} createbutton={this.props.createvolume}></VolumeDialog>
+
    <Navbar bg="light" variant="light" style={{position: 'fixed', 'z-index': '4'}}>
         <Navbar.Brand>Geant4</Navbar.Brand>
         <Button style={{"display": this.state.showrun}} variant="primary" onClick={()=>{
@@ -77,9 +80,9 @@ class NavigationBar extends Component{
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Detector Geometry</Tooltip>}>
+        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Particle Detector</Tooltip>}>
         <span className="d-inline-block">
-          <Dropdown.Item className='detectoroption' onClick={()=>{this.dialog.current.showDialog();}}>Detector</Dropdown.Item>
+          <Dropdown.Item className='detectoroption' onClick={()=>{this.dialog.current.showDialog(this.props.volumes);}}>Detector</Dropdown.Item>
           </span>
         </OverlayTrigger>
         <br/>
@@ -92,6 +95,13 @@ class NavigationBar extends Component{
         <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Directed Particle Gun</Tooltip>}>
         <span className="d-inline-block">
           <Dropdown.Item className='detectoroption' onClick={()=>{this.gundialog.current.showDialog();}}>Gun</Dropdown.Item>
+          </span>
+        </OverlayTrigger>
+        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Detector volume</Tooltip>}>
+        <span className="d-inline-block">
+          <Dropdown.Item className='detectoroption' onClick={()=>{
+            this.volumedialog.current.showDialog();
+            }}>Volume</Dropdown.Item>
           </span>
         </OverlayTrigger>
         </Dropdown.Menu>
@@ -125,10 +135,7 @@ class NavigationBar extends Component{
         </Dropdown.Menu>
       </Dropdown>
         </Nav>
-        <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-primary">Search</Button>
-        </Form>
+        
       </Navbar>
     </> 
   }

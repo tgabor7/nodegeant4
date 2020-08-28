@@ -8,6 +8,10 @@ import Parser from '../utils/Parser';
 class CodeEditor extends Component{
     constructor(props){
         super(props);
+
+        this.fileinput = React.createRef();
+
+        this.updateText = this.updateText.bind(this);
         this.state = {text: '', width: '20%'}
         this.editor = React.createRef();
     }
@@ -23,11 +27,24 @@ class CodeEditor extends Component{
 onClick={()=>{
    this.setState({text: "Write your code here"});
 }}>New</Button>
-<Button style={{'border' : '0','position':'relative','background-color': 'gray', 'z-index':'3', 'bottom':'0', 'border-radius' : '0', 'border':'solid 1px white'}}>Open</Button>
+<input ref={this.fileinput} type="file" style={{"display":"none"}} onChange={(e)=>{
+    var r = new FileReader();
+
+    r.onload = ()=>{
+      var data = r.result;
+      this.updateText(data);
+    }
+    r.readAsBinaryString(e.target.files[0]);
+
+}}></input>
+<Button style={{'border' : '0','position':'relative','background-color': 'gray', 'z-index':'3', 'bottom':'0', 'border-radius' : '0', 'border':'solid 1px white'}}
+onClick={()=>{
+    this.fileinput.current.click();
+}}>Open</Button>
             <Button 
             onClick={()=>{
                 let tmp = this.state.text;
-                Parser.parse(this.state.text,this.props.canvas.current, this.props.clearSetup,this.props.createDetector, this.props.createSource, this.props.createGun);
+                Parser.parse(tmp,this.props.canvas.current, this.props.clearSetup,this.props.createDetector, this.props.createSource, this.props.createGun);
                 this.setState({text: tmp});
                 }}
             style={{'border' : '0','position':'relative','background-color': 'gray', 'z-index':'3', 'bottom':'0', 'border-radius' : '0', 'border':'solid 1px white'}}>Run script</Button>
@@ -48,10 +65,10 @@ onClick={()=>{
 
         <Button 
         onClick={()=>{
-            if(this.state.width == '30%'){
+            if(this.state.width == '20%'){
                 this.setState({width: '0'});
             }else{
-                this.setState({width: '30%'});
+                this.setState({width: '20%'});
             }
         }}
         style={{'right': this.state.width, 'position' : 'fixed', 'top': '50%', 'z-index': '3', 'height':'50px', 'background-color': 'gray', 'border' : '0'}}>

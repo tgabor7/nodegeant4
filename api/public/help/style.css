@@ -1,8 +1,9 @@
 textarea {
-    width: 200px;
+    width: 400px;
     height: 150px;
     position: relative;
     left: 0;
+    background-color: lightgray;
 }
 h2 {
     margin: 10px;
@@ -13,7 +14,17 @@ h2 {
 article {
     border: 1px black solid;
     padding: 5px;
+    background-color: white;
+}
+body {
+    background-color: lightblue;
 }
 h1 {
     text-align: center;
+    background-color: white;
+    margin-top: 0;
+    font-size: 22px;
+    margin-bottom: 0;
+    padding: 13px;
+    color: black;   
 }
