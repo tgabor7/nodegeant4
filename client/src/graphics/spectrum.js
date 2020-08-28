@@ -124,6 +124,25 @@ class Spectrum extends Component {
         
             // Configuration options go here
             options: { responsive: true,
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'number of hits'
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            userCallback: function(label, index, labels) {
+                                return label;
+                            }
+                         },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'energies (keV)'
+                        }
+                    }]
+                },
                 plugins: {
                     zoom: {
                         // Container for pan options
