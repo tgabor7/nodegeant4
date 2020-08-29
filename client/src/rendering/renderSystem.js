@@ -153,7 +153,6 @@ class RenderSystem {
             this.guns[i].model.draw();
             this.gl.disableVertexAttribArray(0);
             this.gl.disableVertexAttribArray(1);
-            console.log(this.guns[i].model.position.x);
         }
         this.gl.disable(this.gl.DEPTH_TEST);
         for (var i = 0; i < this.sources.length; i++) {
@@ -194,7 +193,6 @@ class RenderSystem {
                 this.gl.disableVertexAttribArray(0);
                 this.gl.disableVertexAttribArray(1);
             }
-            console.log(this.drawAxes);
         }
         
         if(!this.drawTracks){

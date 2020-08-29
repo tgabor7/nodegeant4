@@ -57,8 +57,6 @@ class Spectrum extends Component {
             <canvas ref={this.canvas}></canvas>
         </div>
     }
-    energies = [];
-    numberofenergies = [];
     add(e){
         if(isNaN(e)) return;
         if(this.contains(e)){
@@ -80,11 +78,18 @@ class Spectrum extends Component {
         }
         return -1;
     }
+    maximum(l){
+        if(l.length == 0) return 0;
+        let m = l[0];
+        for(let i = 0;i<l.length;i++){
+            if(l[i] > m) m = l[i];
+        }
+        return m;
+    }
     sort(bin){
         var list = [];
-        let max = this.energies[this.energies.length - 1];
-        alert(max);
-        for(let i = 0;i<max;i+=bin){
+        let max = this.maximum(this.energies);
+        for(let i = 0;i<max;i+=parseInt(bin)){
             this.add(i);
         }
         for (var j = 0; j < this.energies.length; j++)
@@ -99,12 +104,16 @@ class Spectrum extends Component {
             this.numberofenergies[k] = list[k].no;
         }
         for(var i = 0;i<this.energies.length;i++){
-            this.addData("[" + this.energies[i] + "-" + (parseInt(this.energies[i]) + parseInt(bin)) + "]",this.numberofenergies[i]-1);
+            this.addData(parseInt(this.energies[i]),this.numberofenergies[i]-1);
         }
-        
+        this.chart.update();
         
     }
     clear(){
+        this.energies = [];
+        this.numberofenergies = [];
+        this.chart.data.labels = [];
+        this.chart.data.datasets = [];
         this.chart.destroy();
         let ctx = this.canvas.current.getContext("2d");
         this.chart = new Chart(ctx, {
@@ -134,7 +143,8 @@ class Spectrum extends Component {
                     xAxes: [{
                         ticks: {
                             userCallback: function(label, index, labels) {
-                                return label;
+                                if(index % 10 == 0) return label;
+                                return "";
                             }
                          },
                         scaleLabel: {
@@ -168,8 +178,7 @@ class Spectrum extends Component {
                 }
              }
         });
-        this.energies = [];
-        this.numberofenergies = [];
+       
         
     }
     static save(){
@@ -180,7 +189,6 @@ class Spectrum extends Component {
         this.chart.data.datasets.forEach((dataset) => {
             dataset.data.push(data);
         });
-        this.chart.update();
     }
 }
 export default Spectrum;

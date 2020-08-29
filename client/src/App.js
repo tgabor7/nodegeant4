@@ -227,7 +227,7 @@ class App extends Component {
       message += data[i];
       message += ',';
     }
-    fetch('http://localhost:80/gammaAPI', {
+    fetch('http://radsim.inf.elte.hu:9000/gammaAPI', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -248,7 +248,7 @@ class App extends Component {
       message += data[i];
       message += ',';
     }
-    fetch('http://localhost:80/gammaAPI', {
+    fetch('http://radsim.inf.elte.hu:9000/gammaAPI', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -645,7 +645,7 @@ class App extends Component {
 
     Parser.init(this.volumeselect.current, this.popup.current.showDialog);
 
-    let response = await fetch("http://localhost/database", {
+    let response = await fetch("http://radsim.inf.elte.hu:9000/database", {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -709,6 +709,7 @@ class App extends Component {
         createbutton={this.createDetector} 
         creategunbutton={this.createGun} 
         createsourcebutton={this.createSource} 
+        createvolume={this.createVolume}
         setshowtracks={this.setShowTracks}
         setshowparticles={this.setShowParticles}
         setshowaxes={this.setShowAxes}
