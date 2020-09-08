@@ -40,20 +40,7 @@ class SourceButton extends Component{
         <Button onClick={()=>{this.editdialog.current.showDialog();}} className="editButton">EDIT</Button>
       </Card.Header>
       <Accordion.Collapse eventKey={this.id}>
-        <Card.Body><Container>
-      <Row>
-      <Col>Position: </Col>
-      </Row>
-      <Row>
-        <Col>x: {this.props.detector.model.position.x} cm</Col>
-        <Col>y: {this.props.detector.model.position.y} cm</Col>
-        <Col>z: {this.props.detector.model.position.z} cm</Col>
-      </Row>
-      <Row>
-      <Col>Material: {this.props.detector.material}</Col>
-      </Row>
-      </Container>
-      </Card.Body>
+      <Card.Body>{this.state.details}</Card.Body>
       </Accordion.Collapse>
     </Card>
   </div>

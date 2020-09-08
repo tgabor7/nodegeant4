@@ -26,6 +26,9 @@ class DetectorDialog extends Component{
       detscalex: 10,
       detscaley: 10,
       detscalez: 10,
+      posme: 1,
+      rotme: 1,
+      scaleme: 1,
       detmat: 'Pb',
       geomrty: 'cube',
       display: 'none',
@@ -144,6 +147,12 @@ class DetectorDialog extends Component{
           />
             <hr />
             <Row>Position</Row>
+            <Form.Control as="select" style={{"width":"100px","margin-left":"-15px","margin-bottom":"10px"}} value={this.state.scaleme} onChange={(e)=>{this.setState({scaleme: e.target.value});}}>
+                <option value=".1">mm</option>
+                <option value="1">cm</option>
+                <option value="10">dm</option>
+                <option value="100">m</option>
+                </Form.Control>
           <Row>
             x<Col><Form.Control
             className="numspinner"
@@ -176,6 +185,10 @@ class DetectorDialog extends Component{
           <br/>
           <hr />
           <Row>Rotation</Row>
+          <Form.Control as="select" style={{"width":"100px","margin-left":"-15px","margin-bottom":"10px"}} value={this.state.rotme} onChange={(e)=>{this.setState({rotme: e.target.value});}}>
+                <option value="0.0174">deg</option>
+                <option value="1">rad</option>
+                </Form.Control>
           <Row>
             x<Col><Form.Control
             className="numspinner"
@@ -208,6 +221,12 @@ class DetectorDialog extends Component{
           <br/>
           <hr />
           <Row>Scale</Row>
+          <Form.Control as="select" style={{"width":"100px","margin-left":"-15px","margin-bottom":"10px"}} value={this.state.posme} onChange={(e)=>{this.setState({posme: e.target.value});}}>
+                <option value=".1">mm</option>
+                <option value="1">cm</option>
+                <option value="10">dm</option>
+                <option value="100">m</option>
+                </Form.Control>
           <Row>
             x<Col><Form.Control
             className="numspinner"
@@ -272,7 +291,7 @@ class DetectorDialog extends Component{
           this.hideDialog();
           this.props.createbutton(this.state.detname, this.state.detposx, this.state.detposy,this.state.detposz,
             this.state.detrotx, this.state.detroty, this.state.detrotz, this.state.detscalex, this.state.detscaley, this.state.detscalez, this.state.detmat, this.state.geomrty,
-            this.state.modeldata,this.state.color);}}>
+            this.state.modeldata,this.state.color, false, this.state.posme, this.state.rotme, this.state.scaleme);}}>
             Create
           </Button>
         </Modal.Footer>

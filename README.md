@@ -1,5 +1,11 @@
 ﻿# nodegeant4
 
+2020/09/08
+- Added units of measurement
+- Adjusted spectrum diagram
+- Volume data and name can be modified
+- Fixed some bugs
+
 2020/08/28
 - Fixed scroll
 - Detector geometry and name can be edited

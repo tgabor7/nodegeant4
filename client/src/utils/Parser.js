@@ -50,10 +50,7 @@ class Parser {
                 break;
             }
         }
-        alert(id);
         for (let i = 0; i < Parser.chunks.length; i++) {
-            alert(Parser.chunks[i].code);
-            alert(Parser.chunks[i].id);
             result += Parser.chunks[i].code;
         }
         return result;
@@ -167,6 +164,12 @@ class Parser {
                             case ('name'):
                                 if (!this.checkString(params)) alert("name incorrect format");
                                 detector.name = params.trim().substring(1, params.trim().length - 1);
+                                if(detector.name.length > 15){
+                                    this.confirmDialog("Name too long","The name you've given to detector " + detector.name + " was too long, maximum length is 15 characters.",()=>{
+
+                                    });
+                                    return;
+                                }
                                 break;
 
                             default:
@@ -190,6 +193,12 @@ class Parser {
                             case ('name'):
                                 if (!this.checkString(params)) alert("name incorrect format");
                                 source.name = params.trim().substring(1, params.trim().length - 1);
+                                if(source.name.length > 15){
+                                    this.confirmDialog("Name too long","The name you've given to source " + source.name + " was too long, maximum length is 15 characters.",()=>{
+
+                                    });
+                                    return;
+                                }
                                 break;
                             default:
                                 alert("No such property: " + attribute);
@@ -205,12 +214,17 @@ class Parser {
                                 if (!this.checkFloat(params, gun.direction, measurement)) alert("direction incorrec format");
                                 break;
                             case ('energy'):
-                                alert(measurement);
                                 gun.energy = parseFloat(params) * measurement;
                                 break;
                             case ('name'):
                                 if (!this.checkString(params)) alert("name incorrect format");
                                 gun.name = params.trim().substring(1, params.trim().length - 1);
+                                if(gun.name.length > 15){
+                                    this.confirmDialog("Name too long","The name you've given to gun " + gun.name + " was too long, maximum length is 15 characters.",()=>{
+
+                                    });
+                                    return;
+                                }
                                 break;
                             default:
                                 alert("No such property: " + attribute);

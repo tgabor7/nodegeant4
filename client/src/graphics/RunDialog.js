@@ -53,7 +53,7 @@ class RunDialog extends Component {
         <Row style={{margin: '5px'}}>
             Number of particles: 
         </Row>
-    <Form>
+    <Form onSubmit={e=>{e.preventDefault();}}>
         <Form.Control required
         type="number"
         value={this.state.numberOfParticles}

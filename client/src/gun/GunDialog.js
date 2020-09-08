@@ -11,13 +11,15 @@ class GunDialog extends Component{
     this.showDialog = this.showDialog.bind(this);
     this.hideDialog = this.hideDialog.bind(this);
     this.state = {show: false, 
-      detname: 'Detector',
+      detname: 'Gun',
       detposx: 0,
       detposy: 0,
       detposz: 0,
-      detdirx: 0,
+      detdirx: 1,
       detdiry: 0,
       detdirz: 0,
+      posu: 1,
+      energyu: 1000,
       energy: 100 }
     
   }
@@ -53,6 +55,12 @@ class GunDialog extends Component{
             </Col>
             </Row>
             <Row>Position</Row>
+            <Form.Control as="select" style={{"width":"100px","margin-left":"-15px","margin-bottom":"10px"}} value={this.state.posu} onChange={(e)=>{this.setState({posu: e.target.value});}}>
+                <option value=".1">mm</option>
+                <option value="1">cm</option>
+                <option value="10">dm</option>
+                <option value="100">m</option>
+                </Form.Control>
           <Row>
             x<Col><Form.Control
             className="numspinner"
@@ -124,7 +132,13 @@ class GunDialog extends Component{
             maxLength="10"
             value = {this.state.energy}
             onChange={(event)=>{this.setState({energy: event.target.value});}} />
-            </Col> keV
+            </Col>
+            <Form.Control as="select" style={{"width":"100px","margin-left":"-15px","margin-bottom":"10px"}} value={this.state.energyu} onChange={(e)=>{this.setState({energyu: e.target.value});}}>
+                <option value="1">eV</option>
+                <option value="1000">keV</option>
+                <option value="1000000">MeV</option>
+                <option value="1000000000">GeV</option>
+                </Form.Control>
           </Row>
           </Container>
         </Form>
@@ -134,7 +148,7 @@ class GunDialog extends Component{
             Cancel
           </Button>
           <Button variant="primary" onClick={()=>{this.hideDialog();this.props.createbutton(this.state.detname, this.state.detposx, this.state.detposy, this.state.detposz,
-            this.state.detdirx, this.state.detdiry, this.state.detdirz, this.state.energy);}}>
+            this.state.detdirx, this.state.detdiry, this.state.detdirz, this.state.energy, false, this.state.posu, this.state.energyu);}}>
             Create
           </Button>
         </Modal.Footer>

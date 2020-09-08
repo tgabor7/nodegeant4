@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ConfirmDialog from '../graphics/ConfirmDialog';
 import Parser from '../utils/Parser';
 import SourceTable from '../graphics/SourceTable';
+import UnitConverter from "../utils/UnitConverter";
 
 class SourceEditDialog extends Component{
   constructor(props){
@@ -21,6 +22,7 @@ class SourceEditDialog extends Component{
       detposx: this.props.detector.model.position.x,
       detposy: this.props.detector.model.position.y,
       detposz: this.props.detector.model.position.z,
+      posu: 1,
       material: this.props.detector.material}
     
   }
@@ -50,7 +52,7 @@ class SourceEditDialog extends Component{
 
         <Modal show={this.state.show} onHide={()=>{this.hideDialog();}}>
         <Modal.Header closeButton>
-          <Modal.Title>Modify Detector</Modal.Title>
+          <Modal.Title>Modify Source</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <Form>
@@ -67,6 +69,12 @@ class SourceEditDialog extends Component{
             </Row>
             <hr />
             <Row>Position</Row>
+            <Form.Control as="select" style={{"width":"100px","margin-left":"-15px","margin-bottom":"10px"}} value={this.state.posu} onChange={(e)=>{this.setState({posu: e.target.value});}}>
+                <option value=".1">mm</option>
+                <option value="1">cm</option>
+                <option value="10">dm</option>
+                <option value="100">m</option>
+                </Form.Control>
           <Row>
             x<Col><Form.Control
             className="numspinner"
@@ -119,9 +127,9 @@ class SourceEditDialog extends Component{
 
             this.props.detector.name = this.state.name;
 
-            this.props.detector.model.position.x = this.state.detposx;
-            this.props.detector.model.position.y = this.state.detposy;
-            this.props.detector.model.position.z = this.state.detposz;
+            this.props.detector.model.position.x = this.state.detposx * this.state.posu;
+            this.props.detector.model.position.y = this.state.detposy * this.state.posu;
+            this.props.detector.model.position.z = this.state.detposz * this.state.posu;
             
             
             this.props.detector.material = this.state.material;
@@ -131,7 +139,7 @@ class SourceEditDialog extends Component{
               if(this.props.buttonid == Parser.chunks[i].id){
                 Parser.chunks[i].code = "\\Source{\n" +
                 "\tname: " + '"' + this.props.name + '";\n' + 
-                "\tposition[cm]: " + this.state.detposx + ", " + this.state.detposy + ", " + this.state.detposz + ";\n" + 
+                "\tposition[" + UnitConverter.convertLength(this.state.posu) + "]: " + this.state.detposx + ", " + this.state.detposy + ", " + this.state.detposz + ";\n" + 
                 "\tmaterial: " + '"' + this.state.material + '";\n' + 
               "}\n";
               }
@@ -145,9 +153,9 @@ class SourceEditDialog extends Component{
                 <Col>Position: </Col>
                 </Row>
                 <Row>
-                  <Col>x: {this.state.detposx} cm</Col>
-                  <Col>y: {this.state.detposy} cm</Col>
-                  <Col>z: {this.state.detposz} cm</Col>
+            <Col>x: {this.state.detposx} {UnitConverter.convertLength(this.state.posu)}</Col>
+            <Col>y: {this.state.detposy} {UnitConverter.convertLength(this.state.posu)}</Col>
+            <Col>z: {this.state.detposz} {UnitConverter.convertLength(this.state.posu)}</Col>
                 </Row>
                 <Row>
                 <Col>Material: {this.state.material}</Col>

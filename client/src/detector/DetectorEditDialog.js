@@ -10,6 +10,7 @@ import Parser from '../utils/Parser';
 import MaterialTable from '../graphics/MaterialTable';
 import STLParser from '../utils/STLParser';
 import Model from '../rendering/model';
+import UnitConverter from '../utils/UnitConverter';
 
 class DetectorEditDialog extends Component {
   constructor(props) {
@@ -34,6 +35,9 @@ class DetectorEditDialog extends Component {
       detscalez: this.props.detector.model.scale.z,
       detmat: this.props.detector.material,
       geomrty: this.props.detector.geometry,
+      posme: 1,
+      rotme: 1,
+      scaleme: 1,
       showError: 'none',
       modeldata: [],
       display: 'none',
@@ -72,7 +76,24 @@ class DetectorEditDialog extends Component {
   hideDialog() {
     this.setState({ show: false });
   }
-
+  convert(v){
+    switch(v){
+      case(".1"):
+        return "mm";
+      case("1"):
+        return "cm";
+      case("10"):
+        return "dm";
+      case("100"):
+        return "m";
+      default:
+        return "cm";
+    }
+  }
+  convertrot(v){
+    if(v==1) return "rad";
+    else return "deg";
+  }
   static id = 0;
   render() {
     const handleDelete = () => {
@@ -151,6 +172,13 @@ class DetectorEditDialog extends Component {
               />
               <hr />
               <Row>Position</Row>
+              <Form.Control as="select" style={{"width":"100px","margin-left":"-15px","margin-bottom":"10px"}} value={this.state.posme} onChange={(e)=>{this.setState({posme: e.target.value});}}>
+                <option value=".1">mm</option>
+                <option value="1">cm</option>
+                <option value="10">dm</option>
+                <option value="100">m</option>
+                </Form.Control>
+              
               <Row>
                 x<Col><Form.Control
                   className="numspinner"
@@ -183,6 +211,10 @@ class DetectorEditDialog extends Component {
               <br />
               <hr />
               <Row>Rotation</Row>
+              <Form.Control as="select" style={{"width":"100px","margin-left":"-15px","margin-bottom":"10px"}} value={this.state.rotme} onChange={(e)=>{this.setState({rotme: e.target.value});}}>
+                <option value="0.0174">deg</option>
+                <option value="1">rad</option>
+                </Form.Control>
               <Row>
                 x<Col><Form.Control
                   className="numspinner"
@@ -193,6 +225,7 @@ class DetectorEditDialog extends Component {
                   value={this.state.detrotx}
                   onChange={(event) => { this.setState({ detrotx: event.target.value }); }} />
                 </Col>
+                
             y<Col><Form.Control
                   className="numspinner"
                   required
@@ -215,6 +248,12 @@ class DetectorEditDialog extends Component {
               <br />
               <hr />
               <Row>Scale</Row>
+              <Form.Control as="select" style={{"width":"100px","margin-left":"-15px","margin-bottom":"10px"}} value={this.state.scaleme} onChange={(e)=>{this.setState({scaleme: e.target.value});}}>
+                <option value=".1">mm</option>
+                <option value="1">cm</option>
+                <option value="10">dm</option>
+                <option value="100">m</option>
+                </Form.Control>
               <Row>
                 x<Col><Form.Control
                   className="numspinner"
@@ -301,17 +340,17 @@ class DetectorEditDialog extends Component {
 
             this.props.detector.name = this.state.detname;
 
-            this.props.detector.model.position.x = this.state.detposx;
-            this.props.detector.model.position.y = this.state.detposy;
-            this.props.detector.model.position.z = this.state.detposz;
+            this.props.detector.model.position.x = this.state.detposx * this.state.posme;
+            this.props.detector.model.position.y = this.state.detposy * this.state.posme;
+            this.props.detector.model.position.z = this.state.detposz * this.state.posme;
 
-            this.props.detector.model.rotation.x = this.state.detrotx;
-            this.props.detector.model.rotation.y = this.state.detroty;
-            this.props.detector.model.rotation.z = this.state.detrotz;
+            this.props.detector.model.rotation.x = this.state.detrotx * this.state.rotme;
+            this.props.detector.model.rotation.y = this.state.detroty * this.state.rotme;
+            this.props.detector.model.rotation.z = this.state.detrotz * this.state.rotme;
 
-            this.props.detector.model.scale.x = this.state.detscalex;
-            this.props.detector.model.scale.y = this.state.detscaley;
-            this.props.detector.model.scale.z = this.state.detscalez;
+            this.props.detector.model.scale.x = this.state.detscalex * this.state.scaleme;
+            this.props.detector.model.scale.y = this.state.detscaley * this.state.scaleme;
+            this.props.detector.model.scale.z = this.state.detscalez * this.state.scaleme;
 
             this.props.detector.material = this.state.detmat;
 
@@ -320,13 +359,19 @@ class DetectorEditDialog extends Component {
             this.props.setname(this.state.detname);
 
             let text = "";
+
+            let pm = UnitConverter.convertLength(this.state.posme);
+            
+            let rm = UnitConverter.convertAngle(this.state.rotme);
+            let sm = UnitConverter.convertLength(this.state.scaleme);
+            
             for (let i = 0; i < Parser.chunks.length; i++) {
               if (this.props.buttonid == Parser.chunks[i].id) {
                 Parser.chunks[i].code = "\\Detector{\n" +
                   "\tname: " + '"' + this.state.detname + '";\n' +
-                  "\tposition[cm]: " + this.state.detposx + ", " + this.state.detposy + ", " + this.state.detposz + ";\n" +
-                  "\trotation[rad]: " + this.state.detrotx + ", " + this.state.detroty + ", " + this.state.detrotz + ";\n" +
-                  "\tscale[cm]: " + this.state.detscalex + ", " + this.state.detscaley + ", " + this.state.detscalez + ";\n" +
+                  "\tposition[" + pm + "]: " + this.state.detposx + ", " + this.state.detposy + ", " + this.state.detposz + ";\n" +
+                  "\trotation[" + rm + "]: " + this.state.detrotx + ", " + this.state.detroty + ", " + this.state.detrotz + ";\n" +
+                  "\tscale[" + sm + "]: " + this.state.detscalex + ", " + this.state.detscaley + ", " + this.state.detscalez + ";\n" +
                   "\tmaterial: " + '"' + this.state.detmat + '";\n' +
                   "\tgeometry: " + '"' + this.state.geomrty + '";\n' + 
                   "}\n";
@@ -342,25 +387,25 @@ class DetectorEditDialog extends Component {
                   <Col>Position: </Col>
                 </Row>
                 <Row>
-                  <Col>x: {this.state.detposx} cm</Col>
-                  <Col>y: {this.state.detposy} cm</Col>
-                  <Col>z: {this.state.detposz} cm</Col>
+            <Col>x: {this.state.detposx} {pm}</Col>
+            <Col>y: {this.state.detposy} {pm}</Col>
+                  <Col>z: {this.state.detposz} {pm}</Col>
                 </Row>
                 <Row>
                   <Col>Rotation: </Col>
                 </Row>
                 <Row>
-                  <Col>x: {this.state.detrotx} deg</Col>
-                  <Col>y: {this.state.detroty} deg</Col>
-                  <Col>z: {this.state.detrotz} deg</Col>
+                  <Col>x: {this.state.detrotx} {rm}</Col>
+                  <Col>y: {this.state.detroty} {rm}</Col>
+                  <Col>z: {this.state.detrotz} {rm}</Col>
                 </Row>
                 <Row>
                   <Col>Scale: </Col>
                 </Row>
                 <Row>
-                  <Col>x: {this.state.detscalex}</Col>
-                  <Col>y: {this.state.detscaley}</Col>
-                  <Col>z: {this.state.detscalez}</Col>
+                  <Col>x: {this.state.detscalex} {sm}</Col>
+                  <Col>y: {this.state.detscaley} {sm}</Col>
+                  <Col>z: {this.state.detscalez} {sm}</Col>
                 </Row>
                 <Row>
                   <Col>Material: </Col>

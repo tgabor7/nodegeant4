@@ -78,7 +78,7 @@ class Spectrum extends Component {
         }
         return -1;
     }
-    maximum(l){
+    maximum(l, bin){
         if(l.length == 0) return 0;
         let m = l[0];
         for(let i = 0;i<l.length;i++){
@@ -89,7 +89,8 @@ class Spectrum extends Component {
     sort(bin){
         var list = [];
         let max = this.maximum(this.energies);
-        for(let i = 0;i<max;i+=parseInt(bin)){
+        alert(bin);
+        for(let i = 0;i<max+2*bin;i+=parseInt(bin)){
             this.add(i);
         }
         for (var j = 0; j < this.energies.length; j++)
@@ -109,7 +110,7 @@ class Spectrum extends Component {
         this.chart.update();
         
     }
-    clear(){
+    clear(bin){
         this.energies = [];
         this.numberofenergies = [];
         this.chart.data.labels = [];
@@ -130,25 +131,30 @@ class Spectrum extends Component {
                     data: []
                 }]
             },
-        
+            
             // Configuration options go here
             options: { responsive: true,
+                
                 scales: {
                     yAxes: [{
                         scaleLabel: {
                             display: true,
+                            fontSize: 18,
+                            fontColor: '#000',
                             labelString: 'number of hits'
                         }
                     }],
                     xAxes: [{
-                        ticks: {
-                            userCallback: function(label, index, labels) {
-                                if(index % 10 == 0) return label;
-                                return "";
-                            }
-                         },
+                        // ticks: {
+                        //     userCallback: function(label, index, labels) {
+                        //         if(parseInt(label) % bin == 0) return label;
+                        //         return "";
+                        //     }
+                        //  },
                         scaleLabel: {
                             display: true,
+                            fontSize: 18,
+                            fontColor: '#000',
                             labelString: 'energies (keV)'
                         }
                     }]
@@ -172,7 +178,7 @@ class Spectrum extends Component {
         
                             // Zooming directions. Remove the appropriate direction to disable 
                             // Eg. 'y' would only allow zooming in the y direction
-                            mode: 'xy',
+                            mode: 'x',
                         }
                     }
                 }

@@ -4,7 +4,7 @@ import {Button, Nav, Navbar, FormControl, Container,Col,Row, Form, Dropdown, Ove
 class SpectrumDialog extends Component {
     constructor(props){
         super(props);
-        this.state = {numberofparticles: 1000, detector: 0,show: false, loading: false, now: 60, binsize: 1}
+        this.state = {numberofparticles: 1000, detector: 0,show: false, loading: false, now: 60, binsize: 10}
         this.hideDialog = this.hideDialog.bind(this);
         this.showDialog = this.showDialog.bind(this);
         this.setLoading = this.setLoading.bind(this);

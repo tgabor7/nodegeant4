@@ -22,6 +22,7 @@ import VolumeDialog from './volume/VolumeDialog';
 import PopupDialog from './graphics/PopupDialog';
 import VolumeSelectDialog from './volume/VolumeSelectDialog';
 import {Element} from 'react-scroll';
+import UnitConverter from './utils/UnitConverter';
 
 class App extends Component {
   constructor(props) {
@@ -267,7 +268,7 @@ class App extends Component {
     let message = response;
 
     message = message.split(" ");
-    this.spectrum.current.clear();
+    this.spectrum.current.clear(binsize);
     for (var i = 0; i < message.length; i++) {
       this.spectrum.current.add(Math.floor(parseFloat(message[i]) / binsize) * binsize);
     }
@@ -365,22 +366,23 @@ class App extends Component {
   modifyDetector(detector) {
 
   }
-  createVolume(name, data) {
+  createVolume(name, data, label) {
     let modeldata = STLParser.parseData(data);
     let bs = this.state.volumebuttons;
     VolumeList.addVolume({name: name, data: data});
-    this.volumes.push({name: name, data: data});
-    bs.push(<VolumeButton name={name} modeldata={modeldata}></VolumeButton>);
+    let vol = {name: name, data: data};
+    this.volumes.push(vol);
+    bs.push(<VolumeButton name={name} volume={vol} modeldata={data} filelabel={label}></VolumeButton>);
     this.setState({volumebuttons: bs});
   }
-  createSource(n, x, y, z, mat, code) {
+  createSource(n, x, y, z, mat, code, posu) {
     if (this.detectors.length > 0) this.navbar.current.showRun(true);
     this.navbar.current.showClearSetup(true);
     if (!code) this.codeeditor.current.updateText(
       this.codeeditor.current.state.text +
       "\\Source{\n" +
       "\tname: " + '"' + n + '";\n' +
-      "\tposition[cm]: " + x + ", " + y + ", " + z + ";\n" +
+      "\tposition["+ UnitConverter.convertLength(posu) + "]: " + x + ", " + y + ", " + z + ";\n" +
       "\tmaterial: " + '"' + mat + '";\n' +
       "}\n"
     );
@@ -391,9 +393,9 @@ class App extends Component {
         <Col>Position: </Col>
       </Row>
       <Row>
-        <Col>x: {x} cm</Col>
-        <Col>y: {y} cm</Col>
-        <Col>z: {z} cm</Col>
+        <Col>x: {x} {UnitConverter.convertLength(posu)}</Col>
+        <Col>y: {y} {UnitConverter.convertLength(posu)}</Col>
+        <Col>z: {z} {UnitConverter.convertLength(posu)}</Col>
       </Row>
       <Row>
         <Col>Material: {mat}</Col>
@@ -404,7 +406,7 @@ class App extends Component {
     Parser.chunks.push({
       id: source.id, code: "\\Source{\n" +
         "\tname: " + '"' + n + '";\n' +
-        "\tposition[cm]: " + x + ", " + y + ", " + z + ";\n" +
+        "\tposition[" + UnitConverter.convertLength(posu) + "]: " + x + ", " + y + ", " + z + ";\n" +
         "\tmaterial: " + '"' + mat + '";\n' +
         "}\n"
     });
@@ -413,7 +415,7 @@ class App extends Component {
     bs.push(<SourceButton codeeditor={this.codeeditor} name={n} removebutton={this.removeSource} id={DetectorButton.id} detector={source} details={details} key={++DetectorButton.id} buttons={this.state.sourcebuttons}></SourceButton>);
     this.setState({ sourcebuttons: bs });
   }
-  createGun(n, px, py, pz, dx, dy, dz, energy, code) {
+  createGun(n, px, py, pz, dx, dy, dz, energy, code, posu, energyu) {
     if (this.detectors.length > 0) this.navbar.current.showRun(true);
     this.navbar.current.showClearSetup(true);
 
@@ -421,9 +423,9 @@ class App extends Component {
       this.codeeditor.current.state.text +
       "\\Gun{\n" +
       "\tname: " + '"' + n + '";\n' +
-      "\tposition[cm]: " + px + ", " + py + ", " + pz + ";\n" +
+      "\tposition[" + UnitConverter.convertLength(posu) + "]: " + px + ", " + py + ", " + pz + ";\n" +
       "\tdirection: " + dx + ", " + dy + ", " + dz + ";\n" +
-      "\tenergy[keV]: " + energy + ';\n' +
+      "\tenergy[" + UnitConverter.convertEnergy(energyu) + "]: " + energy + ';\n' +
       "}\n"
     );
 
@@ -465,16 +467,16 @@ class App extends Component {
     bs.push(<GunButton codeeditor={this.codeeditor} name={n} removebutton={this.removeGun} id={DetectorButton.id} detector={gun} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></GunButton>);
     this.setState({ gunbuttons: bs });
   }
-  createDetector(n, px, py, pz, rx, ry, rz, sx, sy, sz, material, type, data, color, code) {
+  createDetector(n, px, py, pz, rx, ry, rz, sx, sy, sz, material, type, data, color, code, posu, rotu, scaleu) {
     if (this.sources.length > 0 || this.guns.length > 0) this.navbar.current.showRun(true);
     this.navbar.current.showClearSetup(true);
     if (!code) this.codeeditor.current.updateText(
       this.codeeditor.current.state.text +
       "\\Detector{\n" +
       "\tname: " + '"' + n + '";\n' +
-      "\tposition[cm]: " + px + ", " + py + ", " + pz + ";\n" +
-      "\trotation[rad]: " + rx + ", " + ry + ", " + rz + ";\n" +
-      "\tscale[cm]: " + sx + ", " + sy + ", " + sz + ";\n" +
+      "\tposition[" + UnitConverter.convertLength(posu) + "]: " + px + ", " + py + ", " + pz + ";\n" +
+      "\trotation[" + UnitConverter.convertAngle(rotu) + "]: " + rx + ", " + ry + ", " + rz + ";\n" +
+      "\tscale[" + UnitConverter.convertLength(scaleu) + "]: " + sx + ", " + sy + ", " + sz + ";\n" +
       "\tmaterial: " + '"' + material + '";\n' +
       "\tgeometry: " + '"' + type + '";\n' +
 
@@ -487,25 +489,25 @@ class App extends Component {
         <Col>Position: </Col>
       </Row>
       <Row>
-        <Col>x: {px} cm</Col>
-        <Col>y: {py} cm</Col>
-        <Col>z: {pz} cm</Col>
+        <Col>x: {px} {UnitConverter.convertLength(posu)}</Col>
+        <Col>y: {py} {UnitConverter.convertLength(posu)}</Col>
+        <Col>z: {pz} {UnitConverter.convertLength(posu)}</Col>
       </Row>
       <Row>
         <Col>Rotation: </Col>
       </Row>
       <Row>
-        <Col>x: {rx} deg</Col>
-        <Col>y: {ry} deg</Col>
-        <Col>z: {rz} deg</Col>
+        <Col>x: {rx} {UnitConverter.convertAngle(rotu)}</Col>
+        <Col>y: {ry} {UnitConverter.convertAngle(rotu)}</Col>
+        <Col>z: {rz} {UnitConverter.convertAngle(rotu)}</Col>
       </Row>
       <Row>
         <Col>Scale: </Col>
       </Row>
       <Row>
-        <Col>x: {sx}</Col>
-        <Col>y: {sy}</Col>
-        <Col>z: {sz}</Col>
+        <Col>x: {sx} {UnitConverter.convertLength(scaleu)}</Col>
+        <Col>y: {sy} {UnitConverter.convertLength(scaleu)}</Col>
+        <Col>z: {sz} {UnitConverter.convertLength(scaleu)}</Col>
       </Row>
       <Row>
         <Col>Material: </Col>
@@ -573,7 +575,8 @@ class App extends Component {
   removeSource(source, button) {
     if (this.detectors.length < 1 || (this.sources.length < 1 && this.guns.length < 1)) this.navbar.current.showRun(false);
 
-    if (this.sourceslength == 0 || this.guns.length == 0 || this.guns.length == 0) this.navbar.current.showClearSetup(false);
+    if (this.sources.length == 0 && this.guns.length == 0 && this.detectors.length == 0) this.navbar.current.showClearSetup(false);
+
 
     this.canvas.current.removeSource(source);
     this.codeeditor.current.updateText(Parser.removeChunk(source.id));
@@ -591,7 +594,8 @@ class App extends Component {
   removeGun(gun, button) {
     if (this.detectors.length < 1 || (this.sources.length < 1 && this.guns.length < 1)) this.navbar.current.showRun(false);
 
-    if (this.sourceslength == 0 || this.guns.length == 0 || this.guns.length == 0) this.navbar.current.showClearSetup(false);
+    if (this.sources.length == 0 && this.guns.length == 0 && this.detectors.length == 0) this.navbar.current.showClearSetup(false);
+
 
     this.canvas.current.removeGun(gun);
     this.codeeditor.current.updateText(Parser.removeChunk(gun.id));
@@ -608,7 +612,7 @@ class App extends Component {
   }
   removeDetector(detector, button) {
     if (this.detectors.length < 1 || (this.sources.length < 1 && this.guns.length < 1)) this.navbar.current.showRun(false);
-    if (this.sourceslength == 0 || this.guns.length == 0 || this.guns.length == 0) this.navbar.current.showClearSetup(false);
+    if (this.sources.length == 0 && this.guns.length == 0 && this.detectors.length == 0) this.navbar.current.showClearSetup(false);
 
 
     this.canvas.current.removeDetector(detector);
@@ -659,7 +663,7 @@ class App extends Component {
         for (let j = 0;j < json[i].data.data.length;j++){
           str+=String.fromCharCode(json[i].data.data[j]);
         }
-        this.createVolume(json[i].name,str);
+        this.createVolume(json[i].name,str,"");
       }
       //setup first detector
     this.createDetector("Cube", 0, 0, 0, 0, 0, 0, 10, 10, 10, "Pb", 'cube', null, new Vector3(1, 1, 1));
@@ -705,6 +709,7 @@ class App extends Component {
         ref={this.navbar}
         canvas={this.canvas}
         className="navbar"
+        volumes={this.volumes}
         runspectroscopy={this.runSpectroscopy}
         createbutton={this.createDetector} 
         creategunbutton={this.createGun} 

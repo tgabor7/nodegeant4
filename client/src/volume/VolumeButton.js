@@ -4,7 +4,7 @@ import '../App.css';
 import {Button, Card, Accordion, Figure} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import image from '../images/editicon.png';
-import VolumeEditButton from './VolumeEditButton';
+import VolumeEditDialog from './VolumeEditDialog';
 import RenderSystem from '../rendering/renderSystem';
 import ModelCanvas from '../graphics/ModelCanvas';
 
@@ -19,7 +19,6 @@ class VolumeButton extends Component{
   }
   static id = 0;
   componentDidMount(){
-    
   }
   updateDetails(d){
     this.setState({details: d});
@@ -30,7 +29,7 @@ class VolumeButton extends Component{
   render(){
     return <div>
     <ModelCanvas modeldata={this.props.modeldata} ref={this.canvas}></ModelCanvas>
-    <VolumeEditButton></VolumeEditButton>
+    <VolumeEditDialog setname={this.setName} ref={this.editdialog} volume={this.props.volume} name={this.props.name} modeldata={this.props.modeldata} filelabel={this.props.filelabel}></VolumeEditDialog>
     <Card className='button'>
       <Card.Header>
         <Accordion.Toggle as={Button} variant="link" eventKey={this.id} onClick={()=>{

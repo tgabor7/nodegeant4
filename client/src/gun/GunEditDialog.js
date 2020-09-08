@@ -5,6 +5,7 @@ import {Button, Nav, Navbar, FormControl, Container,Col,Row, Form, Dropdown, Ove
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ConfirmDialog from '../graphics/ConfirmDialog';
 import Parser from '../utils/Parser';
+import UnitConverter from "../utils/UnitConverter";
 
 class GunEditDialog extends Component{
   constructor(props){
@@ -21,6 +22,8 @@ class GunEditDialog extends Component{
       detdirx: this.props.detector.direction.x,
       detdiry: this.props.detector.direction.y,
       detdirz: this.props.detector.direction.z,
+      posu: 1,
+      energyu: 1000,
       energy: this.props.detector.energy}
     
   }
@@ -45,7 +48,7 @@ class GunEditDialog extends Component{
 
         <Modal show={this.state.show} onHide={()=>{this.hideDialog();}}>
         <Modal.Header closeButton>
-          <Modal.Title>Modify Detector</Modal.Title>
+          <Modal.Title>Modify Gun</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <Form>
@@ -61,6 +64,12 @@ class GunEditDialog extends Component{
             </Col>
             </Row>
             <Row>Position</Row>
+            <Form.Control as="select" style={{"width":"100px","margin-left":"-15px","margin-bottom":"10px"}} value={this.state.posu} onChange={(e)=>{this.setState({posu: e.target.value});}}>
+                <option value=".1">mm</option>
+                <option value="1">cm</option>
+                <option value="10">dm</option>
+                <option value="100">m</option>
+                </Form.Control>
           <Row>
             x<Col><Form.Control
             className="numspinner"
@@ -132,7 +141,14 @@ class GunEditDialog extends Component{
             maxLength="10"
             value = {this.state.energy}
             onChange={(event)=>{this.setState({energy: event.target.value});}} />
-            </Col> keV
+            
+            </Col>
+            <Form.Control as="select" style={{"width":"100px","margin-left":"-15px","margin-bottom":"10px"}} value={this.state.energyu} onChange={(e)=>{this.setState({energyu: e.target.value});}}>
+                <option value="1">eV</option>
+                <option value="1000">keV</option>
+                <option value="1000000">MeV</option>
+                <option value="1000000000">GeV</option>
+                </Form.Control>
           </Row>
           </Container>
         </Form>
@@ -147,25 +163,25 @@ class GunEditDialog extends Component{
 
             this.props.detector.name = this.state.name;
 
-            this.props.detector.model.position.x = this.state.detposx;
-            this.props.detector.model.position.y = this.state.detposy;
-            this.props.detector.model.position.z = this.state.detposz;
+            this.props.detector.model.position.x = this.state.detposx * this.state.posu;
+            this.props.detector.model.position.y = this.state.detposy * this.state.posu;
+            this.props.detector.model.position.z = this.state.detposz * this.state.posu;
             
             this.props.detector.direction.x = this.state.detdirx;
             this.props.detector.direction.y = this.state.detdiry;
             this.props.detector.direction.z = this.state.detdirz;
             
             
-            this.props.detector.energy = this.state.energy;
+            this.props.detector.energy = this.state.energy * this.state.energyu;
 
             let text = "";
             for(let i = 0;i<Parser.chunks.length;i++){
               if(this.props.buttonid == Parser.chunks[i].id){
                 Parser.chunks[i].code = "\\Gun{\n" +
                 "\tname: " + '"' + this.props.name + '";\n' + 
-                "\tposition[cm]: " + this.state.detposx + ", " + this.state.detposy + ", " + this.state.detposz + ";\n" + 
+                "\tposition[" + UnitConverter.convertLength(this.state.posu) + "]: " + this.state.detposx + ", " + this.state.detposy + ", " + this.state.detposz + ";\n" + 
                 "\tdirection: " + this.state.detdirx + ", " + this.state.detdiry + ", " + this.state.detdirz + ";\n" + 
-                "\tenergy[keV]: " +  this.state.energy + ';\n' + 
+                "\tenergy[" + UnitConverter.convertEnergy(this.state.energyu) + "]: " +  this.state.energy + ';\n' + 
                 "}\n";
               }
               text += Parser.chunks[i].code;
@@ -179,9 +195,9 @@ class GunEditDialog extends Component{
                   <Col>Position: </Col>
                   </Row>
                   <Row>
-                    <Col>x: {this.state.detposx} cm</Col>
-                    <Col>y: {this.state.detposy} cm</Col>
-                    <Col>z: {this.state.detposz} cm</Col>
+                    <Col>x: {this.state.detposx} {UnitConverter.convertLength(this.state.posu)}</Col>
+                    <Col>y: {this.state.detposy} {UnitConverter.convertLength(this.state.posu)}</Col>
+                    <Col>z: {this.state.detposz} {UnitConverter.convertLength(this.state.posu)}</Col>
                   </Row>
                   <Row>
                   <Col>Direction: </Col>
@@ -192,7 +208,7 @@ class GunEditDialog extends Component{
                     <Col>z: {this.state.detdirz} </Col>
                   </Row>
                   <Row>
-                  <Col>Energy: {this.state.energy} keV</Col>
+                  <Col>Energy: {this.state.energy} {UnitConverter.convertEnergy(this.state.energyu)}</Col>
                   </Row>
                   </Container>
             );            

@@ -18,6 +18,7 @@ class SourceDialog extends Component{
       detposx: 0,
       detposy: 0,
       detposz: 0,
+      posu: 1,
       material: 'Co60' }
     
   }
@@ -61,6 +62,12 @@ class SourceDialog extends Component{
             </Row>
             <hr />
             <Row>Position</Row>
+            <Form.Control as="select" style={{"width":"100px","margin-left":"-15px","margin-bottom":"10px"}} value={this.state.posu} onChange={(e)=>{this.setState({posu: e.target.value});}}>
+                <option value=".1">mm</option>
+                <option value="1">cm</option>
+                <option value="10">dm</option>
+                <option value="100">m</option>
+                </Form.Control>
           <Row>
             x<Col><Form.Control
             className="numspinner"
@@ -109,7 +116,7 @@ class SourceDialog extends Component{
             Cancel
           </Button>
           <Button variant="primary" onClick={()=>{this.hideDialog();this.props.createbutton(this.state.detname,  this.state.detposx, this.state.detposy, this.state.detposz,
-            this.state.material);}}>
+            this.state.material, false, this.state.posu);}}>
             Create
           </Button>
         </Modal.Footer>

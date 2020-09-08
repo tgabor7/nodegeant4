@@ -22,8 +22,9 @@ class VolumeDialog extends Component {
 
     }
     showDialog(name) {
-       this.setState({name: name});
         this.setState({ show: true });
+        if(name==undefined) return;
+        this.setState({name: name});
         
     }
     hideDialog() {
@@ -90,7 +91,7 @@ class VolumeDialog extends Component {
                                 return;
                             }
                             this.hideDialog(); 
-                            this.props.createbutton(this.state.name, this.state.modeldata);
+                            this.props.createbutton(this.state.name, this.state.modeldata, this.state.filelabel);
                         }}>
                             Create
           </Button>
