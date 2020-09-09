@@ -27,13 +27,14 @@ export class MainShader{
     
     "uniform vec3 color;"+
     "uniform sampler2D sampler;"+
-    
+    "uniform int fakeLightning;"+
     "void main()"+
     "{"+
       "vec3 norm = normalize(Normal);"+
       "vec3 lightDir = normalize(vec3(100) - fragPos);"+ 
       "float diff = max(dot(norm, lightDir), 0.0); "+
       "vec3 diffuse = diff * vec3(1); "+
+      "if(fakeLightning == 1) diffuse = vec3(.9);"+
       "gl_FragColor = vec4((vec3(.1)+diffuse)*color,1.0);"+
      "}";
 }

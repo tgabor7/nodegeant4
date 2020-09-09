@@ -81,9 +81,10 @@ class RenderSystem {
         //this is whack
     }
     draw(projection, camera){
-        this.gl.disable(this.gl.DEPTH_TEST);
         this.shader.bind();
-
+        this.gl.enable(this.gl.DEPTH_TEST);
+        this.gl.enable(this.gl.CULL_FACE);
+        this.gl.cullFace(this.gl.BACK);
 
         for(let i = 0;i<this.detectors.length;i++){
             this.gl.enable(this.gl.DEPTH_TEST);
@@ -103,11 +104,14 @@ class RenderSystem {
             this.gl.disableVertexAttribArray(0);
             this.gl.disableVertexAttribArray(1);
         }
-
+        this.gl.enable(this.gl.CULL_FACE);
         this.gl.disable(this.gl.DEPTH_TEST);
         for(let i = 0;i<this.detectors.length;i++){
+            this.gl.cullFace(this.gl.FRONT);
+
             if(this.detectors[i].id != RenderSystem.active_id) continue;
             if(this.detectors[i].id == RenderSystem.active_id){
+                
                 this.gl.enableVertexAttribArray(0);
                 this.gl.enableVertexAttribArray(1);
                 this.gl.bindVertexArray(this.detectors[i].model.vao);
@@ -117,6 +121,7 @@ class RenderSystem {
                      this.detectors[i].model.scale.y * (1.01),
                     this.detectors[i].model.scale.z * (1.01));
                 this.shader.setUniform3f("color", 1, .4, 0);
+                this.shader.setUniform1i("fakeLightning", 1);
                 this.shader.setUniform1i("sampler", 0);
                 this.shader.setUniform4fv("view", Maths.createViewMatrix(camera));
                 this.shader.setUniform4fv("projection", projection);
@@ -124,8 +129,29 @@ class RenderSystem {
                 this.detectors[i].model.draw();
                 this.gl.disableVertexAttribArray(0);
                 this.gl.disableVertexAttribArray(1);
+                
+                this.gl.cullFace(this.gl.BACK);
+
+                this.gl.enableVertexAttribArray(0);
+                this.gl.enableVertexAttribArray(1);
+                this.gl.bindVertexArray(this.detectors[i].model.vao);
+                mat = Maths.createTransformationMatrix(this.detectors[i].model.position.x, this.detectors[i].model.position.y, this.detectors[i].model.position.z,
+                    this.detectors[i].model.rotation.x, this.detectors[i].model.rotation.y, this.detectors[i].model.rotation.z,
+                     this.detectors[i].model.scale.x,
+                     this.detectors[i].model.scale.y,
+                    this.detectors[i].model.scale.z);
+                this.shader.setUniform3f("color", this.detectors[i].model.color.x, this.detectors[i].model.color.y, this.detectors[i].model.color.z);
+                this.shader.setUniform1i("sampler", 0);
+                this.shader.setUniform4fv("view", Maths.createViewMatrix(camera));
+                this.shader.setUniform1i("fakeLightning", 0);
+
+                this.shader.setUniform4fv("projection", projection);
+                this.shader.setUniform4fv("transformation", mat);
+                this.detectors[i].model.draw();
+                this.gl.disableVertexAttribArray(0);
+                this.gl.disableVertexAttribArray(1);
             }
-            
+            this.gl.enable(this.gl.DEPTH_TEST);
         }
         
         
@@ -155,6 +181,7 @@ class RenderSystem {
             this.gl.disableVertexAttribArray(1);
         }
         this.gl.disable(this.gl.DEPTH_TEST);
+        
         for (var i = 0; i < this.sources.length; i++) {
             this.gl.enableVertexAttribArray(0);
             this.gl.enableVertexAttribArray(1);
@@ -217,6 +244,7 @@ class RenderSystem {
             this.gl.disableVertexAttribArray(1);
         }
         this.shader.unBind();
+        this.gl.disable(this.gl.DEPTH_TEST);
         
     }
 }

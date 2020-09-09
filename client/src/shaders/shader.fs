@@ -4,8 +4,10 @@ varying vec2 tex_coords;
 varying vec3 Normal;
 varying vec3 fragPos;
 
+
 uniform vec3 color;
 uniform sampler2D sampler;
+uniform float fakeLightning;
 
 void main()
 {

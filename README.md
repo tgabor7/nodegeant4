@@ -1,5 +1,8 @@
 ﻿# nodegeant4
 
+2020/09/09
+- Better outline
+
 2020/09/08
 - Added units of measurement
 - Adjusted spectrum diagram
