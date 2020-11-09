@@ -1,4 +1,12 @@
-﻿# nodegeant4
+# nodegeant4
+
+2020/11/09
+- added logging
+- added testing for the language
+- fixed unit bugs
+- maximum number of particles is limited
+- different spectrum for energy color
+- implemented sensitive detectors
 
 2020/09/09
 - Better outline
