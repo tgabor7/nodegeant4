@@ -16,15 +16,15 @@ class GunEditDialog extends Component{
 
     this.state = {show: false, 
       detname: this.props.detector.name,
-      detposx: this.props.detector.model.position.x,
-      detposy: this.props.detector.model.position.y,
-      detposz: this.props.detector.model.position.z,
+      detposx: this.props.detector.model.position.x / this.props.detector.units[0],
+      detposy: this.props.detector.model.position.y / this.props.detector.units[0],
+      detposz: this.props.detector.model.position.z / this.props.detector.units[0],
       detdirx: this.props.detector.direction.x,
       detdiry: this.props.detector.direction.y,
       detdirz: this.props.detector.direction.z,
-      posu: 1,
-      energyu: 1000,
-      energy: this.props.detector.energy}
+      posu: this.props.detector.units[0],
+      energyu: this.props.detector.units[1],
+      energy: this.props.detector.energy / this.props.detector.units[1]}
     
   }
   componentDidMount(){
@@ -41,7 +41,7 @@ class GunEditDialog extends Component{
   render(){
     const handleDelete = ()=>{
       this.hideDialog();
-      this.props.removebutton(this.props.detector, this.props.button);
+      this.props.removebutton(this.props.detector, this.props.button.id);
     }
     return <>
     <ConfirmDialog ref={this.confirmDialog} title="Confirm" content="Are you sure you want to delete this component?" fun={handleDelete}></ConfirmDialog>

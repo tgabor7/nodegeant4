@@ -141,7 +141,7 @@ class Spectrum extends Component {
                             display: true,
                             fontSize: 18,
                             fontColor: '#000',
-                            labelString: 'number of hits'
+                            labelString: 'Number of hits'
                         }
                     }],
                     xAxes: [{
@@ -155,7 +155,7 @@ class Spectrum extends Component {
                             display: true,
                             fontSize: 18,
                             fontColor: '#000',
-                            labelString: 'energies (keV)'
+                            labelString: 'Energies (keV)'
                         }
                     }]
                 },

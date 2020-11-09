@@ -12,6 +12,9 @@
 #include "QGSP_BIC_HP.hh"
 #include "QGSP_BERT_HP.hh"
 #include "G4KleinNishinaModel.hh"
+#include "G4SDManager.hh"
+#include <sstream>
+#include <iostream>
 
 Simulation::Simulation(G4MTRunManager* runManager)
 {
@@ -24,13 +27,11 @@ void Simulation::init()
 void Simulation::clearDetectors()
 {
 	detectors.clear();
-	de->clearGeometries();
 }
 void Simulation::addDetector(Geometry* d)
 {
-	de->addGeometry(d);
 	detectors.push_back(d);
-	runManager->ReinitializeGeometry();
+	//runManager->ReinitializeGeometry();
 
 }
 void Simulation::addSource(ParticleSource* s)
@@ -142,16 +143,15 @@ Track* Simulation::getTrackByID(int i)
 std::stringstream Simulation::getSpectrum(Gun* gun, int number_of_particles, int spectrum_detector)
 {
 	
-
-	runManager->ReinitializeGeometry();
+	//std::cout << "\nNumber of detectors: " << de->sensitiveDetectors.size() << "\n";
+	//runManager->ReinitializeGeometry();
 	
 	//physicsList->SetDefaultCutValue(1000);
-	
 	std::vector<Track*> finalTracks;
 
 
 	std::stringstream ss;
-	std::cout << "sources: " << sources.size() << "\n";
+	//std::cout << "sources: " << sources.size() << "\n";
 	std::ofstream f("particles.txt");
 
 	for (int l = 0; l < number_of_particles; l++) {
@@ -225,14 +225,13 @@ std::stringstream Simulation::getSpectrum(Gun* gun, int number_of_particles, int
 			}*/
 
 		}
-		for (int i = 0; i < detectors.size(); i++) {
-			if (spectrum_detector == detectors[i]->id) {
+		for (int i = 0; i < de->sensitiveDetectors.size(); i++) {
+			if (spectrum_detector == de->sensitiveDetectors[i]->id) {
 				//f << detectors[i]->energyDeposit << "\n";
-				if (detectors[i]->energyDeposit > 0) {
-					ss << detectors[i]->energyDeposit*1000 << " ";
-					f << detectors[i]->energyDeposit*1000 << "\n";
+				if (de->sensitiveDetectors[i]->edep > 0) {
+					ss << de->sensitiveDetectors[i]->edep*1000 << " ";
 				}
-				detectors[i]->energyDeposit = 0;
+				de->sensitiveDetectors[i]->edep = 0;
 			}
 			
 		}
@@ -245,14 +244,14 @@ std::stringstream Simulation::getSpectrum(Gun* gun, int number_of_particles, int
 		}
 	}*/
 	ss << " ";
-	
+	//std::cout << "\nDone\n";
 	for (int i = 0; i < finalTracks.size(); i++) {
 		delete finalTracks[i];
 	}
 
-	for (int i = 0; i < detectors.size(); i++) {
+	/*for (int i = 0; i < detectors.size(); i++) {
 		std::cout << "\nEnergyDeposit: " << detectors[i]->energyDeposit << "MeV\n";
-	}
+	}*/
 	
 	f.close();
 
@@ -266,16 +265,17 @@ void Simulation::clearGuns()
 {
 	guns.clear();
 }
-std::stringstream Simulation::run(Gun *gun, int numberofparticles)
+std::stringstream Simulation::run(Gun *gun, int numberofparticles, std::ofstream &debug)
 {
 	//at least 1 detector and gun has to be added
-	out = std::ofstream("particles.txt");
-	runManager->ReinitializeGeometry();
+	//out = std::ofstream("particles.txt");
+	//runManager->ReinitializeGeometry();
 	
 	std::vector<Track*> finalTracks;
 	//physicsList->SetDefaultCutValue(1);
 	std::stringstream ss;
-	std::cout << "sources: " << sources.size() << "\n";
+	debug << "\nasd\n";
+	//std::cout << "sources: " << sources.size() << "\n";
 	for (int l = 0; l < numberofparticles; l++) {
 
 		active_source->active = true;
@@ -351,7 +351,35 @@ std::stringstream Simulation::run(Gun *gun, int numberofparticles)
 			//print(particle_tracks[0], 0);
 		}
 	}
-
+	
+	
+	/*for (int i = 0; i < finalTracks.size(); i++) {
+		ss << finalTracks[i]->particles.size();
+		ss << " ";
+		ss << finalTracks[i]->definition;
+		ss << " ";
+		for (int j = 0; j < finalTracks[i]->particles.size(); j++) {
+			ss << finalTracks[i]->particles[j]->position.x;
+			ss << " ";
+			ss << finalTracks[i]->particles[j]->position.y;
+			ss << " ";
+			ss << finalTracks[i]->particles[j]->position.z;
+			ss << " ";
+			ss << finalTracks[i]->particles[j]->track_id;
+			ss << " ";
+			ss << finalTracks[i]->particles[j]->parent_id;
+			ss << " ";
+			ss << finalTracks[i]->particles[j]->totalEnergy;
+			ss << " ";
+			ss << finalTracks[i]->particles[j]->energyDeposit;
+			ss << " ";
+		}
+	}
+	ss << " ";
+	for (int i = 0; i < detectors.size(); i++) {
+		ss << detectors[i]->energyDeposit;
+		ss << " ";
+	}*/
 	for (int i = 0; i < finalTracks.size(); i++) {
 		ss << finalTracks[i]->particles.size();
 		ss << " ";
@@ -379,15 +407,7 @@ std::stringstream Simulation::run(Gun *gun, int numberofparticles)
 		ss << detectors[i]->energyDeposit;
 		ss << " ";
 	}
-	//print(finalTracks[0], 0);
-	/*for (int i = 0; i < finalTracks.size(); i++) {
-		print(finalTracks[i], 0);
-	}*/
-	//writeToFile(finalTracks[0], 0);
-	
-	for (int i = 0; i < detectors.size(); i++) {
-		std::cout << "\nEnergyDeposit: " << detectors[i]->energyDeposit << "MeV\n";
-	}
+	//std::cout << "\nDone\n";
 	return ss;
 }
 void Simulation::print(Track* t, int depth)
@@ -433,6 +453,42 @@ void Simulation::writeToFile(Track* t, int depth)
 		writeToFile(t->next[i], depth);
 	}
 }
+Simulation::Simulation(std::vector<Geometry*> _detectors)
+{
+	//std::cout << "\nNumber of geometries: " << _detectors.size() << "\n";
+	runManager = new G4MTRunManager;
+	//runManager->SetVerboseLevel(4);
+	runManager->SetNumberOfThreads(2);
+	activeTrack = nullptr;
+	currentTrack = nullptr;
+
+
+	de = new DetectorConstruction(_detectors, this);
+	runManager->SetUserInitialization(de);
+
+
+	physicsList = new QBBC;
+
+	//physicsList->RegisterPhysics(new G4StepLimiterPhysics());
+	//physicsList->SetDefaultCutValue(1000);
+	runManager->SetUserInitialization(physicsList);
+
+	active_gun = new Gun();
+	active_gun->energy = 10;
+	active_gun->definition = GAMMA;
+
+	active_gun->position.x = 10;
+	active_gun->direction.x = -1;
+
+	active_source = new ParticleSource(vector3(100), "U235");
+
+	ActionInitialization* action = new ActionInitialization(this, active_gun, active_source);
+	runManager->SetUserInitialization(action);
+
+
+	runManager->Initialize();
+
+}
 Simulation::Simulation()
 {
 	runManager = new G4MTRunManager;
@@ -442,7 +498,7 @@ Simulation::Simulation()
 	currentTrack = nullptr;
 	
 	
-	de = new DetectorConstruction(detectors);
+	de = new DetectorConstruction;
 	runManager->SetUserInitialization(de);
 
 	

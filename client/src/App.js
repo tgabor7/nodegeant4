@@ -21,8 +21,10 @@ import VolumeList from './volume/VolumeList';
 import VolumeDialog from './volume/VolumeDialog';
 import PopupDialog from './graphics/PopupDialog';
 import VolumeSelectDialog from './volume/VolumeSelectDialog';
-import {Element} from 'react-scroll';
+import { Element } from 'react-scroll';
 import UnitConverter from './utils/UnitConverter';
+import Logger from './utils/Logger';
+import CodeTests from './utils/codeTests';
 
 class App extends Component {
   constructor(props) {
@@ -34,8 +36,10 @@ class App extends Component {
     this.popup = React.createRef();
     this.volumeselect = React.createRef();
 
-    this.state = { buttons: [], gunbuttons: [], sourcebuttons: [], volumebuttons: [], spectrum: true, page: 'first',
-    volumebuttonheight: "100%"}
+    this.state = {
+      buttons: [], gunbuttons: [], sourcebuttons: [], volumebuttons: [], spectrum: true, page: 'first',
+      volumebuttonheight: "100%"
+    }
     this.createDetector = this.createDetector.bind(this);
     this.createSource = this.createSource.bind(this);
     this.createGun = this.createGun.bind(this);
@@ -72,6 +76,7 @@ class App extends Component {
     this.canvas.current.clearRun();
   }
   runSpectroscopy(number_of_particles, detector, hideDialog, binsize) {
+    Logger.log(1, "Started spectrum simulation");
     let message_data = [];
 
     // particle gun stuff
@@ -148,6 +153,8 @@ class App extends Component {
     this.sendGamma(message_data, hideDialog, binsize);
   }
   runSim(number_of_particles, hidedialog) {
+    this.clearRun();
+    Logger.log(1, "Started simulation");
     let message_data = [];
 
     // particle gun stuff
@@ -219,6 +226,7 @@ class App extends Component {
       message_data.push(this.guns[i].energy);
     }
     message_data.push(number_of_particles); //number of particles
+    //alert(number_of_particles);
     message_data.push('end');
     this.send(message_data, hidedialog);
   }
@@ -228,7 +236,7 @@ class App extends Component {
       message += data[i];
       message += ',';
     }
-    fetch('http://radsim.inf.elte.hu:9000/gammaAPI', {
+    fetch('http://localhost:9000/gammaAPI', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -241,6 +249,7 @@ class App extends Component {
         this.processGammaSpectrum(response, binsize);
         hideDialog();
         this.setState({ spectrum: false, page: "second" });
+        Logger.log(1, "Finished spectrum simulation");
       });
   }
   send(data, hidedialog) {
@@ -249,7 +258,7 @@ class App extends Component {
       message += data[i];
       message += ',';
     }
-    fetch('http://radsim.inf.elte.hu:9000/gammaAPI', {
+    fetch('http://localhost:9000/gammaAPI', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -261,6 +270,8 @@ class App extends Component {
       .then(response => {
         this.processResponse(response);
         hidedialog();
+        Logger.log(1, "Finished simulation");
+
       });
   }
   processGammaSpectrum(response, binsize) {
@@ -276,7 +287,6 @@ class App extends Component {
   }
   processResponse(response) {
     var message = response;
-
     var floats = message.split(' ');
     var index = 0;
     var j = 0;
@@ -331,12 +341,27 @@ class App extends Component {
       this.tracks.push(tm);
     }
 
-
+    if(this.particles.length > 1000){
+      this.popup.current.showDialog("Too many particles!","Low energy particles will be ommited!",()=>{});
+      this.particles = this.particles.sort((a,b)=>{return b.totalEnergy - a.totalEnergy});
+      this.particles.length = 1000;
+      //this.particles.splice(1000, this.particles.length-1000);
+    } 
     let tmp_particles = [];
-    for (var i = 0; i < this.particles.length; i += Math.ceil(this.particles.length / 10000)) {
+    for (var i = 0; i < this.particles.length; i ++) {
       tmp_particles.push(this.particles[i]);
     }
+    
     this.particles = tmp_particles.slice();
+    function get_max(particles){
+      var max = 0;
+      for (var i = 0; i < particles.length; i++) {
+        if(particles[i].totalEnergy > max) max = particles[i].totalEnergy;
+      }
+      return max;
+    }
+    let max = get_max(this.particles);
+    this.canvas.current.instanceRenderer.maxenergy = max;
 
     function get_average(particles) {
       var max = 0;
@@ -347,18 +372,17 @@ class App extends Component {
 
       return max;
     }
-    let max = get_average(this.particles) * 2;
-
-
-
+    
+    //let max = get_average(this.particles) * 2;
 
     for (let i = 0; i < this.particles.length; i++) {
-      if (this.particles[i].totalEnergy > max) this.particles[i].totalEnergy = max;
-      this.particles[i].color.x = 2 * (this.particles[i].totalEnergy / max);
-      this.particles[i].color.y = 1 - this.particles[i].color.x;
+      //if (this.particles[i].totalEnergy > max) this.particles[i].totalEnergy = max;
+      
+      this.particles[i].color.x = this.particles[i].totalEnergy;
+      //this.particles[i].color.y = 1 - this.particles[i].color.x;
 
-      let d = this.particles[i].color.x / 100;
-      this.particles[i].scale = new Vector3(d, d, d);
+      let d = Math.sqrt(this.particles[i].color.x / max);
+      this.particles[i].scale = new Vector3(d*.03,d*.03,d*.03);
       this.canvas.current.addParticle(this.particles[i]);
     }
     if (this.particles.length > 0) this.navbar.current.showClearParticles(true);
@@ -369,20 +393,20 @@ class App extends Component {
   createVolume(name, data, label) {
     let modeldata = STLParser.parseData(data);
     let bs = this.state.volumebuttons;
-    VolumeList.addVolume({name: name, data: data});
-    let vol = {name: name, data: data};
+    VolumeList.addVolume({ name: name, data: data });
+    let vol = { name: name, data: data };
     this.volumes.push(vol);
-    bs.push(<VolumeButton name={name} volume={vol} modeldata={data} filelabel={label}></VolumeButton>);
-    this.setState({volumebuttons: bs});
+    bs.push(<VolumeButton name={name} volume={vol} modeldata={modeldata} filelabel={label}></VolumeButton>);
+    this.setState({ volumebuttons: bs });
   }
-  createSource(n, x, y, z, mat, code, posu) {
+  async createSource(n, x, y, z, mat, code, posu) {
     if (this.detectors.length > 0) this.navbar.current.showRun(true);
     this.navbar.current.showClearSetup(true);
     if (!code) this.codeeditor.current.updateText(
       this.codeeditor.current.state.text +
       "\\Source{\n" +
       "\tname: " + '"' + n + '";\n' +
-      "\tposition["+ UnitConverter.convertLength(posu) + "]: " + x + ", " + y + ", " + z + ";\n" +
+      "\tposition[" + UnitConverter.convertLength(posu) + "]: " + x + ", " + y + ", " + z + ";\n" +
       "\tmaterial: " + '"' + mat + '";\n' +
       "}\n"
     );
@@ -401,7 +425,7 @@ class App extends Component {
         <Col>Material: {mat}</Col>
       </Row>
     </Container>;
-    let source = this.canvas.current.addSource(x, y, z, mat);
+    let source = this.canvas.current.addSource(x*posu, y*posu, z*posu, mat);
     source.id = +DetectorButton.id;
     Parser.chunks.push({
       id: source.id, code: "\\Source{\n" +
@@ -411,11 +435,14 @@ class App extends Component {
         "}\n"
     });
     source.name = n;
+    source.units[0] = posu;
     this.sources.push(source);
     bs.push(<SourceButton codeeditor={this.codeeditor} name={n} removebutton={this.removeSource} id={DetectorButton.id} detector={source} details={details} key={++DetectorButton.id} buttons={this.state.sourcebuttons}></SourceButton>);
     this.setState({ sourcebuttons: bs });
+    Logger.log(1, "Created source");
+    return [source, DetectorButton.id];
   }
-  createGun(n, px, py, pz, dx, dy, dz, energy, code, posu, energyu) {
+  async createGun(n, px, py, pz, dx, dy, dz, energy, code, posu, energyu) {
     if (this.detectors.length > 0) this.navbar.current.showRun(true);
     this.navbar.current.showClearSetup(true);
 
@@ -452,7 +479,7 @@ class App extends Component {
       </Row>
     </Container>;
 
-    let gun = this.canvas.current.addGun(px, py, pz, dx, dy, dz, energy);
+    let gun = this.canvas.current.addGun(px*posu, py*posu, pz*posu, dx, dy, dz, energy*energyu);
     gun.id = +DetectorButton.id;
     Parser.chunks.push({
       id: gun.id, code: "\\Gun{\n" +
@@ -463,11 +490,15 @@ class App extends Component {
         "}\n"
     });
     gun.name = n;
+    gun.units[0] = posu;
+    gun.units[1] = energyu;
     this.guns.push(gun);
     bs.push(<GunButton codeeditor={this.codeeditor} name={n} removebutton={this.removeGun} id={DetectorButton.id} detector={gun} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></GunButton>);
     this.setState({ gunbuttons: bs });
+    Logger.log(1, "Created gun");
+    return [gun, DetectorButton.id];
   }
-  createDetector(n, px, py, pz, rx, ry, rz, sx, sy, sz, material, type, data, color, code, posu, rotu, scaleu) {
+  async createDetector(n, px, py, pz, rx, ry, rz, sx, sy, sz, material, type, data, color, code, posu, rotu, scaleu) {
     if (this.sources.length > 0 || this.guns.length > 0) this.navbar.current.showRun(true);
     this.navbar.current.showClearSetup(true);
     if (!code) this.codeeditor.current.updateText(
@@ -531,6 +562,9 @@ class App extends Component {
       });
       detector.name = n;
       detector.model.color = color;
+      detector.units[0] = posu;
+      detector.units[1] = rotu;
+      detector.units[2] = scaleu;
       this.detectors.push(detector);
       bs.push(<DetectorButton volumes={this.volumes} canvas={this.canvas} codeeditor={this.codeeditor} name={n} removebutton={this.removeDetector} id={DetectorButton.id} detector={detector} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></DetectorButton>);
       this.setState({ buttons: bs });
@@ -538,15 +572,14 @@ class App extends Component {
     let detector = null;
     if (type == "stl") {
       let modelData = STLParser.parseData(data);
-      detector = this.canvas.current.addSTLDetector(px, py, pz, rx, ry, rz, sx, sy, sz, material, modelData);
+      detector = this.canvas.current.addSTLDetector(px*posu, py*posu, pz*posu, rx*rotu, ry*rotu, rz*rotu, sx*scaleu, sy*scaleu, sz*scaleu, material, modelData);
       paramterize(detector);
-
     } else {
-      this.canvas.current.addDetector(px, py, pz, rx, ry, rz, sx, sy, sz, material, type, this.volumes).then(det => {
-        paramterize(det);
-      });
+      detector = await this.canvas.current.addDetector(px*posu, py*posu, pz*posu, rx*rotu, ry*rotu, rz*rotu, sx*scaleu, sy*scaleu, sz*scaleu, material, type, this.volumes);
+      paramterize(detector);
     }
-
+    Logger.log(1, "Created detector");
+    return [detector, DetectorButton.id];
   }
   clearSetup() {
     Parser.chunks = [];
@@ -554,15 +587,7 @@ class App extends Component {
     this.codeeditor.current.text = "";
     DetectorButton.id = 0;
     this.setState({ buttons: [], gunbuttons: [], sourcebuttons: [] });
-    for (let i = 0; i < this.detectors.length; i++) {
-      this.canvas.current.removeDetector(this.detectors[i]);
-    }
-    for (let i = 0; i < this.sources.length; i++) {
-      this.canvas.current.removeSource(this.sources[i]);
-    }
-    for (let i = 0; i < this.guns.length; i++) {
-      this.canvas.current.removeGun(this.guns[i]);
-    }
+    this.canvas.current.clearSetup()
     this.detectors = [];
     this.sources = [];
     this.guns = [];
@@ -570,38 +595,40 @@ class App extends Component {
     this.state.gunbuttons = [];
     this.state.sourcebuttons = [];
     this.clearRun();
-
+    Logger.log(1, "Cleared setup")
   }
-  removeSource(source, button) {
+  removeSource(source, buttonid) {
     if (this.detectors.length < 1 || (this.sources.length < 1 && this.guns.length < 1)) this.navbar.current.showRun(false);
 
     if (this.sources.length == 0 && this.guns.length == 0 && this.detectors.length == 0) this.navbar.current.showClearSetup(false);
-
+    
 
     this.canvas.current.removeSource(source);
     this.codeeditor.current.updateText(Parser.removeChunk(source.id));
 
     for (var i = 0; i < this.state.sourcebuttons.length; i++) {
-      if (this.state.sourcebuttons[i].key - 1 == button.id) {
+      if (this.state.sourcebuttons[i].key - 1 == buttonid) {
         let bs = this.state.sourcebuttons;
         bs.splice(i, 1);
         this.sources.splice(i, 1);
         this.setState({ sourcebuttons: bs });
+        Logger.log(1, "Removed source")
+
         return;
       }
     }
   }
-  removeGun(gun, button) {
+  removeGun(gun, buttonid) {
     if (this.detectors.length < 1 || (this.sources.length < 1 && this.guns.length < 1)) this.navbar.current.showRun(false);
 
     if (this.sources.length == 0 && this.guns.length == 0 && this.detectors.length == 0) this.navbar.current.showClearSetup(false);
-
+    Logger.log(1, "Removed gun");
 
     this.canvas.current.removeGun(gun);
     this.codeeditor.current.updateText(Parser.removeChunk(gun.id));
 
     for (var i = 0; i < this.state.gunbuttons.length; i++) {
-      if (this.state.gunbuttons[i].key - 1 == button.id) {
+      if (this.state.gunbuttons[i].key - 1 == buttonid) {
         let bs = this.state.gunbuttons;
         bs.splice(i, 1);
         this.guns.splice(i, 1);
@@ -610,20 +637,21 @@ class App extends Component {
       }
     }
   }
-  removeDetector(detector, button) {
+  removeDetector(detector, buttonid) {
     if (this.detectors.length < 1 || (this.sources.length < 1 && this.guns.length < 1)) this.navbar.current.showRun(false);
     if (this.sources.length == 0 && this.guns.length == 0 && this.detectors.length == 0) this.navbar.current.showClearSetup(false);
-
 
     this.canvas.current.removeDetector(detector);
     this.codeeditor.current.updateText(Parser.removeChunk(detector.id));
 
     for (var i = 0; i < this.state.buttons.length; i++) {
-      if (this.state.buttons[i].key - 1 == button.id) {
+      if (this.state.buttons[i].key - 1 == buttonid) {
         let bs = this.state.buttons;
         bs.splice(i, 1);
         this.detectors.splice(i, 1);
         this.setState({ buttons: bs });
+        Logger.log(1, "Removed detector")
+
         return;
       }
     }
@@ -642,38 +670,41 @@ class App extends Component {
     this.canvas.current.drawGrid = !b;
   }
   async componentDidMount() {
-    
+
+   
 
     //setup volumes from the database
-    
+
 
     Parser.init(this.volumeselect.current, this.popup.current.showDialog);
 
-    let response = await fetch("http://radsim.inf.elte.hu:9000/database", {
+    let response = await fetch("http://localhost:9000/database", {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       method: 'POST',
-      body: JSON.stringify({name: ""})
-      });
-      let json = await response.json();
-      for(let i = 0;i<json.length;i++){
-        var str='';
-        for (let j = 0;j < json[i].data.data.length;j++){
-          str+=String.fromCharCode(json[i].data.data[j]);
-        }
-        this.createVolume(json[i].name,str,"");
+      body: JSON.stringify({ name: "" })
+    });
+    let json = await response.json();
+    for (let i = 0; i < json.length; i++) {
+      var str = '';
+      for (let j = 0; j < json[i].data.data.length; j++) {
+        str += String.fromCharCode(json[i].data.data[j]);
       }
-      //setup first detector
-    this.createDetector("Cube", 0, 0, 0, 0, 0, 0, 10, 10, 10, "Pb", 'cube', null, new Vector3(1, 1, 1));
-    
+      this.createVolume(json[i].name, str, "");
+    }
+    //setup first detector
+    this.createDetector("Cube", 0, 0, 0, 0, 0, 0, 10, 10, 10, "Pb", 'cube', null, new Vector3(1, 1, 1), false, 1, 1, 1);
+
+     //run a few tests
+     //CodeTests.langTest([this.codeeditor.current.onclickfunction,this.createDetector, this.createSource, this.createGun,this.removeDetector,this.removeSource,this.removeGun, this.clearSetup]);
   }
   render() {
 
 
     const items = this.state.buttons.map(function (item) {
-      return <div style={{"z-index":"3","color":"black"}}> {item} </div>;
+      return <div style={{ "z-index": "3", "color": "black" }}> {item} </div>;
     });
     const gunButtons = this.state.gunbuttons.map(function (item) {
       return <div> {item} </div>
@@ -682,7 +713,7 @@ class App extends Component {
       return <div> {item} </div>
     });
     let volumeButtons = this.state.volumebuttons.map(function (item) {
-      return <div style={{"z-index":"3","color":"black"}}> {item} </div>
+      return <div style={{ "z-index": "3", "color": "black" }}> {item} </div>
     });
 
     return <div>
@@ -701,58 +732,58 @@ class App extends Component {
           </Nav>
         </Col>
         <Tab.Content>
-          <Tab.Pane eventKey="first" style={{"overflow":"hidden"}}>
-            <Canvas ref={this.canvas} style={{"overflow":"hidden"}}></Canvas>
+          <Tab.Pane eventKey="first" style={{ "overflow": "hidden" }}>
+            <Canvas ref={this.canvas} style={{ "overflow": "hidden" }}></Canvas>
             <CodeEditor ref={this.codeeditor} createGun={this.createGun} clearSetup={this.clearSetup} createSource={this.createSource} createDetector={this.createDetector} canvas={this.canvas} />
 
-        <NavigationBar run={this.runSim} 
-        ref={this.navbar}
-        canvas={this.canvas}
-        className="navbar"
-        volumes={this.volumes}
-        runspectroscopy={this.runSpectroscopy}
-        createbutton={this.createDetector} 
-        creategunbutton={this.createGun} 
-        createsourcebutton={this.createSource} 
-        createvolume={this.createVolume}
-        setshowtracks={this.setShowTracks}
-        setshowparticles={this.setShowParticles}
-        setshowaxes={this.setShowAxes}
-        setshowgrid={this.setShowGrid}
-        clearrun={this.clearRun}
-        clearSetup={this.clearSetup}
-        detectors={this.detectors}
-        buttons={this.state.buttons}></NavigationBar>
-        <div className='buttonbackground'>
-        </div>
-        <Accordion ref={this.accordion} defaultActiveKey="0" className='accordion' style={{"maxHeight": window.innerHeight-50, "height": window.innerHeight-50,"overflow-y":"scroll"}}>
-        <div style={{color: 'white', 'text-align':'center', 'background-color' : 'gray', 'border' : '1px solid white'}}>
-          Volumes
+            <NavigationBar run={this.runSim}
+              ref={this.navbar}
+              canvas={this.canvas}
+              className="navbar"
+              volumes={this.volumes}
+              runspectroscopy={this.runSpectroscopy}
+              createbutton={this.createDetector}
+              creategunbutton={this.createGun}
+              createsourcebutton={this.createSource}
+              createvolume={this.createVolume}
+              setshowtracks={this.setShowTracks}
+              setshowparticles={this.setShowParticles}
+              setshowaxes={this.setShowAxes}
+              setshowgrid={this.setShowGrid}
+              clearrun={this.clearRun}
+              clearSetup={this.clearSetup}
+              detectors={this.detectors}
+              buttons={this.state.buttons}></NavigationBar>
+            <div className='buttonbackground'>
+            </div>
+            <Accordion ref={this.accordion} defaultActiveKey="0" className='accordion' style={{ "maxHeight": window.innerHeight - 50, "height": window.innerHeight - 50, "overflow-y": "scroll" }}>
+              <div style={{ color: 'white', 'text-align': 'center', 'background-color': 'gray', 'border': '1px solid white' }}>
+                Volumes
           </div>
-          {volumeButtons}
-          <div style={{color: 'white', 'text-align':'center', 'background-color' : 'gray', 'border' : '1px solid white'}}>
-          Detectors
+              {volumeButtons}
+              <div style={{ color: 'white', 'text-align': 'center', 'background-color': 'gray', 'border': '1px solid white' }}>
+                Detectors
           </div>
-          {items}
-          <div style={{color: 'white', 'text-align':'center', 'background-color' : 'gray', 'border' : '1px solid white'}}>
-          Sources
+              {items}
+              <div style={{ color: 'white', 'text-align': 'center', 'background-color': 'gray', 'border': '1px solid white' }}>
+                Sources
           </div>
-          {sourceButtons}
-          <div style={{color: 'white', 'text-align':'center', 'background-color' : 'gray', 'border' : '1px solid white'}}>
-          Guns
+              {sourceButtons}
+              <div style={{ color: 'white', 'text-align': 'center', 'background-color': 'gray', 'border': '1px solid white' }}>
+                Guns
           </div>
-          {gunButtons}
-        </Accordion>
-        </Tab.Pane>
-        <Tab.Pane eventKey="second">
-          <Spectrum ref={this.spectrum}></Spectrum>
-        </Tab.Pane>
-      </Tab.Content>
-</Tab.Container>
+              {gunButtons}
+            </Accordion>
+          </Tab.Pane>
+          <Tab.Pane eventKey="second">
+            <Spectrum ref={this.spectrum}></Spectrum>
+          </Tab.Pane>
+        </Tab.Content>
+      </Tab.Container>
 
-    
-  </div>
-    
+
+    </div>
+
   }
 }
 

@@ -11,6 +11,7 @@ import MaterialTable from '../graphics/MaterialTable';
 import STLParser from '../utils/STLParser';
 import Model from '../rendering/model';
 import UnitConverter from '../utils/UnitConverter';
+import Logger from '../utils/Logger';
 
 class DetectorEditDialog extends Component {
   constructor(props) {
@@ -24,20 +25,20 @@ class DetectorEditDialog extends Component {
     this.state = {
       show: false,
       detname: this.props.detector.name,
-      detposx: this.props.detector.model.position.x,
-      detposy: this.props.detector.model.position.y,
-      detposz: this.props.detector.model.position.z,
-      detrotx: this.props.detector.model.rotation.x,
-      detroty: this.props.detector.model.rotation.y,
-      detrotz: this.props.detector.model.rotation.z,
-      detscalex: this.props.detector.model.scale.x,
-      detscaley: this.props.detector.model.scale.y,
-      detscalez: this.props.detector.model.scale.z,
+      detposx: this.props.detector.model.position.x / this.props.detector.units[0],
+      detposy: this.props.detector.model.position.y / this.props.detector.units[0],
+      detposz: this.props.detector.model.position.z / this.props.detector.units[0],
+      detrotx: this.props.detector.model.rotation.x / this.props.detector.units[1],
+      detroty: this.props.detector.model.rotation.y / this.props.detector.units[1],
+      detrotz: this.props.detector.model.rotation.z / this.props.detector.units[1],
+      detscalex: this.props.detector.model.scale.x / this.props.detector.units[2],
+      detscaley: this.props.detector.model.scale.y / this.props.detector.units[2],
+      detscalez: this.props.detector.model.scale.z / this.props.detector.units[2],
       detmat: this.props.detector.material,
       geomrty: this.props.detector.geometry,
-      posme: 1,
-      rotme: 1,
-      scaleme: 1,
+      posme: this.props.detector.units[0],
+      rotme: this.props.detector.units[1],
+      scaleme: this.props.detector.units[2],
       showError: 'none',
       modeldata: [],
       display: 'none',
@@ -98,7 +99,7 @@ class DetectorEditDialog extends Component {
   render() {
     const handleDelete = () => {
       this.hideDialog();
-      this.props.removebutton(this.props.detector, this.props.button);
+      this.props.removebutton(this.props.detector, this.props.button.id);
     }
     let mat = [];
     if (MaterialList.get(this.state.detmat) == this.state.detmat) {
@@ -312,6 +313,7 @@ class DetectorEditDialog extends Component {
             Delete
           </Button>
           <Button variant="primary" onClick={async () => {
+            Logger.log(3, "Modified detector");
 
             this.hideDialog();
             if (this.state.geomrty == 'stl') {
@@ -319,7 +321,7 @@ class DetectorEditDialog extends Component {
               this.props.detector.model = new Model(modelData.vertices, modelData.normals, this.props.canvas.current.gl);
               this.props.detector.model.drawLines = false;
             } else {
-              let response = await fetch("http://radsim.inf.elte.hu:9000/database", {
+              let response = await fetch("http://localhost:9000/database", {
                 headers: {
                   'Accept': 'application/json',
                   'Content-Type': 'application/json'

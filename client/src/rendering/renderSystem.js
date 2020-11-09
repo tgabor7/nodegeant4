@@ -67,6 +67,11 @@ class RenderSystem {
     addDetector(detector){
         this.detectors.push(detector);
     }
+    clearSetup(){
+        this.detectors = []
+        this.sources = []
+        this.guns = []
+    }
     clearTracks(){
         this.models = [];
         this.addModel(new Model([1, 0, 0, -1, 0, 0], [1, 1, 1, 1, 1, 1], this.gl));
@@ -153,7 +158,6 @@ class RenderSystem {
             }
             this.gl.enable(this.gl.DEPTH_TEST);
         }
-        
         
         for (var i = 0; i < this.guns.length; i++) {
             this.gl.enableVertexAttribArray(0);

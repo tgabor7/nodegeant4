@@ -9,6 +9,7 @@ class Detector {
         this.hits = [];
         this.geometry = 'cube';
         this.numberOfHits = [];
+        this.units = [1,1,1];
     }
     contains(f) {
         for (var i = 0; i < this.hits.length; i++) {

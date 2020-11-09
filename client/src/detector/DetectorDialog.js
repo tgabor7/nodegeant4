@@ -147,7 +147,7 @@ class DetectorDialog extends Component{
           />
             <hr />
             <Row>Position</Row>
-            <Form.Control as="select" style={{"width":"100px","margin-left":"-15px","margin-bottom":"10px"}} value={this.state.scaleme} onChange={(e)=>{this.setState({scaleme: e.target.value});}}>
+            <Form.Control as="select" style={{"width":"100px","margin-left":"-15px","margin-bottom":"10px"}} value={this.state.posme} onChange={(e)=>{this.setState({posme: e.target.value});}}>
                 <option value=".1">mm</option>
                 <option value="1">cm</option>
                 <option value="10">dm</option>
@@ -221,7 +221,7 @@ class DetectorDialog extends Component{
           <br/>
           <hr />
           <Row>Scale</Row>
-          <Form.Control as="select" style={{"width":"100px","margin-left":"-15px","margin-bottom":"10px"}} value={this.state.posme} onChange={(e)=>{this.setState({posme: e.target.value});}}>
+          <Form.Control as="select" style={{"width":"100px","margin-left":"-15px","margin-bottom":"10px"}} value={this.state.scaleme} onChange={(e)=>{this.setState({scaleme: e.target.value});}}>
                 <option value=".1">mm</option>
                 <option value="1">cm</option>
                 <option value="10">dm</option>

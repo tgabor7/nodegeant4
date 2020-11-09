@@ -79,7 +79,7 @@ PrimaryGeneratorAction::PrimaryGeneratorAction(Gun *gun, ParticleSource *source)
 
 		int t1Good = radsrc::CApi::sourceConfig(pRadSource);
 		
-		std::cout << "\nt1Good:" << t1Good << "\n";
+		//std::cout << "\nt1Good:" << t1Good << "\n";
 		
 		std::ofstream s("U235.txt");
 
@@ -144,7 +144,6 @@ PrimaryGeneratorAction::PrimaryGeneratorAction(Gun *gun, ParticleSource *source)
 
 	}
 	catch (radsrc::CRadSourceException e) {
-		std::cout << "\nYikes\n";
 	}
 	
 

@@ -1,131 +1,131 @@
-#pragma once
-
 #include "DetectorConstruction.hh"
-#include "G4UserLimits.hh"
-#include "G4RunManager.hh"
+#include "SensitiveDetector.hh"
+
+#include "G4Material.hh"
 #include "G4NistManager.hh"
+#include "G4SDManager.hh"
+
 #include "G4Box.hh"
-#include "G4Cons.hh"
-#include "G4Orb.hh"
-#include "G4Sphere.hh"
-#include "G4Trd.hh"
+#include "G4Tubs.hh"
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
+#include "G4PVParameterised.hh"
+#include "G4GlobalMagFieldMessenger.hh"
+#include "G4AutoDelete.hh"
+
+#include "G4GeometryTolerance.hh"
+#include "G4GeometryManager.hh"
+
+#include "G4UserLimits.hh"
+
+#include "G4VisAttributes.hh"
+#include "G4Colour.hh"
+
 #include "G4SystemOfUnits.hh"
 #include "G4TessellatedSolid.hh"
 #include "G4TriangularFacet.hh"
-#include "G4SDManager.hh"
-
+#include "Simulation.hh"
 
 DetectorConstruction::DetectorConstruction()
-: G4VUserDetectorConstruction()
-{ 
-	
-}
-DetectorConstruction::DetectorConstruction(std::vector<Geometry*> gs)
-	: G4VUserDetectorConstruction()
+    :G4VUserDetectorConstruction()
 {
-	this->geometries = gs;
 }
-void DetectorConstruction::addGeometry(Geometry* g)
+DetectorConstruction::DetectorConstruction(std::vector<Geometry*> geometries)
 {
-	this->geometries.push_back(g);
+    this->geometries = geometries;
 }
-void DetectorConstruction::clearGeometries()
+DetectorConstruction::DetectorConstruction(std::vector<Geometry*> geometries, Simulation* sim)
 {
-	this->geometries.clear();
-	/*for (int i = 0; i < scoringVolumes.size(); i++) {
-		delete scoringVolumes[i];
-	}*/
-	scoringVolumes.clear();
+    this->geometries = geometries;
+    this->simulation = sim;
+    this->detectorid = 0;
 }
 DetectorConstruction::~DetectorConstruction()
-{ }
+{
+    for (int i = 0; i < sensitiveDetectors.size(); i++) {
+        delete sensitiveDetectors[i];
+    }
+}
+
 
 G4VPhysicalVolume* DetectorConstruction::Construct()
-{  
-  G4NistManager* nist = G4NistManager::Instance();
-  
+{
+    G4bool checkOverlaps = true;
 
-  G4double env_sizeXY = 2000*cm, env_sizeZ = 3000*cm;
-  
+    G4NistManager* nist = G4NistManager::Instance();
+    clearDetectors();
+    scoringVolumes.clear();
+    G4double env_sizeXY = 2000 * cm, env_sizeZ = 3000 * cm;
+    G4double world_sizeXY = 1.2 * env_sizeXY * cm;
+    G4double world_sizeZ = 1.2 * env_sizeZ * cm;
+    
+    G4double atomicNumber = 1.;
+    G4double massOfMole = 1.008 * g / mole;
+    G4double density = 1.e-25 * g / cm3;
+    G4double temperature = 2.73 * kelvin;
+    G4double pressure = 3.e-18 * pascal;
+    G4Material* Vacuum =
+        new G4Material("qwe", atomicNumber,
+            massOfMole, density, kStateGas,
+            temperature, pressure);
+    
+    G4Box* solidWorld =
+        new G4Box("World",0.5 * world_sizeXY, 0.5 * world_sizeXY, 0.5 * world_sizeZ);
+    G4LogicalVolume* logicWorld =
+        new G4LogicalVolume(solidWorld, Vacuum, "World");
+    G4VPhysicalVolume* physWorld = new G4PVPlacement(0,G4ThreeVector(),logicWorld, "World",0, false,0,true);
 
-  G4bool checkOverlaps = true;
+    for (int j = 0; j < geometries.size(); j++) {
+        G4Material* material = nist->FindOrBuildMaterial(geometries[j]->material);
 
+        G4TessellatedSolid* tes = new G4TessellatedSolid("tracker");
 
-  G4double world_sizeXY = 1.2*env_sizeXY*cm;
-  G4double world_sizeZ  = 1.2*env_sizeZ*cm;
-  G4Material* world_mat = nist->FindOrBuildMaterial("G4_AIR");
-  
-  G4double atomicNumber = 1.;
-  G4double massOfMole = 1.008 * g / mole;
-  G4double density = 1.e-25 * g / cm3;
-  G4double temperature = 2.73 * kelvin;
-  G4double pressure = 3.e-18 * pascal;
-  G4Material* Vacuum =
-      new G4Material("qwe", atomicNumber,
-          massOfMole, density, kStateGas,
-          temperature, pressure);
+        std::vector<float> data = geometries[j]->vertices;
+        for (int i = 0; i < data.size() / 9; i++) {
+            tes->AddFacet(new G4TriangularFacet(G4ThreeVector(data[i * 9] * geometries[j]->scale.x * cm, data[i * 9 + 1] * geometries[j]->scale.y * cm, data[i * 9 + 2] * geometries[j]->scale.z * cm),
+                G4ThreeVector(data[i * 9 + 3] * geometries[j]->scale.x * cm, data[i * 9 + 4] * geometries[j]->scale.y * cm, data[i * 9 + 5] * geometries[j]->scale.z * cm),
+                G4ThreeVector(data[i * 9 + 6] * geometries[j]->scale.x * cm, data[i * 9 + 7] * geometries[j]->scale.y * cm, data[i * 9 + 8] * geometries[j]->scale.z * cm), ABSOLUTE));
+        }
+        tes->SetSolidClosed(true);
 
+        G4LogicalVolume* logicEnv =
+            new G4LogicalVolume(tes, material, std::string("Chamber" + std::to_string(j)).c_str(), 0, 0, 0);
 
-  G4Box* solidWorld =    
-    new G4Box("World",                       //its name
-       0.5*world_sizeXY, 0.5*world_sizeXY, 0.5*world_sizeZ);     //its size
-      
-  G4LogicalVolume* logicWorld =                         
-    new G4LogicalVolume(solidWorld,          //its solid
-        Vacuum,           //its material
-                        "World");            //its name
-                             
-  G4VPhysicalVolume* physWorld = 
-    new G4PVPlacement(0,                     //no rotation
-                      G4ThreeVector(),       //at (0,0,0)
-                      logicWorld,            //its logical volume
-                      "World",               //its name
-                      0,                     //its mother  volume
-                      false,                 //no boolean operation
-                      0,                     //copy number
-                      checkOverlaps);        //overlaps checking
-                     
-  
-  
-  /*G4UserLimits* limit = new G4UserLimits();
-  limit->SetUserMaxTrackLength(0);
-  logicWorld->SetUserLimits(limit);*/
+        
+        G4RotationMatrix* rotation = new G4RotationMatrix();
+        rotation->rotateX(-geometries[j]->rotation.x * rad);
+        rotation->rotateY(-geometries[j]->rotation.y * rad);
+        rotation->rotateZ(-geometries[j]->rotation.z * rad);
 
-  for (int j = 0; j < geometries.size(); j++) {
-	  G4Material* material = nist->FindOrBuildMaterial(geometries[j]->material);
-      
-      std::cout << "\nDensity: " << material->GetDensity() << "\n\n";
+        new G4PVPlacement(rotation,
+            G4ThreeVector(geometries[j]->position.x * cm, geometries[j]->position.y * cm, geometries[j]->position.z * cm),
+            logicEnv, std::string("Detektor" + std::to_string(j)).c_str(), logicWorld, false, 0, checkOverlaps);
 
-	  G4TessellatedSolid* tes = new G4TessellatedSolid();
-	 
-	  std::vector<float> data = geometries[j]->vertices;
-	  for (int i = 0; i < data.size() / 9; i++) {
-		  tes->AddFacet(new G4TriangularFacet(G4ThreeVector(data[i*9] * geometries[j]->scale.x*cm, data[i * 9 + 1] * geometries[j]->scale.y*cm, data[i * 9 + 2] * geometries[j]->scale.z*cm),
-			  G4ThreeVector(data[i * 9 + 3] * geometries[j]->scale.x*cm, data[i * 9 + 4] * geometries[j]->scale.y*cm, data[i * 9 + 5] * geometries[j]->scale.z*cm),
-			  G4ThreeVector(data[i * 9 + 6] * geometries[j]->scale.x*cm, data[i * 9 + 7] * geometries[j]->scale.y*cm, data[i * 9 + 8] * geometries[j]->scale.z*cm), ABSOLUTE));
-	  }
-	  tes->SetSolidClosed(true);
-	 
-	  G4LogicalVolume* logicEnv =
-		  new G4LogicalVolume(tes, material, std::string("Detektor" + std::to_string(j)).c_str());
+        scoringVolumes.push_back(logicEnv);
 
-      /*limit->SetUserMaxTrackLength(10000);
-      logicEnv->SetUserLimits(limit);*/
+       
 
-	  G4RotationMatrix* rotation = new G4RotationMatrix();
-	  rotation->rotateX(-geometries[j]->rotation.x * rad);
-	  rotation->rotateY(-geometries[j]->rotation.y * rad);
-	  rotation->rotateZ(-geometries[j]->rotation.z * rad);
+    }
+    
+    return physWorld;
+}
 
-	  new G4PVPlacement(rotation,
-		  G4ThreeVector(geometries[j]->position.x*cm, geometries[j]->position.y*cm, geometries[j]->position.z*cm),
-		  logicEnv, std::string("Detektor" + std::to_string(j)).c_str(),logicWorld,false,0, checkOverlaps); 
-
-      
-	  scoringVolumes.push_back(logicEnv);
-
-  }
-  return physWorld;
+void DetectorConstruction::clearDetectors()
+{
+    for (int i = 0; i < sensitiveDetectors.size(); i++) {
+        delete sensitiveDetectors[i];
+    }
+}
+void DetectorConstruction::ConstructSDandField()
+{
+    for (int i = 0; i < scoringVolumes.size(); i++) {
+        detectorid++;
+        SensitiveDetector* aTrackerSD = new SensitiveDetector(std::string("Tracker" + std::to_string(detectorid)).c_str(),
+            std::string("TrackerHitsCollection" + std::to_string(detectorid)).c_str(), simulation);
+        aTrackerSD->id = geometries[i]->id;
+        sensitiveDetectors.push_back(aTrackerSD);
+        
+        G4SDManager::GetSDMpointer()->AddNewDetector(aTrackerSD);
+        SetSensitiveDetector(scoringVolumes[i], aTrackerSD);
+    }
 }

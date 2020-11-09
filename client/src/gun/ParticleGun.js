@@ -5,5 +5,6 @@ export class ParticleGun {
         this.energy = energy;
         this.model = model;
         this.name = "Particle Gun";
+        this.units = [1,1];
     }
 }

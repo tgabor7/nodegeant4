@@ -4,6 +4,7 @@ import AceEditor from 'react-ace';
 import 'brace/mode/elixir';
 import 'brace/theme/monokai';
 import Parser from '../utils/Parser';
+import Logger from '../utils/Logger';
 
 class CodeEditor extends Component{
     constructor(props){
@@ -14,6 +15,12 @@ class CodeEditor extends Component{
         this.updateText = this.updateText.bind(this);
         this.state = {text: '', width: '20%'}
         this.editor = React.createRef();
+        this.onclickfunction = ()=>{
+            let tmp = this.state.text;
+            Parser.parse(tmp,this.props.canvas.current, this.props.clearSetup,this.props.createDetector, this.props.createSource, this.props.createGun);
+            this.setState({text: tmp});
+            Logger.log(2, "Ran script: " + this.state.text);
+        };
     }
     updateText(s){
         this.setState({text: s});
@@ -42,11 +49,7 @@ onClick={()=>{
     this.fileinput.current.click();
 }}>Open</Button>
             <Button 
-            onClick={()=>{
-                let tmp = this.state.text;
-                Parser.parse(tmp,this.props.canvas.current, this.props.clearSetup,this.props.createDetector, this.props.createSource, this.props.createGun);
-                this.setState({text: tmp});
-                }}
+            onClick={this.onclickfunction}
             style={{'border' : '0','position':'relative','background-color': 'gray', 'z-index':'3', 'bottom':'0', 'border-radius' : '0', 'border':'solid 1px white'}}>Run script</Button>
             <Button style={{'border' : '0','position':'relative','background-color': 'gray', 'z-index':'3', 'bottom':'0', 'border-radius' : '0', 'border':'solid 1px white'}}
 onClick={()=>{

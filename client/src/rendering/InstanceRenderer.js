@@ -11,6 +11,7 @@ export class InstanceRenderer {
         this.color_vbo = this.createVBO(gl);
         this.shader = new InstanceShader(gl);
         this.storeData(0, 3, vertices, gl);
+        this.maxenergy = 0.0;
         gl.bindVertexArray(null);
         gl.disableVertexAttribArray(0);
 
@@ -54,6 +55,7 @@ export class InstanceRenderer {
         this.shader.setUniform4fv("projection", projection);
         this.shader.setUniform3f("color", 1,1,1);
         this.shader.setUniform("camera", d);
+        this.shader.setUniform("max", this.maxenergy);
 
         gl.bindVertexArray(null);
         gl.disableVertexAttribArray(0);

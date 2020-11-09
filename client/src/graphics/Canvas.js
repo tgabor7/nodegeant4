@@ -76,12 +76,10 @@ class Canvas extends Component{
       return camera;
   }
     this.gl = this.canvas.current.getContext("webgl2");
-    let color = 0;  
     let gridRenderer = new GridRenderer(this.gl);
     this.renderer = new RenderSystem(this.gl);
     this.instanceRenderer = new InstanceRenderer(Cube.vertices, this.gl);
     var draw = ()=>{
-      color += .001;
       this.gl.clearColor(.2,.2,.2,1.0);
       this.gl.clear(this.gl.COLOR_BUFFER_BIT);
       
@@ -199,6 +197,9 @@ class Canvas extends Component{
 
     return gun;
 
+  }
+  clearSetup(){
+    this.renderer.clearSetup()
   }
   removeSource(source){
     this.renderer.removeSource(source);

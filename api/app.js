@@ -12,6 +12,7 @@ var usersRouter = require('./routes/users');
 var testAPIRouter = require("./routes/testAPI");
 var gammaAPIRouter = require("./routes/gammaAPI");
 var databaseRouter = require("./routes/database");
+var logRouter = require("./routes/log");
 
 var app = express();
 
@@ -39,6 +40,7 @@ app.use('/users', usersRouter);
 app.use("/testAPI", testAPIRouter);
 app.use("/gammaAPI", gammaAPIRouter);
 app.use("/database", databaseRouter);
+app.use("/log", logRouter);
 app.use('/', express.static('./public'));
 app.use('/Help', express.static('./public/help'));
 

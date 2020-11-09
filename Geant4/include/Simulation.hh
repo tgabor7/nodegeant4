@@ -10,6 +10,7 @@
 #include "Gun.hh"
 #include <string>
 #include "G4VModularPhysicsList.hh"
+#include <fstream>
 
 #define NUMBER_OF_SAMPLES 5000
 
@@ -21,6 +22,7 @@ class G4MTRunManager;
 class Simulation {
 public:
 	Simulation();
+	Simulation(std::vector<Geometry*> detectors);
 	Simulation(G4MTRunManager*);
 	void init();
 	void addDetector(Geometry* d); // detector hozzáadása a rendszerhez
@@ -32,7 +34,7 @@ public:
 	void updateGun(Gun *gun); // frissíti a részecske ágyú helyzetét, irányát, a részecske energiáját és typusát
 	void updateSource(ParticleSource* source);
 	void addTrack(const G4Step*); // 
-	std::stringstream run(Gun* gun,int number_of_particles); // feldolgozza a kapott adatot, amit majd a server visszaküldi
+	std::stringstream run(Gun* gun,int number_of_particles, std::ofstream&); // feldolgozza a kapott adatot, amit majd a server visszaküldi
 	std::stringstream getSpectrum(Gun* gun,int number_of_particles, int detector_id); // feldolgozza a kapott adatot, amit majd a server visszaküldi
 	std::vector<Geometry*> detectors;
 	std::vector<ParticleSource*> sources;

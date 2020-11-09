@@ -19,10 +19,10 @@ class SourceEditDialog extends Component{
     this.table = React.createRef();
     this.state = {show: false, 
       detname: this.props.detector.name,
-      detposx: this.props.detector.model.position.x,
-      detposy: this.props.detector.model.position.y,
-      detposz: this.props.detector.model.position.z,
-      posu: 1,
+      detposx: this.props.detector.model.position.x / this.props.detector.units[0],
+      detposy: this.props.detector.model.position.y / this.props.detector.units[0],
+      detposz: this.props.detector.model.position.z / this.props.detector.units[0],
+      posu: this.props.detector.units[0],
       material: this.props.detector.material}
     
   }
@@ -43,7 +43,7 @@ class SourceEditDialog extends Component{
   render(){
     const handleDelete = ()=>{
       this.hideDialog();
-      this.props.removebutton(this.props.detector, this.props.button);
+      this.props.removebutton(this.props.detector, this.props.button.id);
     }
     return <>
         <SourceTable ref={this.table} updatematerial={this.updateMaterial}></SourceTable>
