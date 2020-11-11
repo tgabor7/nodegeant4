@@ -1,11 +1,12 @@
 import Shader from "./shader.js";
-import Matrix, {Maths, Vector3} from "./maths.js";
+import Matrix, {Maths, Vector3} from "../utils/maths.js";
 import { Texture } from "./texture.js";
+import {SpectrumShader} from "../shaders/spectrumshader";
 
 export class GuiRenderer {
     constructor(gl){
         this.gl = gl;
-        this.shader = new Shader([0, 'vertPosition'],"shaders/gui", gl);
+        this.shader = new Shader([[0,'vertPosition']],SpectrumShader,gl);
         this.vertices = [ -1, 1, 1, 1, -1, -1,
              1, -1, 1, 1, -1, -1];
 
@@ -31,12 +32,6 @@ export class GuiRenderer {
         this.gl.disable(this.gl.CULL_FACE);
 
         //this.shader.setUniform("sampler", 0);
-
-        var transformation = Maths.createTransformationMatrix(.45,-.58,0,0,0,0,.05,.002,1);
-      
-
-        this.shader.setUniform4fv("transformation", transformation);
-        
 
 		
         this.gl.enableVertexAttribArray(0);

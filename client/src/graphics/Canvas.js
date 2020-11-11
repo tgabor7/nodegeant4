@@ -11,6 +11,7 @@ import {ParticleGun} from '../gun/ParticleGun';
 import {GunMesh} from '../gun/gun';
 import {ParticleSource} from '../source/ParticleSource';
 import { InstanceRenderer } from '../rendering/InstanceRenderer';
+import ColorSpectrum from '../graphics/ColorSpectrum';
 
 import STLParser from '../utils/STLParser';
 
@@ -18,7 +19,7 @@ import STLParser from '../utils/STLParser';
 class Canvas extends Component{
   constructor(props){
     super(props);
-    this.state = ({hint: " "});
+    this.state = ({hint: " ", colorMinHint: "0 eV", colorMaxHint: "0 eV"});
     this.canvas = createRef();
     this.camera = new Camera(45, -45, 100, new Vector3(0, 0, 0), new Vector3(0, 0, 0));
     this.oldX = 0;
@@ -36,6 +37,10 @@ class Canvas extends Component{
     this.drawGrid = false;
     this.gl = null;
     this.updateHint = this.updateHint.bind(this);
+    this.updateColorHint = this.updateColorHint.bind(this);
+  }
+  updateColorHint(s){
+    this.setState({colorMaxHint: s});
   }
   updateHint(s){
     this.setState({hint: s});
@@ -79,6 +84,7 @@ class Canvas extends Component{
     let gridRenderer = new GridRenderer(this.gl);
     this.renderer = new RenderSystem(this.gl);
     this.instanceRenderer = new InstanceRenderer(Cube.vertices, this.gl);
+    this.guiRenderer = new ColorSpectrum(this.gl);
     var draw = ()=>{
       this.gl.clearColor(.2,.2,.2,1.0);
       this.gl.clear(this.gl.COLOR_BUFFER_BIT);
@@ -109,6 +115,7 @@ class Canvas extends Component{
       if(this.drawGrid) gridRenderer.draw(projection, this.camera, this.canvas.current.offsetWidth,this.canvas.current.offsetHeight, this.camera.d, this.updateHint);
       this.renderer.draw(projection, this.camera);
       if(this.drawParticles) this.instanceRenderer.render(this.particles, Maths.createViewMatrix(this.camera),projection, this.camera.d, this.gl);
+      this.guiRenderer.draw();
       updateCamera(this.camera);
       this.move = false;
       requestAnimationFrame(draw);
@@ -213,6 +220,8 @@ class Canvas extends Component{
   render(){
     return <div>
       <p ref={this.hint} style={{"position":"fixed", "bottom" : "10%", "left" : "20%", "z-index" : "4", "color" : "white"}}>{this.state.hint}</p>
+      <p ref={this.colorMinHint} style={{"position":"fixed", "bottom" : "0%", "left" : "71%", "z-index" : "4", "color" : "white"}}>{this.state.colorMinHint}</p>
+      <p ref={this.colorMaxHint} style={{"position":"fixed", "bottom" : "15%", "left" : "71%", "z-index" : "4", "color" : "white"}}>{this.state.colorMaxHint}</p>
     <canvas ref={this.canvas} onMouseMove={(e)=>{ 
       this.move = true;
       this.oldX = this.x;

@@ -183,7 +183,7 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 		fParticleGun->GeneratePrimaryVertex(anEvent);*/
 	}
 	if(gun->active){
-		fParticleGun->SetParticleEnergy(gun->energy * keV);
+		fParticleGun->SetParticleEnergy(gun->energy * eV);
 
 		fParticleGun->SetParticlePosition(G4ThreeVector(gun->position.x, gun->position.y, gun->position.z));
 		//fParticleGun->SetParticleMomentumDirection(G4ThreeVector(G4UniformRand() - .5, G4UniformRand() - .5, -1));

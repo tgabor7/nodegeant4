@@ -173,7 +173,7 @@ std::stringstream Simulation::getSpectrum(Gun* gun, int number_of_particles, int
 			gun_particle->position.z = sources[j]->position.x;
 
 
-			gun_particle->totalEnergy = sources[j]->getEnergy() * 0.001;
+			gun_particle->totalEnergy = sources[j]->getEnergy();
 
 			Track* primary = new Track;
 
@@ -296,7 +296,7 @@ std::stringstream Simulation::run(Gun *gun, int numberofparticles, std::ofstream
 			gun_particle->position.z = sources[j]->position.x;
 
 
-			gun_particle->totalEnergy = sources[j]->getEnergy() * 0.001;
+			gun_particle->totalEnergy = sources[j]->getEnergy();
 
 			Track* primary = new Track;
 
@@ -332,7 +332,7 @@ std::stringstream Simulation::run(Gun *gun, int numberofparticles, std::ofstream
 			gun_particle->position.z = guns[j]->position.x;
 
 
-			gun_particle->totalEnergy = guns[j]->energy * 0.001;
+			gun_particle->totalEnergy = guns[j]->energy;
 
 			Track* primary = new Track;
 

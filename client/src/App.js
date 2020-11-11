@@ -324,7 +324,7 @@ class App extends Component {
         j++;
 
 
-        this.particles.push(particle);
+        if(i>0) this.particles.push(particle); //ignore source particle for now
       }
       index += numberOfSteps * 7 + 2;
 
@@ -340,10 +340,9 @@ class App extends Component {
       tm.drawLines = true;
       this.tracks.push(tm);
     }
-
     if(this.particles.length > 1000){
       this.popup.current.showDialog("Too many particles!","Low energy particles will be ommited!",()=>{});
-      this.particles = this.particles.sort((a,b)=>{return b.totalEnergy - a.totalEnergy});
+      this.particles = this.particles.sort((a,b)=>{return b.energyDeposit - a.energyDeposit});
       this.particles.length = 1000;
       //this.particles.splice(1000, this.particles.length-1000);
     } 
@@ -356,17 +355,18 @@ class App extends Component {
     function get_max(particles){
       var max = 0;
       for (var i = 0; i < particles.length; i++) {
-        if(particles[i].totalEnergy > max) max = particles[i].totalEnergy;
+        if(particles[i].energyDeposit > max) max = particles[i].energyDeposit;
       }
       return max;
     }
     let max = get_max(this.particles);
+    this.canvas.current.updateColorHint(Math.ceil(max * 1000) + " keV");
     this.canvas.current.instanceRenderer.maxenergy = max;
 
     function get_average(particles) {
       var max = 0;
       for (var i = 0; i < particles.length; i++) {
-        max += +particles[i].totalEnergy;
+        max += +particles[i].energyDeposit;
       }
       max = max / particles.length;
 
@@ -378,7 +378,7 @@ class App extends Component {
     for (let i = 0; i < this.particles.length; i++) {
       //if (this.particles[i].totalEnergy > max) this.particles[i].totalEnergy = max;
       
-      this.particles[i].color.x = this.particles[i].totalEnergy;
+      this.particles[i].color.x = this.particles[i].energyDeposit;
       //this.particles[i].color.y = 1 - this.particles[i].color.x;
 
       let d = Math.sqrt(this.particles[i].color.x / max);

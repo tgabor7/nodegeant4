@@ -1,5 +1,9 @@
 # nodegeant4
 
+2020/11/11
+- added color spectrum gui
+- fixed unit bugs
+
 2020/11/09
 - added logging
 - added testing for the language
