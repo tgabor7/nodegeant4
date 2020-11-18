@@ -2443,7 +2443,7 @@ daughter: A: 87 Z: 223 MetaStableNumber: 0
 46.13kev fraction: 1.4e-05, 69.13kev fraction: 5.5e-05, 69.83kev fraction: 0.00017, 99.7kev fraction: 0.00032, 106.1kev fraction: 1.4e-05, 120.9kev fraction: 5.5e-05, 133.8kev fraction: 2.8e-05, 147.2kev fraction: 8.3e-05, 171.4kev fraction: 4.1e-05, 
 16.559
 
-RadSource Run: Wed Nov 11 09:20:17 2020
+RadSource Run: Tue Nov 17 20:31:23 2020
 
 Input Isotopes
 U-235  100%
