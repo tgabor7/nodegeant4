@@ -10,6 +10,7 @@ import RunDialog from './RunDialog';
 import SpectrumDialog from './SpectrumDialog';
 import ConfirmDialog from './ConfirmDialog';
 import VolumeDialog from '../volume/VolumeDialog';
+import Logger from '../utils/Logger';
 
 class NavigationBar extends Component{
   constructor(props){
@@ -72,6 +73,10 @@ class NavigationBar extends Component{
                   this.confirmDialog.current.showDialog();
                   
                   }}>Clear setup</Button>
+
+        <Button variant="primary" style={{backgroundColor: 'gray'}} onClick={()=>{
+                  Logger.log(1, "asd");
+                  }}>Send log</Button>
 
         <Nav className="mr-auto">
         <Dropdown>

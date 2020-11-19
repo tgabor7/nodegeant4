@@ -74,6 +74,7 @@ class App extends Component {
   }
   clearRun() {
     this.canvas.current.clearRun();
+    this.canvas.current.updateColorHint("0 keV","0 keV");
   }
   runSpectroscopy(number_of_particles, detector, hideDialog, binsize) {
     Logger.log(1, "Started spectrum simulation");
@@ -236,7 +237,7 @@ class App extends Component {
       message += data[i];
       message += ',';
     }
-    fetch('http://localhost:9000/gammaAPI', {
+    fetch('http://radsim.inf.elte.hu:9000/gammaAPI', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -258,7 +259,7 @@ class App extends Component {
       message += data[i];
       message += ',';
     }
-    fetch('http://localhost:9000/gammaAPI', {
+    fetch('http://radsim.inf.elte.hu:9000/gammaAPI', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -359,8 +360,16 @@ class App extends Component {
       }
       return max;
     }
+    function get_min(particles){
+      var min = 0;
+      for (var i = 0; i < particles.length; i++) {
+        if(particles[i].energyDeposit <= max) min = particles[i].energyDeposit;
+      }
+      return min;
+    }
     let max = get_max(this.particles);
-    this.canvas.current.updateColorHint(Math.ceil(max * 1000) + " keV");
+    var min = get_min(this.particles);
+    this.canvas.current.updateColorHint(Math.ceil(max * 1000) + " keV",Math.ceil(min * 1000) + " keV");
     this.canvas.current.instanceRenderer.maxenergy = max;
 
     function get_average(particles) {
@@ -678,7 +687,7 @@ class App extends Component {
 
     Parser.init(this.volumeselect.current, this.popup.current.showDialog);
 
-    let response = await fetch("http://localhost:9000/database", {
+    let response = await fetch("http://radsim.inf.elte.hu:9000/database", {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

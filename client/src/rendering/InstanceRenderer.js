@@ -70,7 +70,8 @@ export class InstanceRenderer {
     createVBO(gl){
         let vbo = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(99999999), gl.STREAM_DRAW, 0);
+        //maximum 5000 particles 16 byte per particle
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(5000*16), gl.STREAM_DRAW, 0);
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
 
         return vbo;

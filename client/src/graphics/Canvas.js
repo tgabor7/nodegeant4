@@ -19,7 +19,7 @@ import STLParser from '../utils/STLParser';
 class Canvas extends Component{
   constructor(props){
     super(props);
-    this.state = ({hint: " ", colorMinHint: "0 eV", colorMaxHint: "0 eV"});
+    this.state = ({hint: " ", colorMinHint: "0 keV", colorMaxHint: "0 keV"});
     this.canvas = createRef();
     this.camera = new Camera(45, -45, 100, new Vector3(0, 0, 0), new Vector3(0, 0, 0));
     this.oldX = 0;
@@ -39,8 +39,8 @@ class Canvas extends Component{
     this.updateHint = this.updateHint.bind(this);
     this.updateColorHint = this.updateColorHint.bind(this);
   }
-  updateColorHint(s){
-    this.setState({colorMaxHint: s});
+  updateColorHint(s, ms){
+    this.setState({colorMaxHint: s, colorMinHint: ms});
   }
   updateHint(s){
     this.setState({hint: s});

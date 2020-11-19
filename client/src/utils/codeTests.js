@@ -2,17 +2,25 @@ import Logger from './Logger';
 import { Vector3 } from './maths';
 
 
+//language test
 class CodeTests {
     static test(a, b){
         return a == b;
     }
-    static async langTest(functions){
+    static async dialogCheck(functions){
+        
+    }
+    static async langTest(functions, entities){
         Logger.log(3, "Started testing!");
         functions[7]();
         
         let detectors = []
         let sources = []
         let guns = []
+
+        //First test case detector creation
+        
+
 
         //test create and delete
         for(let j = 0;j<10;j++){

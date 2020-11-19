@@ -321,7 +321,7 @@ class DetectorEditDialog extends Component {
               this.props.detector.model = new Model(modelData.vertices, modelData.normals, this.props.canvas.current.gl);
               this.props.detector.model.drawLines = false;
             } else {
-              let response = await fetch("http://localhost:9000/database", {
+              let response = await fetch("http://radsim.inf.elte.hu:9000/database", {
                 headers: {
                   'Accept': 'application/json',
                   'Content-Type': 'application/json'

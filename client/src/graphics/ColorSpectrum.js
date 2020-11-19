@@ -29,8 +29,6 @@ class ColorSpectrum {
     }
     draw(){
         //remove clear
-        
-        
         this.shader.bind();
         this.gl.disable(this.gl.DEPTH_TEST);
         this.gl.disable(this.gl.CULL_FACE);
@@ -44,7 +42,7 @@ class ColorSpectrum {
         this.gl.bindVertexArray(this.vao);
         this.shader.setUniform4fv("transformation",transformation);
 
-        this.gl.drawArrays(this.gl.TRIANGLES, 0, this.vertices.length);
+        this.gl.drawArrays(this.gl.TRIANGLES, 0, this.vertices.length / 2);
 
         this.gl.bindVertexArray(null);
         this.gl.disableVertexAttribArray(0);
