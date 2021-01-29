@@ -12,6 +12,7 @@ import STLParser from '../utils/STLParser';
 import Model from '../rendering/model';
 import UnitConverter from '../utils/UnitConverter';
 import Logger from '../utils/Logger';
+import VolumeList from '../volume/VolumeList';
 
 class DetectorEditDialog extends Component {
   constructor(props) {
@@ -317,25 +318,16 @@ class DetectorEditDialog extends Component {
 
             this.hideDialog();
             if (this.state.geomrty == 'stl') {
+              //To-DO
+              //Create new volume if not in voluems
+              this.state.geomrty = this.state.detname + "Volume";
               let modelData = STLParser.parseData(this.state.modeldata);
+              this.props.createvolume(this.state.detname + "Volume",this.state.modeldata,this.state.detname + "Volume");
               this.props.detector.model = new Model(modelData.vertices, modelData.normals, this.props.canvas.current.gl);
               this.props.detector.model.drawLines = false;
             } else {
-              let response = await fetch("http://radsim.inf.elte.hu:9000/database", {
-                headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json'
-                },
-                method: 'POST',
-                body: JSON.stringify({ name: this.state.geomrty })
-              });
-              let json = await response.json();
-              let data = new String(json[0].data.data);
-              var str = '';
-              for (let i = 0; i < json[0].data.data.length; i++) {
-                str += String.fromCharCode(json[0].data.data[i]);
-              }
-              let modeldata = STLParser.parseData(str);
+              let data = VolumeList.getVolume(this.state.geomrty).data;
+              let modeldata = STLParser.parseData(data);
               this.props.detector.model = new Model(modeldata.vertices, modeldata.normals, this.props.canvas.current.gl);
               this.props.detector.model.drawLines = false;
             }

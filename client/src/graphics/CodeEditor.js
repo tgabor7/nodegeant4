@@ -5,6 +5,7 @@ import 'brace/mode/elixir';
 import 'brace/theme/monokai';
 import Parser from '../utils/Parser';
 import Logger from '../utils/Logger';
+import UnitConverter from '../utils/UnitConverter';
 
 class CodeEditor extends Component{
     constructor(props){
@@ -21,9 +22,54 @@ class CodeEditor extends Component{
             this.setState({text: tmp});
             Logger.log(2, "Ran script: " + this.state.text);
         };
+        
+    }
+    addDetectorCode(id, name, position, rotation, scale, material, geometry, posu, rotu, scaleu,code){
+        let tmp = this.state.text;
+        this.setState({text: tmp + Parser.addDetectorCode(id, name, position, rotation, scale, material, geometry, posu, rotu, scaleu)});
+        Parser.chunks.pop();
+    }
+    addSourceCode(name, position, material, posu){
+        let tmp = this.state.text;
+        this.setState({text: tmp + "\\Source{\n" +
+        "\tname: " + '"' + name + '";\n' +
+        "\tposition[" + UnitConverter.convertLength(posu) + "]: " + position.x + ", " + position.y + ", " + position.z + ";\n" +
+        "\tmaterial: " + '"' + material + '";\n' +
+        "}\n"});
+    }
+    addGunCode(name, position, direction, energy, posu, energyu){
+        let tmp = this.state.text;
+        this.setState({text: tmp +  "\\Gun{\n" +
+        "\tname: " + '"' + name + '";\n' +
+        "\tposition[" + UnitConverter.convertLength(posu) + "]: " + position.x + ", " + position.y + ", " + position.z + ";\n" +
+        "\tdirection: " + direction.x + ", " + direction.y + ", " + direction.z + ";\n" +
+        "\tenergy[" + UnitConverter.convertEnergy(energyu) + "]: " + energy + ';\n' +
+        "}\n"});
+    }
+    componentDidMount(){
+        
     }
     updateText(s){
         this.setState({text: s});
+        
+    }
+    renameGeometry(name, newname, detectors){
+        for(let i = 0;i<detectors.length;i++){
+            if(detectors[i].geometry == name){
+                let tmp = Parser.removeChunk(detectors[i].id);
+                alert(tmp);
+                this.updateText(tmp);
+                this.setState({text: tmp + Parser.addDetectorCode(detectors[i].id, detectors[i].name, detectors[i].model.position,
+                    detectors[i].model.rotation, detectors[i].model.scale, detectors[i].material, newname, detectors[i].units[0],
+                    detectors[i].units[1], detectors[i].units[2])});
+                //Parser.chunks.pop();
+                
+            }
+        }
+        // detectors.forEach(e =>{
+            
+        // });
+       
     }
     render(){
         return <div 

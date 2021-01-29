@@ -12,9 +12,9 @@ import {GunMesh} from '../gun/gun';
 import {ParticleSource} from '../source/ParticleSource';
 import { InstanceRenderer } from '../rendering/InstanceRenderer';
 import ColorSpectrum from '../graphics/ColorSpectrum';
-
+import AxisRenderer from '../rendering/axisRenderer';
 import STLParser from '../utils/STLParser';
-
+import VolumeList from '../volume/VolumeList';
 
 class Canvas extends Component{
   constructor(props){
@@ -29,13 +29,18 @@ class Canvas extends Component{
     this.y = 0;
     this.keyDown = ` ${0}`;
     this.down = false;
+    this.rightclick = false;
     this.renderer = null;
     this.instanceRenderer = null;
+    this.axisRenderer = null;
     this.particles = [];
     this.drawTracks = false;
     this.drawParticles = true;
     this.drawGrid = false;
     this.gl = null;
+    this.detector_buttons = [];
+    this.source_buttons = [];
+    this.gun_buttons = [];
     this.updateHint = this.updateHint.bind(this);
     this.updateColorHint = this.updateColorHint.bind(this);
   }
@@ -61,7 +66,54 @@ class Canvas extends Component{
     this.particles = [];
     this.renderer.clearTracks();
   }
+  
   componentDidMount() {
+    this.canvas.current.oncontextmenu = (e)=> {
+      this.rightclick = true;
+      //if(RenderSystem.hover_id == -1) RenderSystem.active_id = -1;
+      let selected = -1;
+      for(var i = 0;i<this.detector_buttons.length;i++){
+        if(this.detector_buttons[i].current.id == RenderSystem.hover_id){
+          this.detector_buttons[i].current.accordion.current.click();
+          selected = this.detector_buttons[i].current.id;
+        }
+      }
+      console.log(this.source_buttons.length);
+      for(var i = 0;i<this.source_buttons.length;i++){
+        if(this.source_buttons[i].current.id == RenderSystem.hover_id){
+          this.source_buttons[i].current.accordion.current.click();
+          selected = this.source_buttons[i].current.id;
+        }
+      }
+      for(var i = 0;i<this.gun_buttons.length;i++){
+        if(this.gun_buttons[i].current.id == RenderSystem.hover_id){
+          this.gun_buttons[i].current.accordion.current.click();
+          selected = this.gun_buttons[i].current.id;
+        }
+      }
+      if(selected == -1){
+        for(var i = 0;i<this.detector_buttons.length;i++){
+          if(this.detector_buttons[i].current.id == RenderSystem.active_id){
+            this.detector_buttons[i].current.accordion.current.click();
+            //selected = this.detector_buttons[i].current.id;
+          }
+        }
+        for(var i = 0;i<this.source_buttons.length;i++){
+          if(this.source_buttons[i].current.id == RenderSystem.active_id){
+            this.source_buttons[i].current.accordion.current.click();
+            //selected = this.source_buttons[i].current.id;
+          }
+        }
+        for(var i = 0;i<this.gun_buttons.length;i++){
+          if(this.gun_buttons[i].current.id == RenderSystem.active_id){
+            this.gun_buttons[i].current.accordion.current.click();
+            //selected = this.source_buttons[i].current.id;
+          }
+        }
+      }
+      //alert(this.detector_buttons[0].current.accordion.current.click());
+      e.preventDefault(); e.stopPropagation();}
+
     function updateCamera(camera) {
       if (camera.y > 89.0) {
           camera.y = 89.0;
@@ -70,12 +122,12 @@ class Canvas extends Component{
           camera.y = -89.0;
       }
   
-      camera.p.x = (camera.d * -Math.sin(camera.x * Math.PI / 180.0)
-          * Math.cos(camera.y * Math.PI / 180.0) + camera.a.x);
-      camera.p.y = (camera.d * -Math.sin(camera.y * Math.PI / 180.0)
+      camera.p.x = (camera.d * -Math.sin(Maths.toRad(camera.x))
+          * Math.cos(Maths.toRad(camera.y)) + camera.a.x);
+      camera.p.y = (camera.d * -Math.sin(Maths.toRad(camera.y))
           + camera.a.y);
-      camera.p.z = (-camera.d * Math.cos(camera.x * Math.PI / 180.0)
-          * Math.cos(camera.y * Math.PI / 180.0) + camera.a.z);
+      camera.p.z = (-camera.d * Math.cos(Maths.toRad(camera.x))
+          * Math.cos(Maths.toRad(camera.y)) + camera.a.z);
   
 
       return camera;
@@ -85,6 +137,7 @@ class Canvas extends Component{
     this.renderer = new RenderSystem(this.gl);
     this.instanceRenderer = new InstanceRenderer(Cube.vertices, this.gl);
     this.guiRenderer = new ColorSpectrum(this.gl);
+    this.axisRenderer = new AxisRenderer(this.gl);
     var draw = ()=>{
       this.gl.clearColor(.2,.2,.2,1.0);
       this.gl.clear(this.gl.COLOR_BUFFER_BIT);
@@ -111,13 +164,21 @@ class Canvas extends Component{
         this.camera.y += this.getMouseYd() / 2;
       }
       }
+      updateCamera(this.camera);
       
       if(this.drawGrid) gridRenderer.draw(projection, this.camera, this.canvas.current.offsetWidth,this.canvas.current.offsetHeight, this.camera.d, this.updateHint);
-      this.renderer.draw(projection, this.camera);
+      this.renderer.draw(projection, this.camera, (this.x/ this.canvas.current.offsetWidth) * 2.0 - 1.0, 
+      ((this.canvas.current.offsetHeight-this.y)/ this.canvas.current.offsetHeight) * 2.0 - 1.0,this.rightclick,this.move);
+      //console.log((this.y-50)/window.innerHeight);
+      //console.log(this.x);
+      //this.renderer.draw(projection, this.camera, this.x, this.y);
       if(this.drawParticles) this.instanceRenderer.render(this.particles, Maths.createViewMatrix(this.camera),projection, this.camera.d, this.gl);
       this.guiRenderer.draw();
-      updateCamera(this.camera);
+      this.axisRenderer.draw(projection,this.camera);
+      
       this.move = false;
+      //console.log(this.rightclick);
+      this.rightclick = false;
       requestAnimationFrame(draw);
       
     }
@@ -179,7 +240,7 @@ class Canvas extends Component{
     };
       let str = "";
         for(let i = 0;i<volumes.length;i++){
-          if(type==volumes[i].name) str = volumes[i].data;
+          str = VolumeList.getVolume(type).data;
         }
         let modeldata = STLParser.parseData(str);
         detector = new Detector(new Model(modeldata.vertices, modeldata.normals, this.gl));
@@ -223,6 +284,7 @@ class Canvas extends Component{
       <p ref={this.colorMinHint} style={{"position":"fixed", "bottom" : "0%", "left" : "71%", "z-index" : "4", "color" : "white"}}>{this.state.colorMinHint}</p>
       <p ref={this.colorMaxHint} style={{"position":"fixed", "bottom" : "15%", "left" : "71%", "z-index" : "4", "color" : "white"}}>{this.state.colorMaxHint}</p>
     <canvas ref={this.canvas} onMouseMove={(e)=>{ 
+      
       this.move = true;
       this.oldX = this.x;
       this.oldY = this.y;

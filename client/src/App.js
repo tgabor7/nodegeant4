@@ -25,6 +25,10 @@ import { Element } from 'react-scroll';
 import UnitConverter from './utils/UnitConverter';
 import Logger from './utils/Logger';
 import CodeTests from './utils/codeTests';
+import MousePicker from './utils/mousePicker';
+import RenderSystem from './rendering/renderSystem';
+import NumberSpinner from './graphics/NumberSpinner';
+import GraphDialog from './graphics/GraphDialog';
 
 class App extends Component {
   constructor(props) {
@@ -35,6 +39,7 @@ class App extends Component {
     this.volumedialog = React.createRef();
     this.popup = React.createRef();
     this.volumeselect = React.createRef();
+    this.graphdialog = React.createRef();
 
     this.state = {
       buttons: [], gunbuttons: [], sourcebuttons: [], volumebuttons: [], spectrum: true, page: 'first',
@@ -63,14 +68,15 @@ class App extends Component {
     this.accordion = React.createRef();
     this.canvas = React.createRef();
 
-
-
     this.detectors = [];
     this.guns = [];
     this.sources = [];
     this.particles = [];
     this.tracks = [];
     this.volumes = [];
+  }
+  checkRunnable(){
+    this.navbar.current.showRun((this.detectors.length > 0 && this.sources.length > 0) || (this.detectors.length > 0 && this.guns.length > 0));
   }
   clearRun() {
     this.canvas.current.clearRun();
@@ -405,35 +411,15 @@ class App extends Component {
     VolumeList.addVolume({ name: name, data: data });
     let vol = { name: name, data: data };
     this.volumes.push(vol);
-    bs.push(<VolumeButton name={name} volume={vol} modeldata={modeldata} filelabel={label}></VolumeButton>);
+    bs.push(<VolumeButton detectors={this.detectors} name={name} volumes={this.volumes} modeldata={modeldata} filelabel={label} volume={vol}></VolumeButton>);
     this.setState({ volumebuttons: bs });
   }
   async createSource(n, x, y, z, mat, code, posu) {
-    if (this.detectors.length > 0) this.navbar.current.showRun(true);
+   this.checkRunnable();
     this.navbar.current.showClearSetup(true);
-    if (!code) this.codeeditor.current.updateText(
-      this.codeeditor.current.state.text +
-      "\\Source{\n" +
-      "\tname: " + '"' + n + '";\n' +
-      "\tposition[" + UnitConverter.convertLength(posu) + "]: " + x + ", " + y + ", " + z + ";\n" +
-      "\tmaterial: " + '"' + mat + '";\n' +
-      "}\n"
-    );
+    if (!code) this.codeeditor.current.addSourceCode(n, new Vector3(x,y,z), mat, posu);
 
     let bs = this.state.sourcebuttons;
-    let details = <Container>
-      <Row>
-        <Col>Position: </Col>
-      </Row>
-      <Row>
-        <Col>x: {x} {UnitConverter.convertLength(posu)}</Col>
-        <Col>y: {y} {UnitConverter.convertLength(posu)}</Col>
-        <Col>z: {z} {UnitConverter.convertLength(posu)}</Col>
-      </Row>
-      <Row>
-        <Col>Material: {mat}</Col>
-      </Row>
-    </Container>;
     let source = this.canvas.current.addSource(x*posu, y*posu, z*posu, mat);
     source.id = +DetectorButton.id;
     Parser.chunks.push({
@@ -446,47 +432,23 @@ class App extends Component {
     source.name = n;
     source.units[0] = posu;
     this.sources.push(source);
-    bs.push(<SourceButton codeeditor={this.codeeditor} name={n} removebutton={this.removeSource} id={DetectorButton.id} detector={source} details={details} key={++DetectorButton.id} buttons={this.state.sourcebuttons}></SourceButton>);
+    var b = React.createRef();
+    bs.push(<SourceButton ref={b} codeeditor={this.codeeditor} name={n} removebutton={this.removeSource} id={DetectorButton.id} detector={source} key={++DetectorButton.id} buttons={this.state.sourcebuttons}></SourceButton>);
     this.setState({ sourcebuttons: bs });
+    this.canvas.current.source_buttons.push(b);
     Logger.log(1, "Created source");
+    this.checkRunnable();
+
     return [source, DetectorButton.id];
   }
   async createGun(n, px, py, pz, dx, dy, dz, energy, code, posu, energyu) {
-    if (this.detectors.length > 0) this.navbar.current.showRun(true);
+    this.checkRunnable();
     this.navbar.current.showClearSetup(true);
 
-    if (!code) this.codeeditor.current.updateText(
-      this.codeeditor.current.state.text +
-      "\\Gun{\n" +
-      "\tname: " + '"' + n + '";\n' +
-      "\tposition[" + UnitConverter.convertLength(posu) + "]: " + px + ", " + py + ", " + pz + ";\n" +
-      "\tdirection: " + dx + ", " + dy + ", " + dz + ";\n" +
-      "\tenergy[" + UnitConverter.convertEnergy(energyu) + "]: " + energy + ';\n' +
-      "}\n"
-    );
+    if (!code) this.codeeditor.current.addGunCode(n, new Vector3(px, py, pz), new Vector3(dx, dy, dz), energy, posu, energyu);
 
     let bs = this.state.gunbuttons;
-    let details = <Container>
-      <Row>
-        <Col>Position: </Col>
-      </Row>
-      <Row>
-        <Col>x: {px} cm</Col>
-        <Col>y: {py} cm</Col>
-        <Col>z: {pz} cm</Col>
-      </Row>
-      <Row>
-        <Col>Direction: </Col>
-      </Row>
-      <Row>
-        <Col>x: {dx} </Col>
-        <Col>y: {dy} </Col>
-        <Col>z: {dz} </Col>
-      </Row>
-      <Row>
-        <Col>Energy: {energy} keV</Col>
-      </Row>
-    </Container>;
+    
 
     let gun = this.canvas.current.addGun(px*posu, py*posu, pz*posu, dx, dy, dz, energy*energyu);
     gun.id = +DetectorButton.id;
@@ -502,92 +464,66 @@ class App extends Component {
     gun.units[0] = posu;
     gun.units[1] = energyu;
     this.guns.push(gun);
-    bs.push(<GunButton codeeditor={this.codeeditor} name={n} removebutton={this.removeGun} id={DetectorButton.id} detector={gun} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></GunButton>);
+    var b = React.createRef();
+    bs.push(<GunButton ref={b} codeeditor={this.codeeditor} name={n} removebutton={this.removeGun} id={DetectorButton.id} detector={gun} key={++DetectorButton.id} buttons={this.state.buttons}></GunButton>);
     this.setState({ gunbuttons: bs });
+    this.canvas.current.gun_buttons.push(b);
     Logger.log(1, "Created gun");
+    this.checkRunnable();
+
     return [gun, DetectorButton.id];
   }
+  /*Create detector object
+    name string
+    position vector3
+    rotation vector3
+    scale vector3
+    material string
+    the geometry of the detector its selected from the geometries list string
+    data if stl is selected the data contains the vertices of the detector's geometry
+    code generate code for the codeeditor boolean
+    measurements
+  */
   async createDetector(n, px, py, pz, rx, ry, rz, sx, sy, sz, material, type, data, color, code, posu, rotu, scaleu) {
-    if (this.sources.length > 0 || this.guns.length > 0) this.navbar.current.showRun(true);
     this.navbar.current.showClearSetup(true);
-    if (!code) this.codeeditor.current.updateText(
-      this.codeeditor.current.state.text +
-      "\\Detector{\n" +
-      "\tname: " + '"' + n + '";\n' +
-      "\tposition[" + UnitConverter.convertLength(posu) + "]: " + px + ", " + py + ", " + pz + ";\n" +
-      "\trotation[" + UnitConverter.convertAngle(rotu) + "]: " + rx + ", " + ry + ", " + rz + ";\n" +
-      "\tscale[" + UnitConverter.convertLength(scaleu) + "]: " + sx + ", " + sy + ", " + sz + ";\n" +
-      "\tmaterial: " + '"' + material + '";\n' +
-      "\tgeometry: " + '"' + type + '";\n' +
-
-      "}\n"
-    );
-
     let bs = this.state.buttons;
-    let details = <Container>
-      <Row>
-        <Col>Position: </Col>
-      </Row>
-      <Row>
-        <Col>x: {px} {UnitConverter.convertLength(posu)}</Col>
-        <Col>y: {py} {UnitConverter.convertLength(posu)}</Col>
-        <Col>z: {pz} {UnitConverter.convertLength(posu)}</Col>
-      </Row>
-      <Row>
-        <Col>Rotation: </Col>
-      </Row>
-      <Row>
-        <Col>x: {rx} {UnitConverter.convertAngle(rotu)}</Col>
-        <Col>y: {ry} {UnitConverter.convertAngle(rotu)}</Col>
-        <Col>z: {rz} {UnitConverter.convertAngle(rotu)}</Col>
-      </Row>
-      <Row>
-        <Col>Scale: </Col>
-      </Row>
-      <Row>
-        <Col>x: {sx} {UnitConverter.convertLength(scaleu)}</Col>
-        <Col>y: {sy} {UnitConverter.convertLength(scaleu)}</Col>
-        <Col>z: {sz} {UnitConverter.convertLength(scaleu)}</Col>
-      </Row>
-      <Row>
-        <Col>Material: </Col>
-      </Row>
-      <Row>
-        <Col>{material}</Col>
-      </Row>
-    </Container>;
+    if(!code) this.codeeditor.current.addDetectorCode(0, n, new Vector3(px,py,pz), new Vector3(rx,ry,rz), new Vector3(sx, sy, sz), material,
+    type, posu, rotu, scaleu);
     let paramterize = (detector) => {
       detector.id = +DetectorButton.id;
       detector.geometry = type;
-      Parser.chunks.push({
-        id: detector.id, code: "\\Detector{\n" +
-          "\tname: " + '"' + n + '";\n' +
-          "\tposition[cm]: " + px + ", " + py + ", " + pz + ";\n" +
-          "\trotation[rad]: " + rx + ", " + ry + ", " + rz + ";\n" +
-          "\tscale[cm]: " + sx + ", " + sy + ", " + sz + ";\n" +
-          "\tmaterial: " + '"' + material + '";\n' +
-          "\tgeometry: " + '"' + type + '";\n' +
-          "}\n"
-      });
+      
+      Parser.addDetectorCode(detector.id, n, new Vector3(px,py,pz), new Vector3(rx,ry,rz), new Vector3(sx, sy, sz), material,
+      type, posu, rotu, scaleu);
+      
+    //   this.codeeditor.current.addDetectorCode(detector.id, n, new Vector3(px,py,pz), new Vector3(rx,ry,rz), new Vector3(sx, sy, sz), material,
+    // type, posu, rotu, scaleu, code);
+
       detector.name = n;
       detector.model.color = color;
       detector.units[0] = posu;
       detector.units[1] = rotu;
       detector.units[2] = scaleu;
       this.detectors.push(detector);
-      bs.push(<DetectorButton volumes={this.volumes} canvas={this.canvas} codeeditor={this.codeeditor} name={n} removebutton={this.removeDetector} id={DetectorButton.id} detector={detector} details={details} key={++DetectorButton.id} buttons={this.state.buttons}></DetectorButton>);
+      var b = React.createRef();
+      bs.push(<DetectorButton createvolume={this.createVolume} ref={b} volumes={this.volumes} canvas={this.canvas} codeeditor={this.codeeditor} name={n} removebutton={this.removeDetector} id={DetectorButton.id} detector={detector} key={++DetectorButton.id} buttons={this.state.buttons}></DetectorButton>);
+      this.canvas.current.detector_buttons.push(b);
       this.setState({ buttons: bs });
     }
     let detector = null;
     if (type == "stl") {
-      let modelData = STLParser.parseData(data);
-      detector = this.canvas.current.addSTLDetector(px*posu, py*posu, pz*posu, rx*rotu, ry*rotu, rz*rotu, sx*scaleu, sy*scaleu, sz*scaleu, material, modelData);
-      paramterize(detector);
+      //let modelData = STLParser.parseData(data);
+      //detector = this.canvas.current.addSTLDetector(px*posu, py*posu, pz*posu, rx*rotu, ry*rotu, rz*rotu, sx*scaleu, sy*scaleu, sz*scaleu, material, modelData);
+      //paramterize(detector);
+      this.createVolume(n + "Volume", data, n + "Volume");
+      this.createDetector(n, px, py, pz, rx, ry, rz, sx, sy, sz, material, n + "Volume", data, color, code, posu, rotu, scaleu);
     } else {
       detector = await this.canvas.current.addDetector(px*posu, py*posu, pz*posu, rx*rotu, ry*rotu, rz*rotu, sx*scaleu, sy*scaleu, sz*scaleu, material, type, this.volumes);
       paramterize(detector);
     }
     Logger.log(1, "Created detector");
+    this.checkRunnable();
+
     return [detector, DetectorButton.id];
   }
   clearSetup() {
@@ -596,22 +532,25 @@ class App extends Component {
     this.codeeditor.current.text = "";
     DetectorButton.id = 0;
     this.setState({ buttons: [], gunbuttons: [], sourcebuttons: [] });
-    this.canvas.current.clearSetup()
+    this.canvas.current.clearSetup();
+    RenderSystem.active_id = -1;
     this.detectors = [];
     this.sources = [];
     this.guns = [];
     this.state.buttons = [];
     this.state.gunbuttons = [];
     this.state.sourcebuttons = [];
+    this.canvas.current.detector_buttons = [];
+    this.canvas.current.source_buttons = [];
+    this.canvas.current.gun_buttons = [];
+
     this.clearRun();
+    this.checkRunnable();
     Logger.log(1, "Cleared setup")
   }
   removeSource(source, buttonid) {
-    if (this.detectors.length < 1 || (this.sources.length < 1 && this.guns.length < 1)) this.navbar.current.showRun(false);
 
     if (this.sources.length == 0 && this.guns.length == 0 && this.detectors.length == 0) this.navbar.current.showClearSetup(false);
-    
-
     this.canvas.current.removeSource(source);
     this.codeeditor.current.updateText(Parser.removeChunk(source.id));
 
@@ -620,15 +559,16 @@ class App extends Component {
         let bs = this.state.sourcebuttons;
         bs.splice(i, 1);
         this.sources.splice(i, 1);
+        this.canvas.current.source_buttons.splice(i, 1);
         this.setState({ sourcebuttons: bs });
         Logger.log(1, "Removed source")
+        this.checkRunnable();
 
         return;
       }
     }
   }
   removeGun(gun, buttonid) {
-    if (this.detectors.length < 1 || (this.sources.length < 1 && this.guns.length < 1)) this.navbar.current.showRun(false);
 
     if (this.sources.length == 0 && this.guns.length == 0 && this.detectors.length == 0) this.navbar.current.showClearSetup(false);
     Logger.log(1, "Removed gun");
@@ -641,15 +581,17 @@ class App extends Component {
         let bs = this.state.gunbuttons;
         bs.splice(i, 1);
         this.guns.splice(i, 1);
+        this.canvas.current.gun_buttons.splice(i, 1);
         this.setState({ gunbuttons: bs });
+        this.checkRunnable();
+
         return;
       }
     }
   }
   removeDetector(detector, buttonid) {
-    if (this.detectors.length < 1 || (this.sources.length < 1 && this.guns.length < 1)) this.navbar.current.showRun(false);
     if (this.sources.length == 0 && this.guns.length == 0 && this.detectors.length == 0) this.navbar.current.showClearSetup(false);
-
+    RenderSystem.active_id = -1;
     this.canvas.current.removeDetector(detector);
     this.codeeditor.current.updateText(Parser.removeChunk(detector.id));
 
@@ -657,9 +599,11 @@ class App extends Component {
       if (this.state.buttons[i].key - 1 == buttonid) {
         let bs = this.state.buttons;
         bs.splice(i, 1);
+        this.canvas.current.detector_buttons.splice(i, 1);
         this.detectors.splice(i, 1);
         this.setState({ buttons: bs });
-        Logger.log(1, "Removed detector")
+        Logger.log(1, "Removed detector");
+        this.checkRunnable();
 
         return;
       }
@@ -681,7 +625,7 @@ class App extends Component {
   async componentDidMount() {
 
    
-
+    
     //setup volumes from the database
 
 
@@ -704,14 +648,14 @@ class App extends Component {
       this.createVolume(json[i].name, str, "");
     }
     //setup first detector
-    this.createDetector("Cube", 0, 0, 0, 0, 0, 0, 10, 10, 10, "Pb", 'cube', null, new Vector3(1, 1, 1), false, 1, 1, 1);
+    this.createDetector("Cube", 0, 0, 0, 0, 0, 0, 10, 10, 10, "Pb", 'cube', null, new Vector3(.5, .5, .5), false, 1, 1, 1);
+    VolumeList.init(this.codeeditor.current);
 
      //run a few tests
      //CodeTests.langTest([this.codeeditor.current.onclickfunction,this.createDetector, this.createSource, this.createGun,this.removeDetector,this.removeSource,this.removeGun, this.clearSetup]);
   }
   render() {
-
-
+    
     const items = this.state.buttons.map(function (item) {
       return <div style={{ "z-index": "3", "color": "black" }}> {item} </div>;
     });
@@ -724,11 +668,11 @@ class App extends Component {
     let volumeButtons = this.state.volumebuttons.map(function (item) {
       return <div style={{ "z-index": "3", "color": "black" }}> {item} </div>
     });
-
     return <div>
       <VolumeSelectDialog ref={this.volumeselect} createbutton={this.createVolume}></VolumeSelectDialog>
       <VolumeDialog ref={this.volumedialog} createbutton={this.createVolume}></VolumeDialog>
       <PopupDialog ref={this.popup}></PopupDialog>
+      <GraphDialog ref={this.graphdialog}></GraphDialog>
       <Tab.Container id="left-tabs-example" defaultActiveKey="first" activeKey={this.state.page}>
         <Col sm={3}>
           <Nav variant="pills" className="flex-column" className='page'>
@@ -742,9 +686,8 @@ class App extends Component {
         </Col>
         <Tab.Content>
           <Tab.Pane eventKey="first" style={{ "overflow": "hidden" }}>
-            <Canvas ref={this.canvas} style={{ "overflow": "hidden" }}></Canvas>
+            <Canvas ref={this.canvas} style={{ "overflow": "hidden" }} buttons={this.state.buttons}></Canvas>
             <CodeEditor ref={this.codeeditor} createGun={this.createGun} clearSetup={this.clearSetup} createSource={this.createSource} createDetector={this.createDetector} canvas={this.canvas} />
-
             <NavigationBar run={this.runSim}
               ref={this.navbar}
               canvas={this.canvas}
@@ -766,6 +709,7 @@ class App extends Component {
             <div className='buttonbackground'>
             </div>
             <Accordion ref={this.accordion} defaultActiveKey="0" className='accordion' style={{ "maxHeight": window.innerHeight - 50, "height": window.innerHeight - 50, "overflow-y": "scroll" }}>
+              
               <div style={{ color: 'white', 'text-align': 'center', 'background-color': 'gray', 'border': '1px solid white' }}>
                 Volumes
           </div>

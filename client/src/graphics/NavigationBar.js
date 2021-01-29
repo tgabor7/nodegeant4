@@ -58,23 +58,23 @@ class NavigationBar extends Component{
 
    <Navbar bg="light" variant="light" style={{position: 'fixed', 'z-index': '4'}}>
         <Navbar.Brand>Geant4</Navbar.Brand>
-        <Button style={{"display": this.state.showrun}} variant="primary" onClick={()=>{
+        <Button style={{"display": this.state.showrun, "borderRadius" : 0}} variant="primary" onClick={()=>{
           this.rundialog.current.showDialog();}} >Run</Button>
 
-        <Button variant="primary" style={{backgroundColor: 'green', "display" : this.state.showrun}} onClick={()=>{
+        <Button variant="primary" style={{backgroundColor: 'green', "display" : this.state.showrun, "borderRadius" : 0}} onClick={()=>{
           this.spectrumdialog.current.showDialog();}}>Spectroscopy</Button>
 
-        <Button variant="primary" style={{"display" : this.state.showclearparticles, backgroundColor: 'red'}} onClick={()=>{
+        <Button variant="primary" style={{"display" : this.state.showclearparticles, backgroundColor: 'red',"borderRadius" : 0}} onClick={()=>{
                   this.props.clearrun();
                   this.showClearParticles(false);
                   }}>Clear particles</Button>
 
-        <Button variant="primary" style={{"display" : this.state.showclearsetup, backgroundColor: 'red'}} onClick={()=>{
+        <Button variant="primary" style={{"display" : this.state.showclearsetup, backgroundColor: 'red',"borderRadius" : 0}} onClick={()=>{
                   this.confirmDialog.current.showDialog();
                   
                   }}>Clear setup</Button>
 
-        <Button variant="primary" style={{backgroundColor: 'gray'}} onClick={()=>{
+        <Button variant="primary" style={{backgroundColor: 'gray',"borderRadius" : 0}} onClick={()=>{
                   Logger.log(1, "asd");
                   }}>Send log</Button>
 

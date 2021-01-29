@@ -1,6 +1,17 @@
 class VolumeList {
+    static init(codeeditor){
+        VolumeList.editor = codeeditor;
+    }
+    static checkVolumeName(name){
+        for(let i = 0;i<VolumeList.volumes.length;i++){
+            if(VolumeList.volumes[i].name == name){
+                return false;
+            }
+        }
+        return true;
+    }
     static addVolume(v){
-        VolumeList.volumes.push(v);
+        if(VolumeList.checkVolumeName(v.name)) VolumeList.volumes.push(v);
     }
     static removeVolume(v){
         for(let i = 0;i<VolumeList.volumes.length;i++){
@@ -14,9 +25,13 @@ class VolumeList {
             if(VolumeList.volumes[i].name == n) return VolumeList.volumes[i];
         }
     }
-    static updateVolume(v){
-
+    static updateVolume(name, newname, newdata, detectors){
+        let v = VolumeList.getVolume(name);
+        v.name = newname;
+        if(newdata != undefined && newdata.length > 0) v.data = newdata;
+        VolumeList.editor.renameGeometry(name, newname, detectors);
     }
+    static editor = null;
     static volumes = [];
 } 
 

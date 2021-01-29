@@ -13,8 +13,30 @@ class GunButton extends Component{
     super(props);
     this.editdialog = React.createRef();
     this.updateDetails = this.updateDetails.bind(this);
-    this.state = {details: this.props.details};
+    this.state = {details: <Container>
+      <Row>
+        <Col>Position: </Col>
+      </Row>
+      <Row>
+        <Col>x: {this.props.detector.model.position.x} cm</Col>
+        <Col>y: {this.props.detector.model.position.y} cm</Col>
+        <Col>z: {this.props.detector.model.position.z} cm</Col>
+      </Row>
+      <Row>
+        <Col>Direction: </Col>
+      </Row>
+      <Row>
+        <Col>x: {this.props.detector.direction.x} </Col>
+        <Col>y: {this.props.detector.direction.y} </Col>
+        <Col>z: {this.props.detector.direction.z} </Col>
+      </Row>
+      <Row>
+        <Col>Energy: {this.props.detector.energy*0.001} keV</Col>
+      </Row>
+    </Container>};
     this.id = this.props.id;
+    this.accordion = React.createRef();
+
   }
   static id = 0;
   updateDetails(d){
@@ -26,12 +48,12 @@ class GunButton extends Component{
       detector={this.props.detector} ref={this.editdialog} buttons={this.props.buttons} details={this.props.details}></GunEditDialog>
     <Card className='button'>
       <Card.Header>
-        <Accordion.Toggle as={Button} onClick={()=>{
-          if(RenderSystem.acitve_id == this.id){
-            RenderSystem.acitve_id = -1;
+      <Accordion.Toggle ref={this.accordion} as={Button} onClick={()=>{
+          if(RenderSystem.active_id == this.props.detector.id){
+            RenderSystem.active_id = -1;
             return;
           }
-          RenderSystem.acitve_id = this.id;
+          RenderSystem.active_id = this.props.detector.id;
           }} variant="link" eventKey={this.id}>
           {this.props.name}
         </Accordion.Toggle>

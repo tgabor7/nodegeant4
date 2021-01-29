@@ -9,6 +9,7 @@ import DetectorButton from '../detector/DetectorButton';
 import React, { Component, createRef } from 'react';
 import MaterialList from '../detector/MaterialList';
 import VolumeList from '../volume/VolumeList';
+import UnitConverter from '../utils/UnitConverter';
 
 //TO-DO
 //position[cm]
@@ -41,6 +42,44 @@ class Parser {
     }
     static chunks = [];
 
+    static addDetectorCode(id, name, position, rotation, scale, material, geometry, posu, rotu, scaleu){
+        let n = "\\Detector{\n" +
+        "\tname: " + '"' + name + '";\n' +
+        "\tposition[" + UnitConverter.convertLength(posu) + "]: " + position.x + ", " + position.y + ", " + position.z + ";\n" +
+        "\trotation[" + UnitConverter.convertAngle(rotu) + "]: " + rotation.x + ", " + rotation.y + ", " + rotation.z + ";\n" +
+        "\tscale[" + UnitConverter.convertLength(scaleu) + "]: " + scale.x + ", " + scale.y + ", " + scale.z + ";\n" +
+        "\tmaterial: " + '"' + material + '";\n' +
+        "\tgeometry: " + '"' + geometry + '";\n' +
+  
+        "}\n";
+        Parser.chunks.push({id: id, code: n});
+
+        return n;
+    }
+    static addSourceCode(id, name, position, material, posu){
+        let n = "\\Source{\n" +
+        "\tname: " + '"' + name + '";\n' +
+        "\tposition[" + UnitConverter.convertLength(posu) + "]: " + position.x + ", " + position.y + ", " + position.z + ";\n" +
+        "\tmaterial: " + '"' + material + '";\n' +
+        "}\n";
+
+        Parser.chunks.push({id: id, code: n});
+
+        return n;
+    }
+    static addGunCode(id, name, position, direction, energy, posu, energyu){
+        let n = "\\Gun{\n" +
+        "\tname: " + '"' + name + '";\n' +
+        "\tposition[" + UnitConverter.convertLength(posu) + "]: " + position.x + ", " + position.y + ", " + position.z + ";\n" +
+        "\tdirection: " + direction.x + ", " + direction.y + ", " + direction.z + ";\n" +
+        "\tenergy[" + UnitConverter.convertEnergy(energyu) + "]: " + energy + ';\n' +
+        "}\n"
+
+        Parser.chunks.push({id: id, code: n});
+
+        return n;
+    }
+
     static removeChunk(id) {
         let result = " ";
 
@@ -55,6 +94,7 @@ class Parser {
         }
         return result;
     }
+    
     static checkFloat(s, v, me) {
         if (isNaN(parseFloat(s.split(',')[0]))) return false;
         if (isNaN(parseFloat(s.split(',')[1]))) return false;
@@ -264,17 +304,17 @@ class Parser {
         }
         clearSetup();
         guns.forEach(gun => {
-            createGun(gun.name, gun.model.position.x, gun.model.position.y, gun.model.position.z, gun.direction.x, gun.direction.y, gun.direction.z, gun.energy, false);
+            createGun(gun.name, gun.model.position.x, gun.model.position.y, gun.model.position.z, gun.direction.x, gun.direction.y, gun.direction.z, gun.energy, false,1,1,1);
         });
 
         sources.forEach(source => {
-            createSource(source.name, source.model.position.x, source.model.position.y, source.model.position.z, source.material, false);
+            createSource(source.name, source.model.position.x, source.model.position.y, source.model.position.z, source.material, false,1,1,1);
         });
 
         detectors.forEach(detector => {
             createDetector(detector.name, detector.model.position.x, detector.model.position.y, detector.model.position.z,
                 detector.model.rotation.x, detector.model.rotation.y, detector.model.rotation.z,
-                detector.model.scale.x, detector.model.scale.y, detector.model.scale.z, detector.material, detector.geometry, VolumeList.getVolume(detector.geometry).data, new Vector3(.5, .5, .5), false);
+                detector.model.scale.x, detector.model.scale.y, detector.model.scale.z, detector.material, detector.geometry, VolumeList.getVolume(detector.geometry).data, new Vector3(.5, .5, .5), false,1,1,1);
         });
 
 

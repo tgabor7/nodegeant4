@@ -3,6 +3,7 @@ import '../App.css';
 
 import { Button, Nav, Navbar, FormControl, Container, Col, Row, Form, Dropdown, OverlayTrigger, Tooltip, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import VolumeList from '../volume/VolumeList';
 
 class VolumeEditDialog extends Component {
   constructor(props) {
@@ -88,6 +89,7 @@ class VolumeEditDialog extends Component {
               return;
             }
             this.hideDialog();
+            VolumeList.updateVolume(this.props.volume.name,this.state.name,this.state.data,this.props.detectors);
 
             this.props.volume.name = this.state.name;
             this.props.setname(this.state.name);

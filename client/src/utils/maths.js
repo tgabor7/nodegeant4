@@ -14,6 +14,9 @@ class Vector4 {
         this.z = z;
         this.w = w;
     }
+    xyz(){
+        return new Vector3(this.x, this.y, this.z);
+    }
 }
 class Vector3 {
     constructor(x, y, z) {
@@ -322,6 +325,27 @@ class Maths {
 
 	    return res;
     }
+    static mulMatV(m, v){
+        var res = new Vector4(0,0,0,0);
+
+        res.x = m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12] * v.w;
+        res.y = m[1] * v.x + m[5] * v.y + m[9] * v.z + m[13] * v.w;
+        res.z = m[2] * v.x + m[6] * v.y + m[10] * v.z + m[14] * v.w;
+        res.w = m[3] * v.x + m[7] * v.y + m[11] * v.z + m[15] * v.w;
+
+        return res;
+    }
+    static dot(u, v){
+        return u.x*v.x + u.y*v.y + u.z*v.z;
+    }
+    static sub(u, v){
+        var res = new Vector3();
+        res.x = u.x - v.x;
+        res.y = u.y - v.y;
+        res.z = u.z - v.z;
+
+        return res;
+    }
     static createTransformationMatrix(x, y, z, rx, ry, rz, sx, sy, sz) {
         var res = new Matrix();
         res = Maths.translate(res, new Vector3(x, y, z));
@@ -382,7 +406,10 @@ class Maths {
     static distance(v, u){
         return Math.sqrt(v.x*u.x+v.y*u.y+v.z*u.z);
     }
+    static toRad(v){
+        return v * Math.PI / 180.0;
+    }
 }
 
 export default Matrix;
-export { Maths, Vector3, Camera }
+export { Maths, Vector3,Vector4, Camera }
