@@ -229,6 +229,7 @@ class RenderSystem {
                      camera.d,
                     camera.d);
                 this.shader.setUniform3f("color", this.models[i].color.x, this.models[i].color.y, this.models[i].color.z);
+                this.shader.setUniform1i("fakeLightning", 1);
                 //this.shader.setUniform1i("sampler", 0);
                 // this.shader.setUniform4fv("view", Maths.createViewMatrix(camera));
                 // this.shader.setUniform4fv("projection", projection);
@@ -252,6 +253,7 @@ class RenderSystem {
                 this.models[i].rotation.x, this.models[i].rotation.y, this.models[i].rotation.z,
                 this.models[i].scale.x, this.models[i].scale.y, this.models[i].scale.z);
             this.shader.setUniform3f("color", this.models[i].color.x, this.models[i].color.y, this.models[i].color.z);
+            this.shader.setUniform1i("fakeLightning", 1);
             this.shader.setUniform1i("sampler", 0);
             this.shader.setUniform4fv("view", Maths.createViewMatrix(camera));
             this.shader.setUniform4fv("projection", projection);
