@@ -22,6 +22,7 @@ class DetectorEditDialog extends Component {
     this.confirmDialog = React.createRef();
     this.table = React.createRef();
     this.updateMaterial = this.updateMaterial.bind(this);
+    this.updateGeometry = this.updateGeometry.bind(this);
 
     this.state = {
       show: false,
@@ -48,7 +49,6 @@ class DetectorEditDialog extends Component {
       options: []
     }
     this.materials = [];
-
   }
   updateMaterial(m) {
     this.setState({ detmat: m });
@@ -65,10 +65,11 @@ class DetectorEditDialog extends Component {
   componentDidMount() {
 
   }
-  async showDialog(volumes) {
-    this.setState({ showError: 'none' });
-    this.setState({show: true});
-    
+  updateGeometry(g){
+    this.setState({geomrty: g});
+  }
+  async showDialog(volumes, detector) {
+    this.setState({ showError: 'none',show: true, geomrty: detector.geometry});
     
     let opt = volumes.map(e=>{
     return <option value={e.name}>{e.name}</option>;

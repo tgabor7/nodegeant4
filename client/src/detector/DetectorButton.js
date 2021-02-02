@@ -56,6 +56,9 @@ class DetectorButton extends Component{
   updateDetails(d){
     this.setState({details: d});
   }
+  updateGeometry(g){
+    this.editdialog.updateGeometry(g);
+  }
   setName(n){
     this.setState({name: n});
   }
@@ -74,7 +77,7 @@ class DetectorButton extends Component{
           }} variant="link" eventKey={this.id}>
           {this.state.name}
         </Accordion.Toggle>
-        <Button onClick={()=>{this.editdialog.current.showDialog(this.props.volumes);}} className="editButton">EDIT</Button>
+        <Button onClick={()=>{this.editdialog.current.showDialog(this.props.volumes,this.props.detector);}} className="editButton">EDIT</Button>
       </Card.Header>
       <Accordion.Collapse eventKey={this.id}>
         <Card.Body>{this.state.details}</Card.Body>

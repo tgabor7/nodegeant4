@@ -24,10 +24,14 @@ class VolumeList {
         for(let i = 0;i<VolumeList.volumes.length;i++){
             if(VolumeList.volumes[i].name == n) return VolumeList.volumes[i];
         }
+        alert("Volume not found!\n" + n);
     }
     static updateVolume(name, newname, newdata, detectors){
         let v = VolumeList.getVolume(name);
         v.name = newname;
+        detectors.forEach(e => {
+            if(e.geometry == name) e.geometry = newname;
+        });
         if(newdata != undefined && newdata.length > 0) v.data = newdata;
         VolumeList.editor.renameGeometry(name, newname, detectors);
     }
