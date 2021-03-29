@@ -1,3 +1,9 @@
+import Requests from '../utils/Reqs';
+
+/*
+This class contains all materials used by both detectors and sources. 
+*/
+
 class MaterialList {
     static sources = [
     ];
@@ -99,7 +105,6 @@ class MaterialList {
                 console.log(body)
         });
         let json = await result.json();
-        alert(JSON.stringify(json));
     }
     static checkMaterial(mat, f) {
         for (let i = 0; i < MaterialList.materials.length; i++) {

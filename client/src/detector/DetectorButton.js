@@ -9,6 +9,11 @@ import RenderSystem from '../rendering/renderSystem';
 import UnitConverter from '../utils/UnitConverter';
 import { Vector3 } from '../utils/maths';
 
+/*
+Class handling detector buttons, clicking it shows an accordion containing the detectors parameters.
+Clicking edit shows a dialog where you can modify the detector.
+*/
+
 class DetectorButton extends Component{
   constructor(props){
     super(props);

@@ -1,3 +1,7 @@
+/*
+Class reprezenting a detector 
+*/
+
 class Detector {
     constructor(m) {
         this.model = m;

@@ -14,6 +14,10 @@ import UnitConverter from '../utils/UnitConverter';
 import Logger from '../utils/Logger';
 import VolumeList from '../volume/VolumeList';
 
+/*
+This class let's you modify a detector's parameters.
+*/
+
 class DetectorEditDialog extends Component {
   constructor(props) {
     super(props);
@@ -53,6 +57,7 @@ class DetectorEditDialog extends Component {
   updateMaterial(m) {
     this.setState({ detmat: m });
   }
+  //this method converts a hex color to an RGB Vector
   hexToRgb(hex) {
     hex = hex.substr(1);
     var bigint = parseInt(hex, 16);
@@ -78,24 +83,6 @@ class DetectorEditDialog extends Component {
   }
   hideDialog() {
     this.setState({ show: false });
-  }
-  convert(v){
-    switch(v){
-      case(".1"):
-        return "mm";
-      case("1"):
-        return "cm";
-      case("10"):
-        return "dm";
-      case("100"):
-        return "m";
-      default:
-        return "cm";
-    }
-  }
-  convertrot(v){
-    if(v==1) return "rad";
-    else return "deg";
   }
   static id = 0;
   render() {

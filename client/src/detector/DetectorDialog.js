@@ -8,6 +8,10 @@ import MaterialList from './MaterialList';
 import { Vector3 } from '../utils/maths';
 import MaterialTable from '../graphics/MaterialTable';
 
+/*
+This dialog pops up when creating a detector. Let's you specify the detector's parameters.
+*/
+
 class DetectorDialog extends Component{
   constructor(props){
     super(props);
@@ -47,6 +51,7 @@ class DetectorDialog extends Component{
    
     
   }
+  //this method converts a hex color to an RGB Vector
   hexToRgb(hex) {
     hex = hex.substr(1);
     var bigint = parseInt(hex, 16);
@@ -55,9 +60,6 @@ class DetectorDialog extends Component{
     var b = bigint & 255;
 
     return new Vector3(r / 255, g / 255, b / 255);
-  }
-  addMaterial(ann, mat){
-    this.materials.push(<option value={ann}>{mat}</option>)
   }
   async showDialog(volumes){
       MaterialList.getElement("All");
