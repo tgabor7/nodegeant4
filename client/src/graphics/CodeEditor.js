@@ -6,6 +6,7 @@ import 'brace/theme/monokai';
 import Parser from '../utils/Parser';
 import Logger from '../utils/Logger';
 import UnitConverter from '../utils/UnitConverter';
+import { saveAs } from 'file-saver';
 
 class CodeEditor extends Component{
     constructor(props){
@@ -23,6 +24,9 @@ class CodeEditor extends Component{
             Logger.log(2, "Ran script: " + this.state.text);
         };
         
+    }
+    run(){
+        this.onclickfunction();
     }
     addDetectorCode(id, name, position, rotation, scale, material, geometry, posu, rotu, scaleu,code){
         let tmp = this.state.text;
@@ -57,7 +61,6 @@ class CodeEditor extends Component{
         for(let i = 0;i<detectors.length;i++){
             if(detectors[i].geometry == name){
                 let tmp = Parser.removeChunk(detectors[i].id);
-                alert(tmp);
                 this.updateText(tmp);
                 this.setState({text: tmp + Parser.addDetectorCode(detectors[i].id, detectors[i].name, detectors[i].model.position,
                     detectors[i].model.rotation, detectors[i].model.scale, detectors[i].material, newname, detectors[i].units[0],

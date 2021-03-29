@@ -42,7 +42,7 @@ class ColorSpectrum {
         this.gl.bindVertexArray(this.vao);
         this.shader.setUniform4fv("transformation",transformation);
 
-        this.gl.drawArrays(this.gl.TRIANGLES, 0, this.vertices.length / 2);
+        this.gl.drawArrays(this.gl.TRIANGLES, 0, this.vertices.length / 2); 
 
         this.gl.bindVertexArray(null);
         this.gl.disableVertexAttribArray(0);

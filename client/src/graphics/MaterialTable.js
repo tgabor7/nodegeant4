@@ -15,12 +15,10 @@ class MaterialTable extends Component{
   }
   changeTable(s){
     if(s=="elements"){
-      this.setState({element: true});
-      this.setState({compound: false});
+      this.setState({element: true, compound: false});
     }
     if(s=="compounds"){
-      this.setState({element: false});
-      this.setState({compound: true});  
+      this.setState({element: false, compound: true});
     }
     this.setState({table: s});
     this.updateMaterials("", s);
@@ -31,6 +29,7 @@ class MaterialTable extends Component{
   }
   showDialog(){
     this.setState({show: true});
+    this.updateMaterials("", "elements");
     }
   hideDialog(){
     this.setState({show: false});

@@ -1,6 +1,6 @@
 class Logger {
     static log(lvl, msg){
-        fetch('http://radsim.inf.elte.hu:9000/log', {
+        fetch('http://localhost:9000/log', {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -10,7 +10,7 @@ class Logger {
         });
     }
     static async getLogs(){
-        let req = await fetch('http://radsim.inf.elte.hu:9000/log', {
+        let req = await fetch('http://localhost:9000/log', {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'

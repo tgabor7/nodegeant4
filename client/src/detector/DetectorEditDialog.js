@@ -376,40 +376,7 @@ class DetectorEditDialog extends Component {
 
             this.props.codeeditor.current.updateText(text);
 
-            this.props.updatedetails(
-              <>
-                <Row>
-                  <Col>Position: </Col>
-                </Row>
-                <Row>
-            <Col>x: {this.state.detposx} {pm}</Col>
-            <Col>y: {this.state.detposy} {pm}</Col>
-                  <Col>z: {this.state.detposz} {pm}</Col>
-                </Row>
-                <Row>
-                  <Col>Rotation: </Col>
-                </Row>
-                <Row>
-                  <Col>x: {this.state.detrotx} {rm}</Col>
-                  <Col>y: {this.state.detroty} {rm}</Col>
-                  <Col>z: {this.state.detrotz} {rm}</Col>
-                </Row>
-                <Row>
-                  <Col>Scale: </Col>
-                </Row>
-                <Row>
-                  <Col>x: {this.state.detscalex} {sm}</Col>
-                  <Col>y: {this.state.detscaley} {sm}</Col>
-                  <Col>z: {this.state.detscalez} {sm}</Col>
-                </Row>
-                <Row>
-                  <Col>Material: </Col>
-                </Row>
-                <Row>
-                  <Col>{this.state.detmat}</Col>
-                </Row>
-              </>
-            );
+            this.props.updatedetails(this.props.detector);
           }}>
             Modify
           </Button>

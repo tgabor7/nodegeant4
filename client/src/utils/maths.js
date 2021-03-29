@@ -113,18 +113,13 @@ class Maths {
         
         forward = this.normalize(forward);
 
-        
         var side = new Vector3(0,0,0);
         side = this.cross(forward, up);
   
-        
         side = this.normalize(side);
-       
-        
 
         upt = this.cross(side, forward);
         
-
         var m = new Matrix();
         m[0] = side.x;
         m[1] = side.y;

@@ -17,6 +17,7 @@ class SourceTable extends Component{
     
   }
   showDialog(){
+    this.updateMaterials("");
     this.setState({show: true});
     }
   hideDialog(){

@@ -7,6 +7,7 @@ import image from '../images/editicon.png';
 import DetectorEditDialog from './DetectorEditDialog';
 import RenderSystem from '../rendering/renderSystem';
 import UnitConverter from '../utils/UnitConverter';
+import { Vector3 } from '../utils/maths';
 
 class DetectorButton extends Component{
   constructor(props){
@@ -14,38 +15,10 @@ class DetectorButton extends Component{
     this.editdialog = React.createRef();
     this.updateDetails = this.updateDetails.bind(this);
     this.setName = this.setName.bind(this);
-    this.state = {details: <Container>
-      <Row>
-        <Col>Position: </Col>
-      </Row>
-      <Row>
-        <Col>x: {this.props.detector.model.position.x} {UnitConverter.convertLength(this.props.detector.units[0])}</Col>
-        <Col>y: {this.props.detector.model.position.y} {UnitConverter.convertLength(this.props.detector.units[0])}</Col>
-        <Col>z: {this.props.detector.model.position.z} {UnitConverter.convertLength(this.props.detector.units[0])}</Col>
-      </Row>
-      <Row>
-        <Col>Rotation: </Col>
-      </Row>
-      <Row>
-        <Col>x: {this.props.detector.model.rotation.x} {UnitConverter.convertAngle(this.props.detector.units[1])}</Col>
-        <Col>y: {this.props.detector.model.rotation.y} {UnitConverter.convertAngle(this.props.detector.units[1])}</Col>
-        <Col>z: {this.props.detector.model.rotation.z} {UnitConverter.convertAngle(this.props.detector.units[1])}</Col>
-      </Row>
-      <Row>
-        <Col>Scale: </Col>
-      </Row>
-      <Row>
-        <Col>x: {this.props.detector.model.scale.x} {UnitConverter.convertLength(this.props.detector.units[2])}</Col>
-        <Col>y: {this.props.detector.model.scale.y} {UnitConverter.convertLength(this.props.detector.units[2])}</Col>
-        <Col>z: {this.props.detector.model.scale.z} {UnitConverter.convertLength(this.props.detector.units[2])}</Col>
-      </Row>
-      <Row>
-        <Col>Material: </Col>
-      </Row>
-      <Row>
-        <Col>{this.props.detector.material}</Col>
-      </Row>
-    </Container> ,name: this.props.name};
+    this.state = {position: this.props.detector.model.position, rotation: this.props.detector.model.rotation, scale: this.props.detector.model.scale,
+    deposit: this.props.detector.deposit, material: this.props.detector.material, punit: this.props.detector.units[0], runit: this.props.detector.units[1],
+  sunit: this.props.detector.units[2], name: this.props.name}
+    
     this.id = this.props.id;
     this.accordion = React.createRef();
   }
@@ -54,7 +27,7 @@ class DetectorButton extends Component{
     
   }
   updateDetails(d){
-    this.setState({details: d});
+    this.setState({deposit: d.deposit, name: d.name, position: d.model.position, rotation: d.model.rotation, scale: d.model.scale, material: d.material, punit: d.units[0], runit: d.units[1], sunit: d.units[2]});
   }
   updateGeometry(g){
     this.editdialog.updateGeometry(g);
@@ -80,7 +53,44 @@ class DetectorButton extends Component{
         <Button onClick={()=>{this.editdialog.current.showDialog(this.props.volumes,this.props.detector);}} className="editButton">EDIT</Button>
       </Card.Header>
       <Accordion.Collapse eventKey={this.id}>
-        <Card.Body>{this.state.details}</Card.Body>
+        <Card.Body>
+        <Container>
+      <Row>
+        <Col>Position: </Col>
+      </Row>
+      <Row>
+        <Col>x: {this.state.position.x} {UnitConverter.convertLength(this.state.punit)}</Col>
+        <Col>y: {this.state.position.y} {UnitConverter.convertLength(this.state.punit)}</Col>
+        <Col>z: {this.state.position.z} {UnitConverter.convertLength(this.state.punit)}</Col>
+      </Row>
+      <Row>
+        <Col>Rotation: </Col>
+      </Row>
+      <Row>
+        <Col>x: {this.state.rotation.x} {UnitConverter.convertAngle(this.state.runit)}</Col>
+        <Col>y: {this.state.rotation.y} {UnitConverter.convertAngle(this.state.runit)}</Col>
+        <Col>z: {this.state.rotation.z} {UnitConverter.convertAngle(this.state.runit)}</Col>
+      </Row>
+      <Row>
+        <Col>Scale: </Col>
+      </Row>
+      <Row>
+        <Col>x: {this.state.scale.x} {UnitConverter.convertLength(this.state.sunit)}</Col>
+        <Col>y: {this.state.scale.y} {UnitConverter.convertLength(this.state.sunit)}</Col>
+        <Col>z: {this.state.scale.z} {UnitConverter.convertLength(this.state.sunit)}</Col>
+      </Row>
+      <Row>
+        <Col>Material: </Col>
+      </Row>
+      <Row>
+        <Col>{this.state.material}</Col>
+      </Row>
+      <Row>
+        <Col>Deposit: </Col>
+        <Col>{this.state.deposit} keV</Col>
+      </Row>
+    </Container>
+          </Card.Body>
       </Accordion.Collapse>
     </Card>
   </div>

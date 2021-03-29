@@ -60,6 +60,7 @@ class DetectorDialog extends Component{
     this.materials.push(<option value={ann}>{mat}</option>)
   }
   async showDialog(volumes){
+      MaterialList.getElement("All");
       this.setState({show: true});
       let detectorName = 'Detector' + this.props.buttons.length;
       this.setState({detname: detectorName});

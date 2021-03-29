@@ -29,6 +29,14 @@ import MousePicker from './utils/mousePicker';
 import RenderSystem from './rendering/renderSystem';
 import NumberSpinner from './graphics/NumberSpinner';
 import GraphDialog from './graphics/GraphDialog';
+import MaterialList from './detector/MaterialList';
+import SaveLoad from './utils/SaveLoad';
+import ErrorDialog from './graphics/ErrorDialog';
+import User from './utils/User';
+import SaveOnlineDialog from './graphics/SaveOnlineDialog';
+
+import Requests from './utils/Reqs';
+import WindowParams from './utils/WindowParameters';
 
 class App extends Component {
   constructor(props) {
@@ -40,6 +48,9 @@ class App extends Component {
     this.popup = React.createRef();
     this.volumeselect = React.createRef();
     this.graphdialog = React.createRef();
+    this.loadfile = React.createRef();
+    this.errordialog = React.createRef();
+    this.confirmdialog = React.createRef();
 
     this.state = {
       buttons: [], gunbuttons: [], sourcebuttons: [], volumebuttons: [], spectrum: true, page: 'first',
@@ -63,7 +74,11 @@ class App extends Component {
 
     this.clearRun = this.clearRun.bind(this);
     this.clearSetup = this.clearSetup.bind(this);
-
+    this.save = this.save.bind(this);
+    this.load = this.load.bind(this);
+    this.saveOnline = this.saveOnline.bind(this);
+    this.showSaveDialog = this.showSaveDialog.bind(this);
+    this.updateProject = this.updateProject.bind(this);
 
     this.accordion = React.createRef();
     this.canvas = React.createRef();
@@ -243,7 +258,8 @@ class App extends Component {
       message += data[i];
       message += ',';
     }
-    fetch('http://radsim.inf.elte.hu:9000/gammaAPI', {
+    Requests.post("gammaAPI",{data: message});
+    fetch('http://localhost:9000/gammaAPI', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -259,27 +275,39 @@ class App extends Component {
         Logger.log(1, "Finished spectrum simulation");
       });
   }
-  send(data, hidedialog) {
+  async send(data, hidedialog) {
     var message = '';
     for (var i = 0; i < data.length; i++) {
       message += data[i];
       message += ',';
     }
-    fetch('http://radsim.inf.elte.hu:9000/gammaAPI', {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify({ data: message })
-    })
-      .then(response => response.text())
-      .then(response => {
-        this.processResponse(response);
-        hidedialog();
-        Logger.log(1, "Finished simulation");
+    let pdata = await fetch("http://localhost:9000/gammaAPI/getid", {
+      method: 'GET'
+    });
+    User.process_id = await pdata.json();
+    //alert("id: " + User.process_id);
+    Requests.post("gammaAPI",{data: message}).then(response => response.text())
+    .then(response => {
+      this.processResponse(response);
+      hidedialog();
+      Logger.log(1, "Finished simulation");
 
-      });
+    });
+    // fetch('http://localhost:9000/gammaAPI', {
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   method: 'POST',
+    //   body: JSON.stringify({ data: message })
+    // })
+    //   .then(response => response.text())
+    //   .then(response => {
+    //     this.processResponse(response);
+    //     hidedialog();
+    //     Logger.log(1, "Finished simulation");
+
+    //   });
   }
   processGammaSpectrum(response, binsize) {
 
@@ -319,6 +347,7 @@ class App extends Component {
         track_data.push(parseFloat(floats[index + i * 7 + 4]) * .1);
 
         particle.definition = definition;
+        if(definition.localeCompare("gamma") && definition.localeCompare("e-") && definition.localeCompare("e+")) alert(definition);
         particle.track_id = parseInt(floats[index + i * 7 + 5]);
         particle.parent_id = parseInt(floats[index + i * 7 + 6]);
         particle.totalEnergy = parseFloat(floats[index + i * 7 + 7]);
@@ -346,13 +375,14 @@ class App extends Component {
       if (definition == "e+") tm.color = new Vector3(1, 1, 0);
       tm.drawLines = true;
       this.tracks.push(tm);
+
     }
-    if(this.particles.length > 1000){
-      this.popup.current.showDialog("Too many particles!","Low energy particles will be ommited!",()=>{});
-      this.particles = this.particles.sort((a,b)=>{return b.energyDeposit - a.energyDeposit});
-      this.particles.length = 1000;
-      //this.particles.splice(1000, this.particles.length-1000);
-    } 
+    // if(this.particles.length > 1000){
+    //   this.popup.current.showDialog("Too many particles!","Low energy particles will be ommited!",()=>{});
+    //   this.particles = this.particles.sort((a,b)=>{return b.energyDeposit - a.energyDeposit});
+    //   this.particles.length = 1000;
+    //   //this.particles.splice(1000, this.particles.length-1000);
+    // } 
     let tmp_particles = [];
     for (var i = 0; i < this.particles.length; i ++) {
       tmp_particles.push(this.particles[i]);
@@ -401,7 +431,20 @@ class App extends Component {
       this.canvas.current.addParticle(this.particles[i]);
     }
     if (this.particles.length > 0) this.navbar.current.showClearParticles(true);
+    let ind = floats.length - this.detectors.length - 1;
+    this.detectors.forEach(e=>{
+      e.deposit = parseFloat(floats[ind]);
+      ind++;
+      this.canvas.current.detector_buttons.forEach(b=>{
+        // alert(b.current.id);
+        // alert(e.id);
+
+        if(e.id == b.current.id) b.current.updateDetails(e);
+      });
+    });
+    console.log(floats);
   }
+  
   modifyDetector(detector) {
 
   }
@@ -548,6 +591,11 @@ class App extends Component {
     this.checkRunnable();
     Logger.log(1, "Cleared setup")
   }
+  removeVolumes(){
+    this.volumes = [];
+    this.setState({volumebuttons: []});
+    VolumeList.removeAll();
+  }
   removeSource(source, buttonid) {
 
     if (this.sources.length == 0 && this.guns.length == 0 && this.detectors.length == 0) this.navbar.current.showClearSetup(false);
@@ -622,24 +670,42 @@ class App extends Component {
   setShowGrid(b) {
     this.canvas.current.drawGrid = !b;
   }
+  load(){
+    this.loadfile.current.click();
+  }
+  saveOnline(name){
+    SaveLoad.saveonline(this.codeeditor.current.state.text,this.volumes,name);
+  }
+  updateProject(){
+    const id = WindowParams.get("projectid");
+    // const windowUrl = window.location.search;
+    // const params = new URLSearchParams(windowUrl);
+    // const id = params.get("projectid");
+    SaveLoad.update(id, this.codeeditor.current.state.text,this.volumes);
+  }
+  save(){
+    SaveLoad.save(this.codeeditor.current.state.text,this.volumes);
+  }
   async componentDidMount() {
 
-   
-    
+    Requests.get("");
+
+    await MaterialList.init();
+
     //setup volumes from the database
-
-
     Parser.init(this.volumeselect.current, this.popup.current.showDialog);
-
-    let response = await fetch("http://radsim.inf.elte.hu:9000/database", {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify({ name: "" })
-    });
-    let json = await response.json();
+    let json = 0;
+    while(json.length == undefined){
+      let response = await fetch("http://localhost:9000/geometryAPI/get", {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'GET'
+      });
+      json = await response.json();
+    }
+    
     for (let i = 0; i < json.length; i++) {
       var str = '';
       for (let j = 0; j < json[i].data.data.length; j++) {
@@ -653,6 +719,32 @@ class App extends Component {
 
      //run a few tests
      //CodeTests.langTest([this.codeeditor.current.onclickfunction,this.createDetector, this.createSource, this.createGun,this.removeDetector,this.removeSource,this.removeGun, this.clearSetup]);
+    
+    //init project
+    // const windowUrl = window.location.search;
+    // const params = new URLSearchParams(windowUrl);
+    // const id = params.get("projectid");
+    const id = WindowParams.get("projectid");
+    if(id != null){
+      //load project
+      await SaveLoad.loadonline(id).then(e=>{
+            
+        if(e[0].content != "Created at radsim.inf.elte.hu"){
+          this.errordialog.current.setContent("Invalid project file selected.");
+          this.errordialog.current.showDialog();
+          return;
+        }
+        this.removeVolumes();
+        this.codeeditor.current.updateText(e[1].content+""); 
+        for(let i = 2;i<e.length;i++){
+          this.createVolume(e[i].name.split("/")[1].split(".")[0]+"", e[i].content+"", e[i].name+"");
+        }
+        this.codeeditor.current.run();
+      });
+    }  
+  }
+  showSaveDialog(){
+    this.confirmdialog.current.showDialog();
   }
   render() {
     
@@ -669,10 +761,41 @@ class App extends Component {
       return <div style={{ "z-index": "3", "color": "black" }}> {item} </div>
     });
     return <div>
+      <ErrorDialog ref={this.errordialog} title="ERROR" content="Choose a zip file."></ErrorDialog>
+      <input ref={this.loadfile} style={{"display": "none"}} type="file" onChange={e=>{
+        var r = new FileReader();
+
+        r.onload = async ()=>{
+          var data = r.result;
+          alert(data);
+          await SaveLoad.load(data).then(e=>{
+            
+            if(e[0].content != "Created at radsim.inf.elte.hu"){
+              this.errordialog.current.setContent("Invalid project file selected.");
+              this.errordialog.current.showDialog();
+              return;
+            }
+            this.removeVolumes();
+            this.codeeditor.current.updateText(e[1].content+""); 
+            for(let i = 2;i<e.length;i++){
+              this.createVolume(e[i].name.split("/")[1].split(".")[0]+"", e[i].content+"", e[i].name+"");
+            }
+            this.codeeditor.current.run();
+          });
+          
+        }
+        if(e.target.files[0].name.split(".")[e.target.files[0].name.split(".").length-1] != "zip"){
+          this.errordialog.current.showDialog();
+          return;
+        }
+        r.readAsBinaryString(e.target.files[0]);
+        e.target.value = null;
+      }}></input>
       <VolumeSelectDialog ref={this.volumeselect} createbutton={this.createVolume}></VolumeSelectDialog>
       <VolumeDialog ref={this.volumedialog} createbutton={this.createVolume}></VolumeDialog>
       <PopupDialog ref={this.popup}></PopupDialog>
       <GraphDialog ref={this.graphdialog}></GraphDialog>
+      <SaveOnlineDialog saveonline={this.saveOnline} ref={this.confirmdialog}></SaveOnlineDialog>
       <Tab.Container id="left-tabs-example" defaultActiveKey="first" activeKey={this.state.page}>
         <Col sm={3}>
           <Nav variant="pills" className="flex-column" className='page'>
@@ -687,8 +810,12 @@ class App extends Component {
         <Tab.Content>
           <Tab.Pane eventKey="first" style={{ "overflow": "hidden" }}>
             <Canvas ref={this.canvas} style={{ "overflow": "hidden" }} buttons={this.state.buttons}></Canvas>
-            <CodeEditor ref={this.codeeditor} createGun={this.createGun} clearSetup={this.clearSetup} createSource={this.createSource} createDetector={this.createDetector} canvas={this.canvas} />
+            <CodeEditor save={this.save} ref={this.codeeditor} createGun={this.createGun} clearSetup={this.clearSetup} createSource={this.createSource} createDetector={this.createDetector} canvas={this.canvas} />
             <NavigationBar run={this.runSim}
+              save = {this.save}
+              load = {this.load}
+              saveonline = {this.showSaveDialog}
+              updateproject={this.updateProject}
               ref={this.navbar}
               canvas={this.canvas}
               className="navbar"

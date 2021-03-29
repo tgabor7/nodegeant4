@@ -13,6 +13,9 @@ class VolumeList {
     static addVolume(v){
         if(VolumeList.checkVolumeName(v.name)) VolumeList.volumes.push(v);
     }
+    static removeAll(){
+        VolumeList.volumes = [];
+    }
     static removeVolume(v){
         for(let i = 0;i<VolumeList.volumes.length;i++){
             if(v == VolumeList[i]){

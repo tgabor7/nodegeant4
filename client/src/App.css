@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+.saveName {
+  margin-left: 20px;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  box-shadow: none;
+}
+.saveName:focus {
+  border: none;
+}

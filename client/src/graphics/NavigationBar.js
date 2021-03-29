@@ -12,6 +12,8 @@ import ConfirmDialog from './ConfirmDialog';
 import VolumeDialog from '../volume/VolumeDialog';
 import Logger from '../utils/Logger';
 
+const Cookies = require("js-cookie");
+
 class NavigationBar extends Component{
   constructor(props){
     super(props);
@@ -23,7 +25,9 @@ class NavigationBar extends Component{
     this.confirmDialog = React.createRef();
     this.volumedialog = React.createRef();
     this.showRun = this.showRun.bind(this);
-    this.state = {showTracks: true, showParticles: true, showAxes: true, showGrid: false, showrun: "none", showclearsetup: "none", showclearparticles: "none"};
+    this.state = {showTracks: true, showParticles: true, showAxes: true, showGrid: false, showrun: "none", showclearsetup: "none", showclearparticles: "none", login: Cookies.get("login")};
+  }
+  componentDidMount(){
   }
   static id = 0;
   showRun(b){
@@ -44,8 +48,10 @@ class NavigationBar extends Component{
       this.props.clearSetup();
       this.showClearSetup(false);
     }
+    const login = this.state.login;
 
     return <>
+
     <ConfirmDialog ref={this.confirmDialog} title="Confirm" content="Are you sure you want to delete all components?" fun={handleDelete}>
 
     </ConfirmDialog>
@@ -81,6 +87,23 @@ class NavigationBar extends Component{
         <Nav className="mr-auto">
         <Dropdown>
         <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: 'white', border: 'none', color: 'black'}}>
+          File
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+        <Dropdown.Item className='exportoption' onClick={()=>{this.props.save();}}>Export</Dropdown.Item>
+        <Dropdown.Item className='importoption' onClick={()=>{this.props.load();}}>Import</Dropdown.Item>
+        <Dropdown.Item className='saveoption' style={login == undefined ? {"display":"none"}:{"display":"block"}} onClick={()=>{
+          this.props.updateproject();
+        }}>Save</Dropdown.Item>
+        <Dropdown.Item className='saveoption' style={login == undefined ? {"display":"none"}:{"display":"block"}} onClick={()=>{
+          this.props.saveonline();
+        }}>Save as</Dropdown.Item>
+        </Dropdown.Menu>
+        
+      </Dropdown>
+        <Dropdown>
+        <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: 'white', border: 'none', color: 'black'}}>
           Add
         </Dropdown.Toggle>
 
@@ -111,6 +134,7 @@ class NavigationBar extends Component{
         </OverlayTrigger>
         </Dropdown.Menu>
       </Dropdown>
+         
       <Dropdown>
         <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: 'white', border: 'none', color: 'black'}}>
           View
@@ -139,6 +163,13 @@ class NavigationBar extends Component{
 
         </Dropdown.Menu>
       </Dropdown>
+      <Button onClick={()=>{
+        window.location = "../Dashboard";
+      }}>Dashboard</Button>
+      <p style={login == undefined ? {"display":"none"}:{"fontSize":"20px","display":"block","position":"absolute","right":"10%"}}>Logged in as {login}! </p>
+      <Button style={login == undefined ? {"display":"block","position":"absolute","right":"2%"}:{"display":"none"}} onClick={()=>{window.location = "Login"}}>Login</Button>
+      <Button style={login == undefined ? {"display":"none"}:{"display":"block","backgroundColor":"#ff0000","position":"absolute","right":"2%"}} onClick={()=>{Cookies.remove("login"); window.location.reload()}}>Logout</Button>
+     
         </Nav>
         
       </Navbar>
