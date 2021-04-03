@@ -24,27 +24,15 @@ class Spectrum extends Component {
                 }]
             },
         
-            // Configuration options go here
             options: { responsive: true,
                 plugins: {
                     zoom: {
-                        // Container for pan options
                         pan: {
-                            // Boolean to enable panning
                             enabled: true,
-        
-                            // Panning directions. Remove the appropriate direction to disable 
-                            // Eg. 'y' would only allow panning in the y direction
                             mode: 'xy'
                         },
-        
-                        // Container for zoom options
                         zoom: {
-                            // Boolean to enable zooming
                             enabled: true,
-        
-                            // Zooming directions. Remove the appropriate direction to disable 
-                            // Eg. 'y' would only allow zooming in the y direction
                             mode: 'xy',
                         }
                     }
@@ -145,12 +133,6 @@ class Spectrum extends Component {
                         }
                     }],
                     xAxes: [{
-                        // ticks: {
-                        //     userCallback: function(label, index, labels) {
-                        //         if(parseInt(label) % bin == 0) return label;
-                        //         return "";
-                        //     }
-                        //  },
                         scaleLabel: {
                             display: true,
                             fontSize: 18,
@@ -161,23 +143,13 @@ class Spectrum extends Component {
                 },
                 plugins: {
                     zoom: {
-                        // Container for pan options
                         pan: {
-                            // Boolean to enable panning
                             enabled: true,
-        
-                            // Panning directions. Remove the appropriate direction to disable 
-                            // Eg. 'y' would only allow panning in the y direction
                             mode: 'x'
                         },
         
-                        // Container for zoom options
                         zoom: {
-                            // Boolean to enable zooming
                             enabled: true,
-        
-                            // Zooming directions. Remove the appropriate direction to disable 
-                            // Eg. 'y' would only allow zooming in the y direction
                             mode: 'x',
                         }
                     }

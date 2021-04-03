@@ -52,9 +52,10 @@ class App extends Component {
     this.errordialog = React.createRef();
     this.confirmdialog = React.createRef();
 
+
     this.state = {
       buttons: [], gunbuttons: [], sourcebuttons: [], volumebuttons: [], spectrum: true, page: 'first',
-      volumebuttonheight: "100%"
+      volumebuttonheight: "100%", projectName: "Untitled"
     }
     this.createDetector = this.createDetector.bind(this);
     this.createSource = this.createSource.bind(this);
@@ -740,6 +741,7 @@ class App extends Component {
           this.createVolume(e[i].name.split("/")[1].split(".")[0]+"", e[i].content+"", e[i].name+"");
         }
         this.codeeditor.current.run();
+        this.setState({projectname: e.name});
       });
     }  
   }
@@ -818,6 +820,7 @@ class App extends Component {
               updateproject={this.updateProject}
               ref={this.navbar}
               canvas={this.canvas}
+              projectname={this.state.projectName}
               className="navbar"
               volumes={this.volumes}
               runspectroscopy={this.runSpectroscopy}

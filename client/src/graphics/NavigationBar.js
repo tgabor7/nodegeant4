@@ -25,7 +25,7 @@ class NavigationBar extends Component{
     this.confirmDialog = React.createRef();
     this.volumedialog = React.createRef();
     this.showRun = this.showRun.bind(this);
-    this.state = {showTracks: true, showParticles: true, showAxes: true, showGrid: false, showrun: "none", showclearsetup: "none", showclearparticles: "none", login: Cookies.get("login")};
+    this.state = {showTracks: true, showParticles: true, showAxes: true, showGrid: false, showrun: "none", showclearsetup: "none", showclearparticles: "none", login: Cookies.get("login"),projectname: this.props.projectname};
   }
   componentDidMount(){
   }
@@ -63,7 +63,7 @@ class NavigationBar extends Component{
    <VolumeDialog ref={this.volumedialog} createbutton={this.props.createvolume}></VolumeDialog>
 
    <Navbar bg="light" variant="light" style={{position: 'fixed', 'z-index': '4'}}>
-        <Navbar.Brand>Geant4</Navbar.Brand>
+        <Navbar.Brand>{this.props.projectname}</Navbar.Brand>
         <Button style={{"display": this.state.showrun, "borderRadius" : 0}} variant="primary" onClick={()=>{
           this.rundialog.current.showDialog();}} >Run</Button>
 

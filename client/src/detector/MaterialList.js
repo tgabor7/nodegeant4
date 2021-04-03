@@ -40,8 +40,6 @@ class MaterialList {
                         console.error(error)
                         return
                     }
-                    console.log(`statusCode: ${res.statusCode}`)
-                    console.log(body)
             });
             json = await result.json();
         }
@@ -62,8 +60,6 @@ class MaterialList {
                 console.error(error)
                 return
                 }
-                console.log(`statusCode: ${res.statusCode}`)
-                console.log(body)
         });
         let compoundjson = await compoundresult.json();
         for(let i = 0;i<compoundjson.length;i++){
@@ -81,8 +77,6 @@ class MaterialList {
                 console.error(error)
                 return
                 }
-                console.log(`statusCode: ${res.statusCode}`)
-                console.log(body)
         });
         let sourceJson = await sourceResult.json();
         for(let i = 0;i<sourceJson.length;i++){
@@ -101,8 +95,6 @@ class MaterialList {
                 console.error(error)
                 return
                 }
-                console.log(`statusCode: ${res.statusCode}`)
-                console.log(body)
         });
         let json = await result.json();
     }
