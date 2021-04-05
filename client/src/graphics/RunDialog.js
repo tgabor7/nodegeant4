@@ -1,5 +1,6 @@
 import React, { Component, createRef } from 'react';
 import {Button, Nav, Navbar, FormControl, Container,Col,Row, Form, Dropdown, OverlayTrigger, Tooltip, Modal, Spinner, ProgressBar} from 'react-bootstrap';
+import Requests from "../utils/Reqs";
 
 const User = require("../utils/User");
 
@@ -20,20 +21,11 @@ class RunDialog extends Component {
     startProgress(){
       this.setState({progress: 0});
       this.id = setInterval(()=>{
-        fetch('http://localhost:9000/gammaAPI/progress', {
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          method: 'POST',
-          body: JSON.stringify({ id: User.process_id})
-        })
-          .then(response => response.text())
-          .then(response => {
-            console.log(response);
-            if(response.length > 0) this.setState({progress: parseInt(response)});
-          });
-        
+        Requests.post("gammaAPI/progress",{id: User.process_id}) .then(response => response.text())
+        .then(response => {
+          console.log(response);
+          if(response.length > 0) this.setState({progress: parseInt(response)});
+        });
       },100);
     }
     showDialog(){

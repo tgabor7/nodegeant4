@@ -253,28 +253,18 @@ class App extends Component {
     message_data.push('end');
     this.send(message_data, hidedialog);
   }
-  sendGamma(data, hideDialog, binsize) {
+  async sendGamma(data, hideDialog, binsize) {
     var message = '';
     for (var i = 0; i < data.length; i++) {
       message += data[i];
       message += ',';
     }
-    Requests.post("gammaAPI",{data: message});
-    fetch('http://localhost:9000/gammaAPI', {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify({ data: message })
-    })
-      .then(response => response.text())
-      .then(response => {
-        this.processGammaSpectrum(response, binsize);
-        hideDialog();
-        this.setState({ spectrum: false, page: "second" });
-        Logger.log(1, "Finished spectrum simulation");
-      });
+    let response = await Requests.post("gammaAPI",{data: message}).text();
+    
+    this.processGammaSpectrum(response, binsize);
+    hideDialog();
+    this.setState({ spectrum: false, page: "second" });
+    Logger.log(1, "Finished spectrum simulation");
   }
   async send(data, hidedialog) {
     var message = '';
@@ -282,9 +272,7 @@ class App extends Component {
       message += data[i];
       message += ',';
     }
-    let pdata = await fetch("http://localhost:9000/gammaAPI/getid", {
-      method: 'GET'
-    });
+    let pdata = await Requests.get("gammaAPI/getid");
     User.process_id = await pdata.json();
     //alert("id: " + User.process_id);
     Requests.post("gammaAPI",{data: message}).then(response => response.text())
@@ -294,21 +282,6 @@ class App extends Component {
       Logger.log(1, "Finished simulation");
 
     });
-    // fetch('http://localhost:9000/gammaAPI', {
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   method: 'POST',
-    //   body: JSON.stringify({ data: message })
-    // })
-    //   .then(response => response.text())
-    //   .then(response => {
-    //     this.processResponse(response);
-    //     hidedialog();
-    //     Logger.log(1, "Finished simulation");
-
-    //   });
   }
   processGammaSpectrum(response, binsize) {
 
@@ -697,13 +670,8 @@ class App extends Component {
     Parser.init(this.volumeselect.current, this.popup.current.showDialog);
     let json = 0;
     while(json.length == undefined){
-      let response = await fetch("http://localhost:9000/geometryAPI/get", {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        method: 'GET'
-      });
+      
+      let response = await Requests.get("geometryAPI/get");
       json = await response.json();
     }
     

@@ -27,9 +27,8 @@ class SaveLoad {
     static async loadonline(id){
         let files = [];
 
-        let pdata = await fetch("http://localhost:9000/projectAPI/get/" + id, {
-        method: 'GET'
-        });
+        let pdata = await Requests.get("projectAPI/get/" + id);
+        
         let json = await pdata.json();
         for (let i = 0; i < json.length; i++) {
             var zip = new JSZip();
@@ -60,15 +59,7 @@ class SaveLoad {
         zip.generateAsync({type:"base64"})
                 .then(async function(content) {
                 //projectAPI
-                request.post('http://localhost:9000/projectAPI/add', {
-                    json: {
-                        name: name,
-                        data: content,
-                        user: Cookies.get("login")
-                    }
-                }, (error, res, body) => {
-                        alert(error);
-                });
+                Requests.post("projectAPI/add",{name: name,data: content, user: Cookies.get("login")});
          });
     }
     static save(code, volumes){

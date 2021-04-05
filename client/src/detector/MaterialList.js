@@ -29,18 +29,7 @@ class MaterialList {
         //Load elements from the API
         let json = 0;
         while(json.length == undefined){
-            let result = await fetch("http://localhost:9000/elementAPI/get/All",{
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                  },
-                method: 'GET',
-                }, (error, res, body) => {
-                    if (error) {
-                        console.error(error)
-                        return
-                    }
-            });
+            let result = await Requests.get("elementAPI/get/All");
             json = await result.json();
         }
        
@@ -49,53 +38,20 @@ class MaterialList {
         }
 
         //Load compounds from the API
-        let compoundresult = await fetch("http://localhost:9000/compoundAPI/get/All",{
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-            method: 'GET',
-            }, (error, res, body) => {
-                if (error) {
-                console.error(error)
-                return
-                }
-        });
+        let compoundresult = await Requests.get("compoundAPI/get/All");
         let compoundjson = await compoundresult.json();
         for(let i = 0;i<compoundjson.length;i++){
             MaterialList.compounds.push(compoundjson[i]['name']);
         }
         //Load sources from the API
-        let sourceResult = await fetch("http://localhost:9000/sourceAPI/get/All",{
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-            method: 'GET',
-            }, (error, res, body) => {
-                if (error) {
-                console.error(error)
-                return
-                }
-        });
+        let sourceResult = await Requests.get("sourceAPI/get/All");
         let sourceJson = await sourceResult.json();
         for(let i = 0;i<sourceJson.length;i++){
             MaterialList.sources.push(sourceJson[i]['name']);
         }
     }
     static async getElement(symbol){
-        let result = await fetch("http://localhost:9000/elementAPI/get/" + symbol,{
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-            method: 'GET',
-            }, (error, res, body) => {
-                if (error) {
-                console.error(error)
-                return
-                }
-        });
+        let result = await Requests.get("elementAPI/get/" + symbol);
         let json = await result.json();
     }
     static checkMaterial(mat, f) {

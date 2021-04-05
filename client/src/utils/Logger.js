@@ -1,23 +1,12 @@
+import Requests from "./Reqs";
+
 class Logger {
     static log(lvl, msg){
-        fetch('http://localhost:9000/log', {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({ level: lvl, message: msg })
-        });
+        
+        Requests.post("log",{level: lvl, message: msg});
     }
     static async getLogs(){
-        let req = await fetch('http://localhost:9000/log', {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        method: 'GET'
-        })
-        let message = await req.text();
+        let message = await (await Requests.get("log")).text();
 
         return message;
     }
