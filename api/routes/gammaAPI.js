@@ -26,7 +26,30 @@ var removeId = function(id){
         }
     }
 }
+router.post("/progress", async function(req, res, next){
+    let content = '';
+    const fs = require('fs');
+    if(!fs.existsSync("progress" + req.body.id)){
+        res.send("0");
+        return;
+    }
+    let readStream = fs.createReadStream("progress" + req.body.id);
 
+    readStream.on('data', function(chunk) {
+        content += chunk.toString('utf8');
+    });
+    readStream.on('end', function(){
+        res.send(content);
+        readStream.close();
+    });
+    
+});
+router.get("/getid", async function(req, res, next){
+    res.send(""+getNextId());
+});
+router.post("/cancel", async function(req, res, next){
+    
+});
 router.post("/",async function(req, res, next) {
     res.connection.setTimeout(1000 * 60 * 60);
     console.log("\nNumber of ids: " + ids.length + "\n");
@@ -35,11 +58,13 @@ router.post("/",async function(req, res, next) {
         return; 
     }
     id = getNextId();
+    //res.write(""+id);
     console.log("current process id: " + id);
     ids.push(id);
     let process_id = +id;
     const { exec } = require('child_process');
     const fs = require('fs');
+    if(fs.existsSync("progress" + process_id)) fs.unlinkSync("progress" + process_id);
     fs.writeFile('receive' + process_id, req.body.data, function(err){
         if(err) return console.log(err);
     });
@@ -60,7 +85,8 @@ router.post("/",async function(req, res, next) {
         });
         readStream.on('end', function(){
             console.log(content.length);
-            res.send(content);
+            res.write(content);
+            res.end();
             removeId(id);
         });
        

@@ -8,3 +8,957 @@ Date: 2020-11-17-20-31-18 lvl: 1 message: Started simulation
 Date: 2020-11-17-20-31-19 lvl: 1 message: Finished simulation
 Date: 2020-11-17-20-31-23 lvl: 1 message: Started simulation
 Date: 2020-11-17-20-31-24 lvl: 1 message: Finished simulation
+Date: 2021-03-06-12-44-1 lvl: 1 message: Created detector
+Date: 2021-03-06-12-44-22 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+
+Date: 2021-03-06-12-44-33 lvl: 1 message: Cleared setup
+Date: 2021-03-06-12-44-33 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+
+Date: 2021-03-06-12-44-33 lvl: 1 message: Created detector
+Date: 2021-03-06-12-44-50 lvl: 1 message: Created detector
+Date: 2021-03-06-12-45-1 lvl: 3 message: Modified detector
+Date: 2021-03-06-13-36-38 lvl: 1 message: Created detector
+Date: 2021-03-06-16-21-24 lvl: 1 message: Created detector
+Date: 2021-03-06-18-25-18 lvl: 1 message: Created detector
+Date: 2021-03-06-18-25-27 lvl: 1 message: Removed detector
+Date: 2021-03-06-18-25-45 lvl: 1 message: Created source
+Date: 2021-03-06-18-25-52 lvl: 1 message: Created detector
+Date: 2021-03-06-18-26-11 lvl: 1 message: Started simulation
+Date: 2021-03-06-18-27-2 lvl: 1 message: Cleared setup
+Date: 2021-03-06-18-27-2 lvl: 1 message: Created source
+Date: 2021-03-06-18-27-2 lvl: 2 message: Ran script:  \Source{
+	name: "Source0";
+	position[cm]: 0, 0, 0;
+	material: "Co60";
+}
+\Detector{
+	name: "Detector0";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "model";
+}
+
+Date: 2021-03-06-18-27-2 lvl: 1 message: Created detector
+Date: 2021-03-06-18-27-6 lvl: 1 message: Created detector
+Date: 2021-03-06-18-27-12 lvl: 3 message: Modified detector
+Date: 2021-03-06-18-27-22 lvl: 1 message: Created detector
+Date: 2021-03-06-18-27-28 lvl: 1 message: Removed detector
+Date: 2021-03-06-18-27-30 lvl: 1 message: Removed detector
+Date: 2021-03-06-18-28-11 lvl: 1 message: Created detector
+Date: 2021-03-06-18-28-15 lvl: 1 message: Created source
+Date: 2021-03-06-18-28-16 lvl: 1 message: Started simulation
+Date: 2021-03-06-18-28-28 lvl: 1 message: Finished simulation
+Date: 2021-03-06-18-29-41 lvl: 1 message: Created detector
+Date: 2021-03-06-18-30-12 lvl: 1 message: Created detector
+Date: 2021-03-06-18-31-8 lvl: 1 message: Created source
+Date: 2021-03-06-18-31-11 lvl: 1 message: Started simulation
+Date: 2021-03-06-18-31-22 lvl: 1 message: Finished simulation
+Date: 2021-03-06-18-31-28 lvl: 1 message: Removed detector
+Date: 2021-03-06-18-31-31 lvl: 1 message: Started simulation
+Date: 2021-03-06-18-31-39 lvl: 1 message: Finished simulation
+Date: 2021-03-06-18-32-5 lvl: 3 message: Modified detector
+Date: 2021-03-06-18-32-14 lvl: 1 message: Started simulation
+Date: 2021-03-06-18-32-20 lvl: 1 message: Finished simulation
+Date: 2021-03-06-18-32-32 lvl: 1 message: Removed source
+Date: 2021-03-06-18-32-48 lvl: 3 message: Modified detector
+Date: 2021-03-06-18-40-13 lvl: 1 message: Created gun
+Date: 2021-03-06-18-41-17 lvl: 1 message: Started simulation
+Date: 2021-03-06-18-41-24 lvl: 1 message: Finished simulation
+Date: 2021-03-06-18-43-25 lvl: 1 message: Created detector
+Date: 2021-03-06-18-43-38 lvl: 3 message: Modified detector
+Date: 2021-03-06-18-45-3 lvl: 1 message: Created detector
+Date: 2021-03-06-18-50-6 lvl: 1 message: Created detector
+Date: 2021-03-06-19-6-57 lvl: 1 message: Created detector
+Date: 2021-03-06-19-9-26 lvl: 1 message: Created detector
+Date: 2021-03-06-19-12-39 lvl: 1 message: Created detector
+Date: 2021-03-06-19-13-39 lvl: 1 message: Created detector
+Date: 2021-03-06-19-13-58 lvl: 1 message: Created detector
+Date: 2021-03-06-19-14-5 lvl: 1 message: Created detector
+Date: 2021-03-06-19-14-28 lvl: 1 message: Created detector
+Date: 2021-03-06-19-15-36 lvl: 1 message: Created detector
+Date: 2021-03-20-17-47-31 lvl: 1 message: Created detector
+Date: 2021-03-20-17-47-48 lvl: 1 message: Created detector
+Date: 2021-03-20-17-48-4 lvl: 1 message: Created detector
+Date: 2021-03-20-17-49-30 lvl: 1 message: Created detector
+Date: 2021-03-20-17-49-37 lvl: 1 message: Created detector
+Date: 2021-03-20-17-49-49 lvl: 1 message: Created detector
+Date: 2021-03-20-17-59-36 lvl: 1 message: Created detector
+Date: 2021-03-20-17-59-46 lvl: 1 message: Created detector
+Date: 2021-03-20-17-59-54 lvl: 1 message: Created detector
+Date: 2021-03-20-18-1-15 lvl: 1 message: Created detector
+Date: 2021-03-20-18-1-21 lvl: 1 message: Created detector
+Date: 2021-03-20-18-1-24 lvl: 1 message: Created detector
+Date: 2021-03-20-18-2-59 lvl: 1 message: Created detector
+Date: 2021-03-20-18-3-16 lvl: 1 message: Created detector
+Date: 2021-03-20-18-3-32 lvl: 1 message: Created detector
+Date: 2021-03-20-18-3-33 lvl: 1 message: Created detector
+Date: 2021-03-20-18-3-50 lvl: 1 message: Created detector
+Date: 2021-03-20-18-3-59 lvl: 1 message: Removed detector
+Date: 2021-03-20-18-4-5 lvl: 1 message: Cleared setup
+Date: 2021-03-20-18-4-6 lvl: 1 message: Created detector
+Date: 2021-03-20-18-5-13 lvl: 1 message: Created detector
+Date: 2021-03-20-18-5-18 lvl: 1 message: Created detector
+Date: 2021-03-20-18-5-19 lvl: 1 message: Created detector
+Date: 2021-03-20-18-5-20 lvl: 1 message: Created detector
+Date: 2021-03-20-18-5-21 lvl: 1 message: Created detector
+Date: 2021-03-20-18-5-22 lvl: 1 message: Created detector
+Date: 2021-03-20-18-5-23 lvl: 1 message: Created detector
+Date: 2021-03-20-18-5-24 lvl: 1 message: Created detector
+Date: 2021-03-20-18-5-25 lvl: 1 message: Created detector
+Date: 2021-03-20-18-5-26 lvl: 1 message: Created detector
+Date: 2021-03-20-18-6-3 lvl: 1 message: asd
+Date: 2021-03-20-18-6-4 lvl: 1 message: asd
+Date: 2021-03-20-18-6-4 lvl: 1 message: asd
+Date: 2021-03-20-18-6-5 lvl: 1 message: asd
+Date: 2021-03-20-18-6-5 lvl: 1 message: asd
+Date: 2021-03-20-18-12-9 lvl: 1 message: Created detector
+Date: 2021-03-20-18-12-12 lvl: 1 message: Created detector
+Date: 2021-03-20-18-12-15 lvl: 1 message: Created detector
+Date: 2021-03-20-18-12-20 lvl: 1 message: Created detector
+Date: 2021-03-20-18-12-23 lvl: 1 message: Created detector
+Date: 2021-03-20-18-14-15 lvl: 1 message: Created detector
+Date: 2021-03-20-18-14-51 lvl: 1 message: Created detector
+Date: 2021-03-20-18-14-57 lvl: 1 message: Created detector
+Date: 2021-03-20-18-15-0 lvl: 1 message: Created detector
+Date: 2021-03-20-18-15-28 lvl: 1 message: Created detector
+Date: 2021-03-20-18-15-34 lvl: 1 message: Created detector
+Date: 2021-03-20-18-15-35 lvl: 1 message: Created detector
+Date: 2021-03-20-18-15-36 lvl: 1 message: Created detector
+Date: 2021-03-20-18-15-37 lvl: 1 message: Created detector
+Date: 2021-03-20-18-15-38 lvl: 1 message: Created detector
+Date: 2021-03-20-18-15-39 lvl: 1 message: Created detector
+Date: 2021-03-20-18-15-41 lvl: 1 message: Created detector
+Date: 2021-03-20-18-16-21 lvl: 1 message: Created detector
+Date: 2021-03-20-18-16-22 lvl: 1 message: Created detector
+Date: 2021-03-20-18-16-23 lvl: 1 message: Created detector
+Date: 2021-03-20-18-17-36 lvl: 1 message: Created detector
+Date: 2021-03-20-18-17-41 lvl: 1 message: Created detector
+Date: 2021-03-20-18-18-55 lvl: 1 message: Created detector
+Date: 2021-03-20-18-19-0 lvl: 1 message: Created detector
+Date: 2021-03-20-18-19-5 lvl: 1 message: Created detector
+Date: 2021-03-20-18-19-6 lvl: 1 message: Created detector
+Date: 2021-03-20-18-20-52 lvl: 1 message: Created detector
+Date: 2021-03-20-18-20-56 lvl: 1 message: Created detector
+Date: 2021-03-20-18-21-0 lvl: 1 message: Created detector
+Date: 2021-03-20-18-21-3 lvl: 1 message: Created detector
+Date: 2021-03-20-18-21-4 lvl: 1 message: Created detector
+Date: 2021-03-20-18-22-39 lvl: 1 message: Created detector
+Date: 2021-03-20-18-22-42 lvl: 1 message: Created detector
+Date: 2021-03-20-18-24-38 lvl: 1 message: Created detector
+Date: 2021-03-20-18-24-42 lvl: 1 message: Created detector
+Date: 2021-03-20-18-24-45 lvl: 1 message: Created detector
+Date: 2021-03-20-18-24-48 lvl: 1 message: Created detector
+Date: 2021-03-20-18-24-50 lvl: 1 message: Created detector
+Date: 2021-03-20-18-28-11 lvl: 1 message: Created detector
+Date: 2021-03-20-18-29-9 lvl: 1 message: Created detector
+Date: 2021-03-20-18-29-13 lvl: 1 message: Created detector
+Date: 2021-03-20-18-29-15 lvl: 1 message: Created detector
+Date: 2021-03-20-18-29-16 lvl: 1 message: Created detector
+Date: 2021-03-20-18-29-17 lvl: 1 message: Created detector
+Date: 2021-03-20-18-29-18 lvl: 1 message: Created detector
+Date: 2021-03-20-18-29-19 lvl: 1 message: Created detector
+Date: 2021-03-20-18-29-20 lvl: 1 message: Created detector
+Date: 2021-03-20-18-29-21 lvl: 1 message: Created detector
+Date: 2021-03-20-18-29-21 lvl: 1 message: Created detector
+Date: 2021-03-20-18-29-22 lvl: 1 message: Created detector
+Date: 2021-03-20-18-29-23 lvl: 1 message: Created detector
+Date: 2021-03-20-18-31-6 lvl: 1 message: Created detector
+Date: 2021-03-20-18-31-9 lvl: 1 message: Created detector
+Date: 2021-03-20-18-31-10 lvl: 1 message: Created detector
+Date: 2021-03-20-18-32-25 lvl: 1 message: Created detector
+Date: 2021-03-20-18-32-43 lvl: 1 message: Created detector
+Date: 2021-03-20-18-32-48 lvl: 1 message: Created detector
+Date: 2021-03-20-18-33-14 lvl: 1 message: Created detector
+Date: 2021-03-20-18-33-19 lvl: 1 message: Created detector
+Date: 2021-03-20-18-33-24 lvl: 1 message: Created detector
+Date: 2021-03-20-18-33-42 lvl: 1 message: Created detector
+Date: 2021-03-20-18-33-46 lvl: 1 message: Created detector
+Date: 2021-03-20-18-33-51 lvl: 1 message: Created detector
+Date: 2021-03-20-18-34-2 lvl: 1 message: Created detector
+Date: 2021-03-20-18-34-9 lvl: 1 message: Created detector
+Date: 2021-03-20-18-34-12 lvl: 1 message: Created detector
+Date: 2021-03-20-18-34-31 lvl: 1 message: Created detector
+Date: 2021-03-20-18-34-33 lvl: 1 message: Created detector
+Date: 2021-03-22-17-3-18 lvl: 1 message: Created detector
+Date: 2021-03-22-17-3-23 lvl: 1 message: Created detector
+Date: 2021-03-22-17-13-5 lvl: 1 message: Created detector
+Date: 2021-03-22-17-17-19 lvl: 1 message: Created detector
+Date: 2021-03-22-17-17-54 lvl: 1 message: Created detector
+Date: 2021-03-22-17-20-9 lvl: 1 message: Created detector
+Date: 2021-03-22-17-25-25 lvl: 1 message: Created detector
+Date: 2021-03-22-17-26-43 lvl: 1 message: Created detector
+Date: 2021-03-22-18-16-51 lvl: 1 message: Created detector
+Date: 2021-03-22-18-17-3 lvl: 1 message: Created source
+Date: 2021-03-22-18-17-5 lvl: 1 message: Started simulation
+Date: 2021-03-22-18-17-10 lvl: 1 message: Finished simulation
+Date: 2021-03-22-18-25-7 lvl: 1 message: Created detector
+Date: 2021-03-22-18-25-46 lvl: 1 message: Created detector
+Date: 2021-03-22-18-26-47 lvl: 1 message: Created detector
+Date: 2021-03-22-18-30-13 lvl: 1 message: Created detector
+Date: 2021-03-22-18-31-2 lvl: 1 message: Created detector
+Date: 2021-03-22-19-44-48 lvl: 1 message: Created detector
+Date: 2021-03-22-19-47-28 lvl: 1 message: Created detector
+Date: 2021-03-22-19-47-51 lvl: 1 message: Created detector
+Date: 2021-03-22-19-48-34 lvl: 1 message: Created detector
+Date: 2021-03-22-19-49-48 lvl: 1 message: Created detector
+Date: 2021-03-22-21-34-59 lvl: 1 message: Created detector
+Date: 2021-03-22-21-35-7 lvl: 1 message: Created detector
+Date: 2021-03-22-21-35-8 lvl: 1 message: Created detector
+Date: 2021-03-23-16-48-3 lvl: 1 message: Created detector
+Date: 2021-03-23-16-48-33 lvl: 1 message: Created detector
+Date: 2021-03-23-16-48-37 lvl: 1 message: Created detector
+Date: 2021-03-23-16-48-56 lvl: 1 message: Created detector
+Date: 2021-03-23-16-49-56 lvl: 1 message: Created detector
+Date: 2021-03-23-16-50-8 lvl: 1 message: Created detector
+Date: 2021-03-23-16-50-53 lvl: 1 message: Created detector
+Date: 2021-03-23-16-51-9 lvl: 1 message: Created detector
+Date: 2021-03-23-16-51-17 lvl: 1 message: Created detector
+Date: 2021-03-23-16-51-25 lvl: 1 message: Created detector
+Date: 2021-03-23-16-52-14 lvl: 1 message: Created detector
+Date: 2021-03-23-16-52-38 lvl: 1 message: Created detector
+Date: 2021-03-23-16-52-52 lvl: 1 message: Created detector
+Date: 2021-03-23-16-53-38 lvl: 1 message: Created detector
+Date: 2021-03-23-17-3-42 lvl: 1 message: Created detector
+Date: 2021-03-23-17-4-1 lvl: 1 message: Created detector
+Date: 2021-03-23-17-4-7 lvl: 1 message: Created detector
+Date: 2021-03-23-17-4-16 lvl: 1 message: Created detector
+Date: 2021-03-23-17-4-57 lvl: 1 message: Created detector
+Date: 2021-03-23-17-20-59 lvl: 1 message: Created detector
+Date: 2021-03-23-17-21-14 lvl: 1 message: Created detector
+Date: 2021-03-23-17-22-28 lvl: 1 message: Created detector
+Date: 2021-03-23-17-22-37 lvl: 1 message: Created detector
+Date: 2021-03-23-17-23-39 lvl: 1 message: Created detector
+Date: 2021-03-23-17-25-6 lvl: 1 message: Created detector
+Date: 2021-03-23-17-25-18 lvl: 1 message: Created detector
+Date: 2021-03-23-17-26-48 lvl: 1 message: Created detector
+Date: 2021-03-23-17-28-1 lvl: 1 message: Created detector
+Date: 2021-03-23-17-33-47 lvl: 1 message: Created detector
+Date: 2021-03-23-17-35-33 lvl: 1 message: Created detector
+Date: 2021-03-23-17-35-37 lvl: 1 message: Created detector
+Date: 2021-03-23-17-36-13 lvl: 1 message: Created detector
+Date: 2021-03-23-17-37-9 lvl: 1 message: Created detector
+Date: 2021-03-23-17-48-45 lvl: 1 message: Created detector
+Date: 2021-03-23-17-51-12 lvl: 1 message: Created detector
+Date: 2021-03-23-17-51-45 lvl: 1 message: Created detector
+Date: 2021-03-23-17-51-55 lvl: 1 message: Created detector
+Date: 2021-03-23-17-53-38 lvl: 1 message: Created detector
+Date: 2021-03-23-17-54-36 lvl: 1 message: Created detector
+Date: 2021-03-23-17-58-23 lvl: 1 message: Created detector
+Date: 2021-03-23-18-4-50 lvl: 1 message: Created detector
+Date: 2021-03-23-18-5-50 lvl: 1 message: Created detector
+Date: 2021-03-23-18-6-50 lvl: 1 message: Created detector
+Date: 2021-03-23-18-7-42 lvl: 1 message: Created detector
+Date: 2021-03-23-18-8-7 lvl: 1 message: Created detector
+Date: 2021-03-23-18-9-6 lvl: 1 message: Created detector
+Date: 2021-03-23-18-9-36 lvl: 1 message: Created detector
+Date: 2021-03-23-18-28-53 lvl: 1 message: Created detector
+Date: 2021-03-23-18-32-7 lvl: 1 message: Created detector
+Date: 2021-03-23-18-32-53 lvl: 1 message: Created detector
+Date: 2021-03-23-18-33-16 lvl: 1 message: Created detector
+Date: 2021-03-23-18-35-4 lvl: 1 message: Created detector
+Date: 2021-03-23-18-36-26 lvl: 1 message: Created detector
+Date: 2021-03-23-18-36-52 lvl: 1 message: Created detector
+Date: 2021-03-23-18-40-56 lvl: 1 message: Created detector
+Date: 2021-03-23-18-56-48 lvl: 1 message: Created detector
+Date: 2021-03-23-18-57-32 lvl: 1 message: Created detector
+Date: 2021-03-23-18-57-54 lvl: 1 message: Created detector
+Date: 2021-03-23-18-58-38 lvl: 1 message: Created detector
+Date: 2021-03-23-18-59-42 lvl: 1 message: Created detector
+Date: 2021-03-23-18-59-45 lvl: 1 message: Created detector
+Date: 2021-03-23-19-0-2 lvl: 1 message: Created detector
+Date: 2021-03-23-19-0-23 lvl: 1 message: Created detector
+Date: 2021-03-23-19-3-23 lvl: 1 message: Created detector
+Date: 2021-03-23-21-24-47 lvl: 1 message: Created detector
+Date: 2021-03-23-21-37-33 lvl: 1 message: Created detector
+Date: 2021-03-23-21-39-22 lvl: 1 message: Cleared setup
+Date: 2021-03-23-21-39-22 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+
+Date: 2021-03-23-21-39-22 lvl: 1 message: Created detector
+Date: 2021-03-23-21-39-22 lvl: 1 message: Created detector
+Date: 2021-03-23-21-39-37 lvl: 1 message: Cleared setup
+Date: 2021-03-23-21-39-37 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+
+Date: 2021-03-23-21-39-37 lvl: 1 message: Created detector
+Date: 2021-03-23-21-39-38 lvl: 1 message: Created detector
+Date: 2021-03-23-21-39-44 lvl: 1 message: Cleared setup
+Date: 2021-03-23-21-39-44 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+
+Date: 2021-03-23-21-39-44 lvl: 1 message: Created detector
+Date: 2021-03-23-21-39-45 lvl: 1 message: Created detector
+Date: 2021-03-23-21-40-39 lvl: 1 message: Cleared setup
+Date: 2021-03-23-21-40-40 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+
+Date: 2021-03-23-21-40-40 lvl: 1 message: Created detector
+Date: 2021-03-23-21-40-40 lvl: 1 message: Created detector
+Date: 2021-03-23-21-40-48 lvl: 3 message: Modified detector
+Date: 2021-03-23-21-40-50 lvl: 1 message: Cleared setup
+Date: 2021-03-23-21-40-50 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Al";
+	geometry: "cube";
+}
+\Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+
+Date: 2021-03-23-21-40-50 lvl: 1 message: Created detector
+Date: 2021-03-23-21-40-50 lvl: 1 message: Created detector
+Date: 2021-03-23-21-42-14 lvl: 1 message: Created detector
+Date: 2021-03-23-21-42-15 lvl: 1 message: Cleared setup
+Date: 2021-03-23-21-42-15 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+
+Date: 2021-03-23-21-42-15 lvl: 1 message: Created detector
+Date: 2021-03-23-21-48-17 lvl: 1 message: Created detector
+Date: 2021-03-23-21-52-33 lvl: 1 message: Created detector
+Date: 2021-03-23-21-52-51 lvl: 1 message: Created detector
+Date: 2021-03-23-21-52-51 lvl: 1 message: Cleared setup
+Date: 2021-03-23-21-52-51 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+
+Date: 2021-03-23-21-52-51 lvl: 1 message: Created detector
+Date: 2021-03-23-21-53-17 lvl: 3 message: Modified detector
+Date: 2021-03-23-21-53-37 lvl: 1 message: Created detector
+Date: 2021-03-23-21-53-37 lvl: 1 message: Cleared setup
+Date: 2021-03-23-21-53-37 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+
+Date: 2021-03-23-21-53-37 lvl: 1 message: Created detector
+Date: 2021-03-23-21-55-54 lvl: 1 message: Created detector
+Date: 2021-03-23-21-55-54 lvl: 1 message: Cleared setup
+Date: 2021-03-23-21-55-54 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+
+Date: 2021-03-23-21-55-54 lvl: 1 message: Created detector
+Date: 2021-03-23-21-56-28 lvl: 1 message: Created detector
+Date: 2021-03-23-21-56-42 lvl: 3 message: Modified detector
+Date: 2021-03-23-21-56-48 lvl: 3 message: Modified detector
+Date: 2021-03-23-21-57-13 lvl: 1 message: Created detector
+Date: 2021-03-23-21-57-13 lvl: 1 message: Cleared setup
+Date: 2021-03-23-21-57-13 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+\Detector{
+	name: "Detector1";
+	position[cm]: 100, 0, 0;
+	rotation[deg]: 30.000000000000004, 0, 0;
+	scale[cm]: 13, 10, 10;
+	material: "Be";
+	geometry: "cube";
+}
+
+Date: 2021-03-23-21-57-13 lvl: 1 message: Created detector
+Date: 2021-03-23-21-57-13 lvl: 1 message: Created detector
+Date: 2021-03-24-17-48-18 lvl: 1 message: Created detector
+Date: 2021-03-24-17-48-25 lvl: 1 message: Created detector
+Date: 2021-03-24-17-48-26 lvl: 1 message: Cleared setup
+Date: 2021-03-24-17-48-26 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+\Detector{
+	name: "Detector1";
+	position[cm]: 100, 0, 0;
+	rotation[deg]: 30.000000000000004, 0, 0;
+	scale[cm]: 13, 10, 10;
+	material: "Be";
+	geometry: "cube";
+}
+
+Date: 2021-03-24-17-48-26 lvl: 1 message: Created detector
+Date: 2021-03-24-17-48-26 lvl: 1 message: Created detector
+Date: 2021-03-24-17-50-52 lvl: 1 message: Created detector
+Date: 2021-03-24-17-53-49 lvl: 1 message: Created detector
+Date: 2021-03-24-17-53-53 lvl: 1 message: Created detector
+Date: 2021-03-24-17-53-53 lvl: 1 message: Cleared setup
+Date: 2021-03-24-17-53-53 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+
+Date: 2021-03-24-17-53-53 lvl: 1 message: Created detector
+Date: 2021-03-24-17-54-3 lvl: 1 message: Created detector
+Date: 2021-03-24-17-54-3 lvl: 1 message: Cleared setup
+Date: 2021-03-24-17-54-3 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+\Detector{
+	name: "Detector1";
+	position[cm]: 100, 0, 0;
+	rotation[deg]: 30.000000000000004, 0, 0;
+	scale[cm]: 13, 10, 10;
+	material: "Be";
+	geometry: "cube";
+}
+
+Date: 2021-03-24-17-54-3 lvl: 1 message: Created detector
+Date: 2021-03-24-17-54-3 lvl: 1 message: Created detector
+Date: 2021-03-24-17-54-17 lvl: 1 message: Created detector
+Date: 2021-03-24-17-54-17 lvl: 1 message: Cleared setup
+Date: 2021-03-24-17-54-17 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+
+Date: 2021-03-24-17-54-17 lvl: 1 message: Created detector
+Date: 2021-03-24-17-54-23 lvl: 1 message: Created source
+Date: 2021-03-24-17-54-31 lvl: 1 message: Created gun
+Date: 2021-03-24-17-56-2 lvl: 1 message: Created detector
+Date: 2021-03-24-17-56-2 lvl: 1 message: Cleared setup
+Date: 2021-03-24-17-56-2 lvl: 1 message: Created gun
+Date: 2021-03-24-17-56-2 lvl: 1 message: Created source
+Date: 2021-03-24-17-56-2 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+\Source{
+	name: "Source1";
+	position[cm]: 0, 0, 0;
+	material: "Co60";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: 0, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 100;
+}
+
+Date: 2021-03-24-17-56-2 lvl: 1 message: Created detector
+Date: 2021-03-24-17-57-44 lvl: 1 message: Created detector
+Date: 2021-03-24-17-59-57 lvl: 1 message: Created detector
+Date: 2021-03-24-18-0-9 lvl: 3 message: Modified detector
+Date: 2021-03-24-18-0-17 lvl: 3 message: Modified detector
+Date: 2021-03-24-18-0-26 lvl: 1 message: Created gun
+Date: 2021-03-24-18-0-29 lvl: 1 message: Started simulation
+Date: 2021-03-24-18-0-34 lvl: 1 message: Finished simulation
+Date: 2021-03-24-18-1-14 lvl: 1 message: Created detector
+Date: 2021-03-24-18-1-14 lvl: 1 message: Cleared setup
+Date: 2021-03-24-18-1-14 lvl: 1 message: Created gun
+Date: 2021-03-24-18-1-14 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 100, 10, 100;
+	material: "K";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: 0, 20, 0;
+	direction: 0, -1, 0;
+	energy[keV]: 100;
+}
+
+Date: 2021-03-24-18-1-14 lvl: 1 message: Created detector
+Date: 2021-03-24-18-1-55 lvl: 3 message: Modified detector
+Date: 2021-03-25-10-39-35 lvl: 1 message: Created detector
+Date: 2021-03-25-10-39-46 lvl: 1 message: Created detector
+Date: 2021-03-25-10-40-3 lvl: 1 message: Created detector
+Date: 2021-03-25-10-40-4 lvl: 1 message: Cleared setup
+Date: 2021-03-25-10-40-4 lvl: 1 message: Created gun
+Date: 2021-03-25-10-40-4 lvl: 1 message: Created source
+Date: 2021-03-25-10-40-4 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+\Source{
+	name: "Source1";
+	position[cm]: 0, 0, 0;
+	material: "Co60";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: 0, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 100;
+}
+
+Date: 2021-03-25-10-40-4 lvl: 1 message: Created detector
+Date: 2021-03-25-11-24-45 lvl: 1 message: Created detector
+Date: 2021-03-25-17-49-15 lvl: 1 message: Created detector
+Date: 2021-03-25-20-11-50 lvl: 1 message: Created detector
+Date: 2021-03-25-20-11-55 lvl: 1 message: Created detector
+Date: 2021-03-25-20-11-59 lvl: 1 message: Created detector
+Date: 2021-03-25-20-11-59 lvl: 1 message: Cleared setup
+Date: 2021-03-25-20-11-59 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+\Detector{
+	name: "Detector1";
+	position[cm]: 100, 0, 0;
+	rotation[deg]: 30.000000000000004, 0, 0;
+	scale[cm]: 13, 10, 10;
+	material: "Be";
+	geometry: "cube";
+}
+
+Date: 2021-03-25-20-11-59 lvl: 1 message: Created detector
+Date: 2021-03-25-20-11-59 lvl: 1 message: Created detector
+Date: 2021-03-25-20-59-44 lvl: 1 message: Created detector
+Date: 2021-03-27-10-51-31 lvl: 1 message: Created detector
+Date: 2021-03-27-10-56-18 lvl: 1 message: Created detector
+Date: 2021-03-27-10-56-25 lvl: 1 message: Created detector
+Date: 2021-03-27-12-18-11 lvl: 1 message: Created detector
+Date: 2021-03-27-13-21-13 lvl: 1 message: Created detector
+Date: 2021-03-27-13-22-25 lvl: 1 message: Created detector
+Date: 2021-03-27-13-22-27 lvl: 1 message: Created detector
+Date: 2021-03-27-13-22-32 lvl: 1 message: Created detector
+Date: 2021-03-27-13-22-39 lvl: 1 message: Created detector
+Date: 2021-03-27-13-22-45 lvl: 1 message: Created detector
+Date: 2021-03-27-13-23-55 lvl: 1 message: Created detector
+Date: 2021-03-27-13-23-57 lvl: 1 message: Created detector
+Date: 2021-03-27-22-54-37 lvl: 1 message: Created detector
+Date: 2021-03-27-22-56-56 lvl: 1 message: Created detector
+Date: 2021-03-27-23-4-33 lvl: 1 message: Created detector
+Date: 2021-03-27-23-6-7 lvl: 1 message: Created detector
+Date: 2021-03-28-14-28-51 lvl: 1 message: Created detector
+Date: 2021-03-28-14-29-54 lvl: 1 message: Created detector
+Date: 2021-03-28-14-30-1 lvl: 1 message: Created detector
+Date: 2021-03-28-17-1-51 lvl: 1 message: Created detector
+Date: 2021-03-28-17-1-54 lvl: 1 message: Created detector
+Date: 2021-03-28-17-6-59 lvl: 1 message: Created detector
+Date: 2021-03-28-17-7-7 lvl: 1 message: Created detector
+Date: 2021-03-28-17-7-11 lvl: 1 message: Created detector
+Date: 2021-03-28-17-7-11 lvl: 1 message: Cleared setup
+Date: 2021-03-28-17-7-11 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+\Detector{
+	name: "Detector1";
+	position[cm]: 100, 0, 0;
+	rotation[deg]: 30.000000000000004, 0, 0;
+	scale[cm]: 13, 10, 10;
+	material: "Be";
+	geometry: "cube";
+}
+
+Date: 2021-03-28-17-7-11 lvl: 1 message: Created detector
+Date: 2021-03-28-17-7-11 lvl: 1 message: Created detector
+Date: 2021-03-28-17-7-24 lvl: 3 message: Modified detector
+Date: 2021-03-28-17-7-33 lvl: 1 message: Created detector
+Date: 2021-03-28-17-7-34 lvl: 1 message: Cleared setup
+Date: 2021-03-28-17-7-34 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+\Detector{
+	name: "Detector1";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0.5235833333333341, 0, 0;
+	scale[cm]: 13, 10, 10;
+	material: "Be";
+	geometry: "cube";
+}
+
+Date: 2021-03-28-17-7-34 lvl: 1 message: Created detector
+Date: 2021-03-28-17-7-34 lvl: 1 message: Created detector
+Date: 2021-03-28-17-7-55 lvl: 1 message: Created detector
+Date: 2021-03-28-17-7-58 lvl: 1 message: Created detector
+Date: 2021-03-28-17-7-58 lvl: 1 message: Cleared setup
+Date: 2021-03-28-17-7-58 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+\Detector{
+	name: "Detector1";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0.5235833333333341, 0, 0;
+	scale[cm]: 13, 10, 10;
+	material: "Be";
+	geometry: "cube";
+}
+
+Date: 2021-03-28-17-7-58 lvl: 1 message: Created detector
+Date: 2021-03-28-17-7-58 lvl: 1 message: Created detector
+Date: 2021-03-28-17-8-36 lvl: 1 message: Created detector
+Date: 2021-03-28-17-9-13 lvl: 1 message: Created detector
+Date: 2021-03-28-17-9-34 lvl: 1 message: Created detector
+Date: 2021-03-28-17-9-36 lvl: 1 message: Created detector
+Date: 2021-03-28-17-9-50 lvl: 1 message: Created detector
+Date: 2021-03-28-17-9-53 lvl: 1 message: Created detector
+Date: 2021-03-28-17-9-55 lvl: 1 message: Created detector
+Date: 2021-03-28-17-10-3 lvl: 1 message: Created detector
+Date: 2021-03-28-17-10-38 lvl: 1 message: Created detector
+Date: 2021-03-29-11-51-2 lvl: 1 message: Created detector
+Date: 2021-03-29-11-51-5 lvl: 1 message: Created source
+Date: 2021-03-29-11-51-7 lvl: 1 message: Started simulation
+Date: 2021-03-29-11-51-12 lvl: 1 message: Finished simulation
+Date: 2021-03-29-11-51-17 lvl: 1 message: Started simulation
+Date: 2021-03-29-11-51-19 lvl: 1 message: Finished simulation
+Date: 2021-03-29-11-55-26 lvl: 1 message: Created detector
+Date: 2021-03-29-11-58-7 lvl: 1 message: Created detector
+Date: 2021-03-29-11-58-9 lvl: 1 message: Created source
+Date: 2021-03-29-11-58-10 lvl: 1 message: Started simulation
+Date: 2021-03-29-11-59-1 lvl: 1 message: Created detector
+Date: 2021-03-29-11-59-3 lvl: 1 message: Created source
+Date: 2021-03-29-11-59-5 lvl: 1 message: Started simulation
+Date: 2021-03-29-11-59-23 lvl: 1 message: Created detector
+Date: 2021-03-29-12-0-14 lvl: 1 message: Created detector
+Date: 2021-03-29-12-0-18 lvl: 1 message: Created source
+Date: 2021-03-29-12-0-20 lvl: 1 message: Started simulation
+Date: 2021-03-29-12-0-22 lvl: 1 message: Finished simulation
+Date: 2021-03-29-13-3-31 lvl: 1 message: Created detector
+Date: 2021-03-29-13-51-48 lvl: 1 message: Created detector
+Date: 2021-03-29-17-31-25 lvl: 1 message: Created detector
+Date: 2021-03-29-17-31-31 lvl: 3 message: Modified detector
+Date: 2021-03-29-17-31-34 lvl: 1 message: Created source
+Date: 2021-03-29-17-31-35 lvl: 1 message: Started simulation
+Date: 2021-03-29-17-31-44 lvl: 1 message: Finished simulation
+Date: 2021-03-29-17-31-55 lvl: 1 message: Removed source
+Date: 2021-03-29-17-32-0 lvl: 1 message: Created gun
+Date: 2021-03-29-17-32-2 lvl: 1 message: Started simulation
+Date: 2021-03-29-17-32-3 lvl: 1 message: Finished simulation
+Date: 2021-03-29-17-32-9 lvl: 1 message: Started simulation
+Date: 2021-03-29-17-32-10 lvl: 1 message: Finished simulation
+Date: 2021-03-29-17-32-22 lvl: 1 message: Started simulation
+Date: 2021-03-29-17-32-22 lvl: 1 message: Finished simulation
+Date: 2021-03-29-17-32-27 lvl: 1 message: Started simulation
+Date: 2021-03-29-17-32-28 lvl: 1 message: Finished simulation
+Date: 2021-03-29-17-32-34 lvl: 1 message: Started simulation
+Date: 2021-03-29-17-32-35 lvl: 1 message: Finished simulation
+Date: 2021-03-29-17-32-43 lvl: 1 message: Started simulation
+Date: 2021-03-29-17-32-48 lvl: 1 message: Finished simulation
+Date: 2021-03-29-17-34-39 lvl: 1 message: Created detector
+Date: 2021-03-29-17-34-43 lvl: 3 message: Modified detector
+Date: 2021-03-29-17-34-47 lvl: 3 message: Modified detector
+Date: 2021-03-29-17-34-54 lvl: 3 message: Modified detector
+Date: 2021-03-29-17-38-42 lvl: 1 message: Created detector
+Date: 2021-03-29-17-39-13 lvl: 1 message: Created detector
+Date: 2021-03-29-18-1-17 lvl: 1 message: Created detector
+Date: 2021-03-29-18-37-34 lvl: 1 message: Created detector
+Date: 2021-03-29-18-38-2 lvl: 1 message: Created detector
+Date: 2021-03-30-10-36-7 lvl: 1 message: Created detector
+Date: 2021-03-30-11-0-19 lvl: 1 message: Created detector
+Date: 2021-03-30-11-0-30 lvl: 1 message: Created detector
+Date: 2021-03-30-15-33-3 lvl: 1 message: Created detector
+Date: 2021-03-30-15-33-13 lvl: 1 message: Created detector
+Date: 2021-03-30-15-33-30 lvl: 1 message: Created detector
+Date: 2021-03-30-15-33-31 lvl: 1 message: Cleared setup
+Date: 2021-03-30-15-33-31 lvl: 1 message: Created gun
+Date: 2021-03-30-15-33-31 lvl: 1 message: Created source
+Date: 2021-03-30-15-33-31 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+\Source{
+	name: "Source1";
+	position[cm]: 0, 0, 0;
+	material: "Co60";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: 0, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 100;
+}
+
+Date: 2021-03-30-15-33-31 lvl: 1 message: Created detector
+Date: 2021-03-30-15-37-4 lvl: 1 message: Created detector
+Date: 2021-03-30-15-37-4 lvl: 1 message: Cleared setup
+Date: 2021-03-30-15-37-4 lvl: 1 message: Created gun
+Date: 2021-03-30-15-37-4 lvl: 1 message: Created source
+Date: 2021-03-30-15-37-4 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+\Source{
+	name: "Source1";
+	position[cm]: 0, 0, 0;
+	material: "Co60";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: 0, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 100;
+}
+
+Date: 2021-03-30-15-37-4 lvl: 1 message: Created detector
+Date: 2021-03-30-15-37-10 lvl: 1 message: Created detector
+Date: 2021-03-30-15-37-10 lvl: 1 message: Cleared setup
+Date: 2021-03-30-15-37-10 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+
+Date: 2021-03-30-15-37-10 lvl: 1 message: Created detector
+Date: 2021-03-30-15-37-14 lvl: 1 message: Created detector
+Date: 2021-03-30-15-37-14 lvl: 1 message: Cleared setup
+Date: 2021-03-30-15-37-14 lvl: 1 message: Created gun
+Date: 2021-03-30-15-37-14 lvl: 1 message: Created source
+Date: 2021-03-30-15-37-14 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+\Source{
+	name: "Source1";
+	position[cm]: 0, 0, 0;
+	material: "Co60";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: 0, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 100;
+}
+
+Date: 2021-03-30-15-37-14 lvl: 1 message: Created detector
+Date: 2021-03-30-15-37-21 lvl: 1 message: Created detector
+Date: 2021-03-30-15-37-21 lvl: 1 message: Cleared setup
+Date: 2021-03-30-15-37-21 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+\Detector{
+	name: "Detector1";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0.5235833333333341, 0, 0;
+	scale[cm]: 13, 10, 10;
+	material: "Be";
+	geometry: "cube";
+}
+
+Date: 2021-03-30-15-37-21 lvl: 1 message: Created detector
+Date: 2021-03-30-15-37-21 lvl: 1 message: Created detector
+Date: 2021-03-30-15-37-48 lvl: 1 message: Created detector
+Date: 2021-03-30-15-37-55 lvl: 1 message: Created detector
+Date: 2021-03-30-15-38-11 lvl: 1 message: Created gun
+Date: 2021-03-30-15-38-16 lvl: 1 message: Started simulation
+Date: 2021-03-30-15-38-21 lvl: 1 message: Finished simulation
+Date: 2021-03-30-15-38-29 lvl: 1 message: Started simulation
+Date: 2021-03-30-15-38-30 lvl: 1 message: Finished simulation
+Date: 2021-03-30-15-38-43 lvl: 1 message: Started simulation
+Date: 2021-03-30-15-38-45 lvl: 1 message: Finished simulation
+Date: 2021-03-30-15-38-52 lvl: 1 message: Started simulation
+Date: 2021-03-30-17-23-53 lvl: 1 message: Created detector
+Date: 2021-03-30-17-24-11 lvl: 1 message: Created detector
+Date: 2021-03-30-17-27-50 lvl: 1 message: Created detector
+Date: 2021-03-30-17-28-12 lvl: 1 message: Created detector
+Date: 2021-03-30-17-28-12 lvl: 1 message: Cleared setup
+Date: 2021-03-30-17-28-12 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+\Detector{
+	name: "Detector1";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0.5235833333333341, 0, 0;
+	scale[cm]: 13, 10, 10;
+	material: "Be";
+	geometry: "cube";
+}
+
+Date: 2021-03-30-17-28-12 lvl: 1 message: Created detector
+Date: 2021-03-30-17-28-12 lvl: 1 message: Created detector
+Date: 2021-03-30-17-35-1 lvl: 1 message: Created source
+Date: 2021-03-30-17-35-5 lvl: 1 message: Started simulation
+Date: 2021-03-30-17-35-8 lvl: 1 message: Finished simulation
+Date: 2021-03-30-17-35-19 lvl: 1 message: Started simulation
+Date: 2021-03-30-17-35-22 lvl: 1 message: Finished simulation
+Date: 2021-03-30-17-36-54 lvl: 3 message: Modified detector
+Date: 2021-03-30-17-37-0 lvl: 1 message: Removed detector
+Date: 2021-03-30-17-37-4 lvl: 1 message: Started simulation
+Date: 2021-03-30-17-37-8 lvl: 1 message: Finished simulation
+Date: 2021-03-30-17-54-6 lvl: 1 message: Started simulation
+Date: 2021-03-30-17-54-8 lvl: 1 message: Finished simulation
+Date: 2021-03-30-17-54-15 lvl: 1 message: Created detector
+Date: 2021-03-30-17-54-15 lvl: 1 message: Cleared setup
+Date: 2021-03-30-17-54-15 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+\Detector{
+	name: "Detector1";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0.5235833333333341, 0, 0;
+	scale[cm]: 13, 10, 10;
+	material: "Be";
+	geometry: "cube";
+}
+
+Date: 2021-03-30-17-54-15 lvl: 1 message: Created detector
+Date: 2021-03-30-17-54-15 lvl: 1 message: Created detector
+Date: 2021-03-30-17-54-31 lvl: 1 message: Created detector
+Date: 2021-03-30-17-54-34 lvl: 1 message: Created source
+Date: 2021-03-30-17-54-36 lvl: 1 message: Started simulation
+Date: 2021-03-30-17-54-37 lvl: 1 message: Finished simulation
+Date: 2021-03-30-18-3-27 lvl: 1 message: Created detector
+Date: 2021-03-30-18-3-27 lvl: 1 message: Cleared setup
+Date: 2021-03-30-18-3-27 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 20, 10, 10;
+	material: "Pb";
+	geometry: "cylinder";
+}
+\Detector{
+	name: "Detector1";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0.5235833333333341, 0, 0;
+	scale[cm]: 13, 10, 10;
+	material: "Be";
+	geometry: "cube";
+}
+
+Date: 2021-03-30-18-3-27 lvl: 1 message: Created detector
+Date: 2021-03-30-18-3-27 lvl: 1 message: Created detector
+Date: 2021-03-30-18-3-31 lvl: 1 message: Removed detector
+Date: 2021-03-30-18-3-34 lvl: 1 message: Created source
+Date: 2021-03-30-18-3-36 lvl: 1 message: Started simulation
+Date: 2021-03-30-18-3-37 lvl: 1 message: Finished simulation
+Date: 2021-04-02-18-38-52 lvl: 1 message: Created detector
+Date: 2021-04-02-18-39-5 lvl: 1 message: Created gun
+Date: 2021-04-02-18-39-7 lvl: 1 message: Started simulation

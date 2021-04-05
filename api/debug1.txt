@@ -1,10 +1,12 @@
 
+Number of Detectors1
+000
 
 
- Number of guns: 1
+ Number of guns: 0
 
 
 
-1
+100000
 
 asd
