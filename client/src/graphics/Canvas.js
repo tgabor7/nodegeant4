@@ -3,7 +3,6 @@ import '../App.css';
 import { GridRenderer } from '../rendering/grid.js';
 import { Maths,Camera,Vector3 } from '../utils/maths.js';
 import RenderSystem from '../rendering/renderSystem';
-import { render } from '@testing-library/react';
 import Detector from '../detector/Detektor.js';
 import Model from '../rendering/model';
 import {Cube} from '../entities/cube';

@@ -2,6 +2,10 @@ import React, { Component, createRef } from 'react';
 import Chart from 'chart.js';
 import 'chartjs-plugin-zoom';
 
+/*
+
+*/
+
 class Spectrum extends Component {
     constructor(props){
         super(props);
