@@ -50,10 +50,8 @@ router.delete("/delete/",verify, async function(req, res,next){
     mongoose.connection.close();
 
 });
-router.put("/create/",verify, function(req,res,next){
-
+router.put("/create/", verify, verifyRole,function(req,res,next){
     mongoose.connect(process.env.DB_HOME, {useNewUrlParser: true});
-    
     const material = new SourceModel({
         name: req.body.name
     });

@@ -8,21 +8,21 @@ function verify(req, res, next){
         return res.status(401).send("Access denied!");
     }
     try{
-        const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-        req.user = verified;
-        next();
+        jwt.verify(token, process.env.TOKEN_SECRET, (err, user)=>{
+            req.user = user;
+            next();
+        });
+        
     }catch(err){
         res.status(400).send('Invalid token!');
     }
 }
-async function verifyRole(role){
-    return (req, res, next) =>{
-        if(req.user.permission === role){
-            next();
-        }else{
-            return res.status(401).send("Access denied!");
-        }
+function verifyRole(req, res, next){
+    if(req.user.role === "Admin"){
+        next();
+        return;
     }
+    res.status(401).send("Access denied!");
 }
 
 module.exports = {
