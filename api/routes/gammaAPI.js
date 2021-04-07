@@ -64,7 +64,6 @@ router.post("/",async function(req, res, next) {
     let process_id = +id;
     const { exec } = require('child_process');
     const fs = require('fs');
-    if(fs.existsSync("progress" + process_id)) fs.unlinkSync("progress" + process_id);
     fs.writeFile('receive' + process_id, req.body.data, function(err){
         if(err) return console.log(err);
     });
@@ -88,6 +87,9 @@ router.post("/",async function(req, res, next) {
             res.write(content);
             res.end();
             removeId(id);
+            if(fs.existsSync("progress" + process_id)) fs.unlinkSync("progress" + process_id);
+            if(fs.existsSync("receive" + process_id)) fs.unlinkSync("receive" + process_id);
+
         });
        
     });

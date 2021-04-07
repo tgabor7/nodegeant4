@@ -2,7 +2,7 @@ const express = require('express');
 var mongoose = require("mongoose");
 const ElementModel = require('../models/ElementModel');
 const router = express.Router();
-const verify = require('../verifyToken');
+const {verify} = require('../verifyToken');
 
 router.get("/get/:symbol", async function(req, res,next){
 

@@ -8,9 +8,10 @@ const Cookies = require('js-cookie');
 function App() {
     const user = Cookies.get("login");
     const [projects, setProjects] = useState([]);    
+    const url = "http://radsim.inf.elte.hu/";
 
     useEffect(async ()=>{
-    let response = await fetch("http://localhost:9000/projectAPI/getNames/" + user, {
+    let response = await fetch(url + "projectAPI/getNames/" + user, {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'

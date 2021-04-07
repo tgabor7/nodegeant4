@@ -2,7 +2,7 @@ const express = require('express');
 var mongoose = require("mongoose");
 const SourceModel = require('../models/SourceModel');
 const router = express.Router();
-const verify = require('../verifyToken');
+const {verify, verifyRole} = require('../verifyToken');
 
 router.get("/get/:name", async function(req, res,next){
 
@@ -54,17 +54,18 @@ router.put("/create/",verify, function(req,res,next){
 
     mongoose.connect(process.env.DB_HOME, {useNewUrlParser: true});
     
-
     const material = new SourceModel({
         name: req.body.name
     });
     material.save().then(data => {
         res.json(data);
+        mongoose.connection.close();
     })
     .catch(err => {
         console.log(err);
+        mongoose.connection.close();
     });
-    mongoose.connection.close();
+    
 
 });
 

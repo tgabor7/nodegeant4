@@ -16,6 +16,8 @@ function App() {
   const [confirmEmailError, setConfirmEmailError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
+  const url = "http://radsim.inf.elte.hu/";
+
   let validateUsername = ()=>{
     if(username == ""){
       setNameError("Enter username");
@@ -53,7 +55,7 @@ function App() {
       return;
     }
     
-    fetch('http://localhost:9000/userAPI/login', {
+    fetch(url + 'userAPI/login', {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -166,7 +168,7 @@ function App() {
         <div className="error">{confirmPasswordError}</div>
         <div className="pass">Forgot password?</div>
         <input type="button" value="Register" onClick={()=>{
-          fetch('http://localhost:9000/userAPI/register', {
+          fetch(url + 'userAPI/register', {
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'

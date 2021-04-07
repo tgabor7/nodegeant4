@@ -19,8 +19,6 @@ app.set('port', port);
 /**
  * Create HTTPS server.
  */
-var privateKey = fs.readFileSync( './radsim.inf.elte.hu.key' );
-var certificate = fs.readFileSync( './radsim.inf.elte.hu.pem' );
 
 //var server = https.createServer({key: privateKey, cert: certificate},app);
 var server = http.createServer(app);

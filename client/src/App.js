@@ -685,6 +685,8 @@ class App extends Component {
     //setup first detector
     this.createDetector("Cube", 0, 0, 0, 0, 0, 0, 10, 10, 10, "Pb", 'cube', null, new Vector3(.5, .5, .5), false, 1, 1, 1);
     VolumeList.init(this.codeeditor.current);
+    //setup first source
+    this.createSource("GPS",0,0,0,"Co60",false,1);
 
      //run a few tests
      //CodeTests.langTest([this.codeeditor.current.onclickfunction,this.createDetector, this.createSource, this.createGun,this.removeDetector,this.removeSource,this.removeGun, this.clearSetup]);

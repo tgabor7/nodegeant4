@@ -16,7 +16,7 @@ router.post("/login/", async function(req, res, next){
         }
         const validPass = await bcrypt.compare(req.body.password, user[0].password);
         if(validPass){
-            const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
+            const token = jwt.sign({_id: user._id, permissions: user.permissions}, process.env.TOKEN_SECRET);
             res.header('auth-token', token);
             res.send("Successfull login!");
         }else{
@@ -43,7 +43,7 @@ router.post("/register/", async function(req, res, next){
         const user = new UserModel({
             name: req.body.name,
             password: hash,
-            permission: 0
+            permissions: 0
             
         });
         user.save().then(data => {

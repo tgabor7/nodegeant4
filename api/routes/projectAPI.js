@@ -2,7 +2,7 @@ const express = require('express');
 var mongoose = require("mongoose");
 const Project = require('../models/ProjectModel');
 const router = express.Router();
-const verify = require('../verifyToken');
+const {verify} = require('../verifyToken');
 
 router.get("/get/:id", async(req, res) =>{
     mongoose.connect(process.env.DB_HOME, {useNewUrlParser: true});

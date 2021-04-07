@@ -1,8 +1,7 @@
 import React, { Component, createRef } from 'react';
 import {Button, Nav, Navbar, FormControl, Container,Col,Row, Form, Dropdown, OverlayTrigger, Tooltip, Modal, Spinner, ProgressBar} from 'react-bootstrap';
 import Requests from "../utils/Reqs";
-
-const User = require("../utils/User");
+import User from "../utils/User";
 
 class RunDialog extends Component {
     constructor(props){
@@ -48,7 +47,10 @@ class RunDialog extends Component {
             <ProgressBar now={this.state.progress} label={this.state.progress + "%"}></ProgressBar>
         </Modal.Body>
         <Modal.Footer>
-        <Button variant="secondary" onClick={()=>{this.hideDialog();}}>
+        <Button variant="secondary" onClick={()=>{
+          Requests.post("gammaAPI/cancel",{id: User.process_id});
+          this.hideDialog();
+          }}>
             Cancel
           </Button>
           <Button variant="primary" onClick={()=>{
