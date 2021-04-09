@@ -3,44 +3,23 @@ import '../App.css';
 
 import {Button, Card, Accordion, Figure, Row, Col, Container} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import image from '../images/editicon.png';
 import GunEditDialog from './GunEditDialog';
 import RenderSystem from '../rendering/renderSystem';
-import DetectorButton from '../detector/DetectorButton';
+import UnitConverter from '../utils/UnitConverter';
 
 class GunButton extends Component{
   constructor(props){
     super(props);
     this.editdialog = React.createRef();
     this.updateDetails = this.updateDetails.bind(this);
-    this.state = {details: <Container>
-      <Row>
-        <Col>Position: </Col>
-      </Row>
-      <Row>
-        <Col>x: {this.props.detector.model.position.x} cm</Col>
-        <Col>y: {this.props.detector.model.position.y} cm</Col>
-        <Col>z: {this.props.detector.model.position.z} cm</Col>
-      </Row>
-      <Row>
-        <Col>Direction: </Col>
-      </Row>
-      <Row>
-        <Col>x: {this.props.detector.direction.x} </Col>
-        <Col>y: {this.props.detector.direction.y} </Col>
-        <Col>z: {this.props.detector.direction.z} </Col>
-      </Row>
-      <Row>
-        <Col>Energy: {this.props.detector.energy*0.001} keV</Col>
-      </Row>
-    </Container>};
+    this.state = {detector: this.props.detector};
     this.id = this.props.id;
     this.accordion = React.createRef();
 
   }
   static id = 0;
   updateDetails(d){
-    this.setState({details: d});
+    this.setState({detector: d});
   }
   render(){
     return <div>
@@ -60,7 +39,29 @@ class GunButton extends Component{
         <Button onClick={()=>{this.editdialog.current.showDialog();}} className="editButton">EDIT</Button>
       </Card.Header>
       <Accordion.Collapse eventKey={this.id}>
-      <Card.Body>{this.state.details}</Card.Body>
+      <Card.Body>
+      <Container>
+      <Row>
+        <Col>Position: </Col>
+      </Row>
+      <Row>
+        <Col>x: {this.state.detector.model.position.x} {UnitConverter.convertLength(this.state.detector.units[0])}</Col>
+        <Col>y: {this.state.detector.model.position.y} {UnitConverter.convertLength(this.state.detector.units[0])}</Col>
+        <Col>z: {this.state.detector.model.position.z} {UnitConverter.convertLength(this.state.detector.units[0])}</Col>
+      </Row>
+      <Row>
+        <Col>Direction: </Col>
+      </Row>
+      <Row>
+        <Col>x: {this.state.detector.direction.x} </Col>
+        <Col>y: {this.state.detector.direction.y} </Col>
+        <Col>z: {this.state.detector.direction.z} </Col>
+      </Row>
+      <Row>
+        <Col>Energy: {this.state.detector.energy} {UnitConverter.convertEnergy(this.state.detector.units[1])}</Col>
+      </Row>
+    </Container>
+    </Card.Body>
       </Accordion.Collapse>
     </Card>
   </div>

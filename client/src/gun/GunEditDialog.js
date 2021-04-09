@@ -190,27 +190,7 @@ class GunEditDialog extends Component{
             this.props.codeeditor.current.updateText(text);
 
             this.props.updatedetails(
-            <Container>
-                  <Row>
-                  <Col>Position: </Col>
-                  </Row>
-                  <Row>
-                    <Col>x: {this.state.detposx} {UnitConverter.convertLength(this.state.posu)}</Col>
-                    <Col>y: {this.state.detposy} {UnitConverter.convertLength(this.state.posu)}</Col>
-                    <Col>z: {this.state.detposz} {UnitConverter.convertLength(this.state.posu)}</Col>
-                  </Row>
-                  <Row>
-                  <Col>Direction: </Col>
-                  </Row>
-                  <Row>
-                    <Col>x: {this.state.detdirx} </Col>
-                    <Col>y: {this.state.detdiry} </Col>
-                    <Col>z: {this.state.detdirz} </Col>
-                  </Row>
-                  <Row>
-                  <Col>Energy: {this.state.energy} {UnitConverter.convertEnergy(this.state.energyu)}</Col>
-                  </Row>
-                  </Container>
+           this.props.detector
             );            
             }}>
             Modify

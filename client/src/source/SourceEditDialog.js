@@ -148,19 +148,7 @@ class SourceEditDialog extends Component{
 
             this.props.codeeditor.current.updateText(text);
 
-            this.props.updatedetails(<Container>
-                <Row>
-                <Col>Position: </Col>
-                </Row>
-                <Row>
-            <Col>x: {this.state.detposx} {UnitConverter.convertLength(this.state.posu)}</Col>
-            <Col>y: {this.state.detposy} {UnitConverter.convertLength(this.state.posu)}</Col>
-            <Col>z: {this.state.detposz} {UnitConverter.convertLength(this.state.posu)}</Col>
-                </Row>
-                <Row>
-                <Col>Material: {this.state.material}</Col>
-                </Row>
-                </Container>);            
+            this.props.updatedetails(this.props.detector);            
             }}>
             Modify
           </Button>

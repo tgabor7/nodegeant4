@@ -12,20 +12,7 @@ class SourceButton extends Component{
     super(props);
     this.editdialog = React.createRef();
     this.updateDetails = this.updateDetails.bind(this);
-    this.state = {details: 
-      <Container>
-      <Row>
-        <Col>Position: </Col>
-      </Row>
-      <Row>
-        <Col>x: {this.props.detector.model.position.x} {UnitConverter.convertLength(this.props.detector.units[0])}</Col>
-        <Col>y: {this.props.detector.model.position.y} {UnitConverter.convertLength(this.props.detector.units[0])}</Col>
-        <Col>z: {this.props.detector.model.position.z} {UnitConverter.convertLength(this.props.detector.units[0])}</Col>
-      </Row>
-      <Row>
-        <Col>Material: {this.props.detector.material}</Col>
-      </Row>
-    </Container>
+    this.state = {detector: this.props.detector
     };
     this.id = this.props.id;
     this.accordion = React.createRef();
@@ -34,7 +21,7 @@ class SourceButton extends Component{
   componentDidMount(){
   }
   updateDetails(d){
-    this.setState({details: d});
+    this.setState({detector: d});
   }
   render(){
     return <div>
@@ -54,7 +41,21 @@ class SourceButton extends Component{
         <Button onClick={()=>{this.editdialog.current.showDialog();}} className="editButton">EDIT</Button>
       </Card.Header>
       <Accordion.Collapse eventKey={this.id}>
-      <Card.Body>{this.state.details}</Card.Body>
+      <Card.Body>
+      <Container>
+      <Row>
+        <Col>Position: </Col>
+      </Row>
+      <Row>
+        <Col>x: {this.state.detector.model.position.x} {UnitConverter.convertLength(this.state.detector.units[0])}</Col>
+        <Col>y: {this.state.detector.model.position.y} {UnitConverter.convertLength(this.state.detector.units[0])}</Col>
+        <Col>z: {this.state.detector.model.position.z} {UnitConverter.convertLength(this.state.detector.units[0])}</Col>
+      </Row>
+      <Row>
+        <Col>Material: {this.props.detector.material}</Col>
+      </Row>
+    </Container>
+      </Card.Body>
       </Accordion.Collapse>
     </Card>
   </div>

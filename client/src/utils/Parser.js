@@ -17,10 +17,10 @@ var m = 100;
 var dm = 10;
 var cm = 1;
 var mm = .1;
-var eV = .001;
-var keV = 1;
-var MeV = 1000;
-var GeV = 1000000;
+var eV = 1;
+var keV = 1000;
+var MeV = 1000000;
+var GeV = 1000000000;
 var deg = 0.0174527777777778;
 var rad = 1;
 class Parser {
@@ -184,13 +184,13 @@ class Parser {
                                 }
                                 break;
                             case ('position'):
-                                if (!this.checkFloat(params, detector.model.position, measurement)) alert("position incorrec format");
+                                if (!this.checkFloat(params, detector.model.position, measurement)) alert("position incorrect format");
                                 break;
                             case ('rotation'):
-                                if (!this.checkFloat(params, detector.model.rotation, measurement)) alert("rotation incorrec format");
+                                if (!this.checkFloat(params, detector.model.rotation, measurement)) alert("rotation incorrect format");
                                 break;
                             case ('scale'):
-                                if (!this.checkFloat(params, detector.model.scale, measurement)) alert("scale incorrec format");
+                                if (!this.checkFloat(params, detector.model.scale, measurement)) alert("scale incorrect format");
 
                                 break;
                             case ('material'):
@@ -248,10 +248,10 @@ class Parser {
                     if (words[0] == 'Gun') {
                         switch (attribute) {
                             case ('position'):
-                                if (!this.checkFloat(params, gun.model.position, measurement)) alert("position incorrec format");
+                                if (!this.checkFloat(params, gun.model.position, measurement)) alert("position incorrect format");
                                 break;
                             case ('direction'):
-                                if (!this.checkFloat(params, gun.direction, measurement)) alert("direction incorrec format");
+                                if (!this.checkFloat(params, gun.direction, measurement)) alert("direction incorrect format");
                                 break;
                             case ('energy'):
                                 gun.energy = parseFloat(params) * measurement;

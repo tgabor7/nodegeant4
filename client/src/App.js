@@ -259,12 +259,13 @@ class App extends Component {
       message += data[i];
       message += ',';
     }
-    let response = await Requests.post("gammaAPI",{data: message}).text();
+    Requests.post("gammaAPI",{data: message}).then(response => response.text()).then(response=>{
+      this.processGammaSpectrum(response, binsize);
+      hideDialog();
+      this.setState({ spectrum: false, page: "second" });
+      Logger.log(1, "Finished spectrum simulation");
+    });
     
-    this.processGammaSpectrum(response, binsize);
-    hideDialog();
-    this.setState({ spectrum: false, page: "second" });
-    Logger.log(1, "Finished spectrum simulation");
   }
   async send(data, hidedialog) {
     var message = '';
@@ -321,7 +322,6 @@ class App extends Component {
         track_data.push(parseFloat(floats[index + i * 7 + 4]) * .1);
 
         particle.definition = definition;
-        if(definition.localeCompare("gamma") && definition.localeCompare("e-") && definition.localeCompare("e+")) alert(definition);
         particle.track_id = parseInt(floats[index + i * 7 + 5]);
         particle.parent_id = parseInt(floats[index + i * 7 + 6]);
         particle.totalEnergy = parseFloat(floats[index + i * 7 + 7]);
@@ -465,24 +465,17 @@ class App extends Component {
     if (!code) this.codeeditor.current.addGunCode(n, new Vector3(px, py, pz), new Vector3(dx, dy, dz), energy, posu, energyu);
 
     let bs = this.state.gunbuttons;
-    
 
     let gun = this.canvas.current.addGun(px*posu, py*posu, pz*posu, dx, dy, dz, energy*energyu);
     gun.id = +DetectorButton.id;
-    Parser.chunks.push({
-      id: gun.id, code: "\\Gun{\n" +
-        "\tname: " + '"' + n + '";\n' +
-        "\tposition[cm]: " + px + ", " + py + ", " + pz + ";\n" +
-        "\tdirection: " + dx + ", " + dy + ", " + dz + ";\n" +
-        "\tenergy[keV]: " + energy + ';\n' +
-        "}\n"
-    });
     gun.name = n;
     gun.units[0] = posu;
     gun.units[1] = energyu;
+    Parser.addGunCode(gun.id, n, new Vector3(px, py, pz),new Vector3(dx, dy, dz),energy, posu, energyu);
+
     this.guns.push(gun);
     var b = React.createRef();
-    bs.push(<GunButton ref={b} codeeditor={this.codeeditor} name={n} removebutton={this.removeGun} id={DetectorButton.id} detector={gun} key={++DetectorButton.id} buttons={this.state.buttons}></GunButton>);
+    bs.push(<GunButton ref={b} codeeditor={this.codeeditor} name={n} removebutton={this.removeGun} id={DetectorButton.id} detector={gun} key={++DetectorButton.id} buttons={this.state.gunbuttons}></GunButton>);
     this.setState({ gunbuttons: bs });
     this.canvas.current.gun_buttons.push(b);
     Logger.log(1, "Created gun");
@@ -547,7 +540,7 @@ class App extends Component {
     Parser.chunks = [];
     this.codeeditor.current.updateText(" ");
     this.codeeditor.current.text = "";
-    DetectorButton.id = 0;
+    //DetectorButton.id = 0;
     this.setState({ buttons: [], gunbuttons: [], sourcebuttons: [] });
     this.canvas.current.clearSetup();
     RenderSystem.active_id = -1;
