@@ -290,7 +290,6 @@ class DetectorDialog extends Component{
             Cancel
           </Button>
           <Button variant="primary" onClick={()=>{
-          alert(this.state.geomrty);
           this.hideDialog();
           this.props.createbutton(this.state.detname, this.state.detposx, this.state.detposy,this.state.detposz,
             this.state.detrotx, this.state.detroty, this.state.detrotz, this.state.detscalex, this.state.detscaley, this.state.detscalez, this.state.detmat, this.state.geomrty,

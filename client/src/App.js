@@ -37,6 +37,7 @@ import SaveOnlineDialog from './graphics/SaveOnlineDialog';
 
 import Requests from './utils/Reqs';
 import WindowParams from './utils/WindowParameters';
+import Error from './utils/Error';
 
 class App extends Component {
   constructor(props) {
@@ -424,6 +425,10 @@ class App extends Component {
   }
   createVolume(name, data, label) {
     let modeldata = STLParser.parseData(data);
+    if(modeldata == null){
+      alert("Geometry too complicated.");
+      return;
+    }
     let bs = this.state.volumebuttons;
     VolumeList.addVolume({ name: name, data: data });
     let vol = { name: name, data: data };
@@ -661,6 +666,8 @@ class App extends Component {
 
     //setup volumes from the database
     Parser.init(this.volumeselect.current, this.popup.current.showDialog);
+    Error.init(this.errordialog.current);
+
     let json = 0;
     while(json.length == undefined){
       
@@ -732,7 +739,6 @@ class App extends Component {
 
         r.onload = async ()=>{
           var data = r.result;
-          alert(data);
           await SaveLoad.load(data).then(e=>{
             
             if(e[0].content != "Created at radsim.inf.elte.hu"){

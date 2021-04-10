@@ -3,6 +3,7 @@ import '../App.css';
 
 import { Button, Modal, Row, Col, Form, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Error from '../utils/Error';
 
 class VolumeDialog extends Component {
     constructor(props) {
@@ -70,12 +71,18 @@ class VolumeDialog extends Component {
                                     r.onload = () => {
                                         var data = r.result;
                                         this.setState({ modeldata: data });
+                                        if(this.state.filelabel.split(".")[this.state.filelabel.split(".").length - 1].toUpperCase() !== 'STL'){
+                                            //To do error handling
+                                            this.setState({filelabel: "",modeldata: []});
+                                            Error.showError("Bad format","Select an .stl file!");
+                                        }
                                     }
                                     r.readAsBinaryString(evt.target.files[0]);
 
                                     let path = evt.target.value;
                                     path = path.split("\\")[path.split("\\").length - 1];
                                     this.setState({ filelabel: path });
+                                    
                                 }}
                             />
                         </Container>
@@ -87,7 +94,7 @@ class VolumeDialog extends Component {
           </Button>
                         <Button variant="primary" onClick={() => {
                             if(this.state.modeldata.length == 0){
-                                alert("Select an stl file!");
+                                Error.showError("No file selected","Select an .stl file!");
                                 return;
                             }
                             this.hideDialog(); 

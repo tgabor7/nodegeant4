@@ -1,6 +1,6 @@
 class Requests{
     constructor(){}
-    static url = "http://radsim.inf.elte.hu/"
+    static url = "http://localhost:9000/"
     static get = async (route) => {
         let response = await fetch(this.url + route, {
             headers: {

@@ -1169,3 +1169,90 @@ Date: 2021-04-07-15-31-16 lvl: 1 message: Created source
 Date: 2021-04-07-15-31-16 lvl: 1 message: Created detector
 Date: 2021-04-10-9-32-52 lvl: 1 message: Created source
 Date: 2021-04-10-9-32-52 lvl: 1 message: Created detector
+Date: 2021-04-10-17-3-12 lvl: 1 message: Created source
+Date: 2021-04-10-17-3-12 lvl: 1 message: Created detector
+Date: 2021-04-10-17-3-18 lvl: 1 message: Created detector
+Date: 2021-04-10-17-3-45 lvl: 1 message: Created source
+Date: 2021-04-10-17-3-45 lvl: 1 message: Created detector
+Date: 2021-04-10-17-3-57 lvl: 3 message: Modified detector
+Date: 2021-04-10-19-2-19 lvl: 1 message: Created source
+Date: 2021-04-10-19-2-19 lvl: 1 message: Created detector
+Date: 2021-04-10-19-7-50 lvl: 1 message: Created source
+Date: 2021-04-10-19-7-50 lvl: 1 message: Created detector
+Date: 2021-04-10-19-8-36 lvl: 1 message: Created source
+Date: 2021-04-10-19-8-36 lvl: 1 message: Created detector
+Date: 2021-04-10-19-9-5 lvl: 1 message: Created source
+Date: 2021-04-10-19-9-5 lvl: 1 message: Created detector
+Date: 2021-04-10-19-9-27 lvl: 1 message: Created source
+Date: 2021-04-10-19-9-27 lvl: 1 message: Created detector
+Date: 2021-04-10-19-9-49 lvl: 1 message: Created source
+Date: 2021-04-10-19-9-49 lvl: 1 message: Created detector
+Date: 2021-04-10-19-10-15 lvl: 1 message: Created source
+Date: 2021-04-10-19-10-15 lvl: 1 message: Created detector
+Date: 2021-04-10-19-10-17 lvl: 1 message: Created source
+Date: 2021-04-10-19-10-17 lvl: 1 message: Created detector
+Date: 2021-04-10-19-11-11 lvl: 1 message: Created source
+Date: 2021-04-10-19-11-11 lvl: 1 message: Created detector
+Date: 2021-04-10-19-12-11 lvl: 1 message: Created source
+Date: 2021-04-10-19-12-11 lvl: 1 message: Created detector
+Date: 2021-04-10-19-12-35 lvl: 1 message: Created source
+Date: 2021-04-10-19-12-35 lvl: 1 message: Created detector
+Date: 2021-04-10-19-12-46 lvl: 1 message: Created source
+Date: 2021-04-10-19-12-46 lvl: 1 message: Created detector
+Date: 2021-04-10-19-12-48 lvl: 1 message: Created source
+Date: 2021-04-10-19-12-48 lvl: 1 message: Created detector
+Date: 2021-04-10-19-13-15 lvl: 1 message: Created source
+Date: 2021-04-10-19-13-15 lvl: 1 message: Created detector
+Date: 2021-04-10-19-15-16 lvl: 1 message: Created source
+Date: 2021-04-10-19-15-16 lvl: 1 message: Created detector
+Date: 2021-04-10-19-15-41 lvl: 1 message: Created source
+Date: 2021-04-10-19-15-41 lvl: 1 message: Created detector
+Date: 2021-04-10-20-42-22 lvl: 1 message: Created source
+Date: 2021-04-10-20-42-22 lvl: 1 message: Created detector
+Date: 2021-04-10-20-44-47 lvl: 1 message: Created source
+Date: 2021-04-10-20-44-47 lvl: 1 message: Created detector
+Date: 2021-04-10-20-46-54 lvl: 1 message: Created source
+Date: 2021-04-10-20-46-54 lvl: 1 message: Created detector
+Date: 2021-04-10-20-47-16 lvl: 1 message: Created source
+Date: 2021-04-10-20-47-16 lvl: 1 message: Created detector
+Date: 2021-04-10-20-54-11 lvl: 1 message: Created detector
+Date: 2021-04-10-20-54-11 lvl: 1 message: Created detector
+Date: 2021-04-10-20-55-37 lvl: 1 message: Created source
+Date: 2021-04-10-20-55-37 lvl: 1 message: Created detector
+Date: 2021-04-10-20-55-46 lvl: 1 message: Cleared setup
+Date: 2021-04-10-20-55-46 lvl: 1 message: Created source
+Date: 2021-04-10-20-55-46 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 100, 100, 100;
+	material: "Pb";
+	geometry: "cube";
+}
+\Source{
+	name: "GPS";
+	position[cm]: 0, 0, 0;
+	material: "Co60";
+}
+
+Date: 2021-04-10-20-55-46 lvl: 1 message: Created detector
+Date: 2021-04-10-20-55-58 lvl: 1 message: Created detector
+Date: 2021-04-10-20-55-58 lvl: 1 message: Created detector
+Date: 2021-04-10-20-56-48 lvl: 1 message: Created source
+Date: 2021-04-10-20-56-48 lvl: 1 message: Created detector
+Date: 2021-04-10-20-56-59 lvl: 1 message: Created detector
+Date: 2021-04-10-20-56-59 lvl: 1 message: Created detector
+Date: 2021-04-10-20-57-31 lvl: 1 message: Created source
+Date: 2021-04-10-20-57-31 lvl: 1 message: Created detector
+Date: 2021-04-10-20-57-34 lvl: 1 message: Created source
+Date: 2021-04-10-20-57-34 lvl: 1 message: Created detector
+Date: 2021-04-10-20-57-41 lvl: 1 message: Created source
+Date: 2021-04-10-20-57-41 lvl: 1 message: Created detector
+Date: 2021-04-10-20-57-49 lvl: 1 message: Created detector
+Date: 2021-04-10-20-57-49 lvl: 1 message: Created detector
+Date: 2021-04-10-20-58-1 lvl: 1 message: Created source
+Date: 2021-04-10-20-58-1 lvl: 1 message: Created detector
+Date: 2021-04-10-20-58-11 lvl: 1 message: Created source
+Date: 2021-04-10-20-58-11 lvl: 1 message: Created detector
+Date: 2021-04-10-21-16-12 lvl: 1 message: Created source
+Date: 2021-04-10-21-16-12 lvl: 1 message: Created detector

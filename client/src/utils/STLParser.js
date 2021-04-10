@@ -61,6 +61,7 @@ class STLParrser {
         let res = [];
         var normals = [];
         var size = readInt(data, 80);
+        if(size > 10000 || size <= 0) return null;
         for (var k = 0; k < size; k++) {
             for (var j = 0; j < 9; j++) {
                 res.push(readFloat(data, 96 + j * 4 + k * 50));

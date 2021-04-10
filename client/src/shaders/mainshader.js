@@ -31,7 +31,7 @@ export class MainShader{
     "void main()"+
     "{"+
       "vec3 norm = normalize(Normal);"+
-      "vec3 lightDir = normalize(vec3(100) - fragPos);"+ 
+      "vec3 lightDir = vec3(1,0.5,0);"+ 
       "float diff = max(dot(norm, lightDir), 0.0); "+
       "vec3 diffuse = diff * vec3(1); "+
       "if(fakeLightning == 1) diffuse = vec3(.9);"+
