@@ -25,7 +25,7 @@ class RunDialog extends Component {
           console.log(response);
           if(response.length > 0) this.setState({progress: parseInt(response)});
         });
-      },100);
+      },1000);
     }
     showDialog(){
         this.setState({show: true,loading: false});

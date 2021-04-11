@@ -1,5 +1,10 @@
 export class MainShader{
    
+    /*
+    Vertex shader calculates the position of the vertices in 3d space,
+    transformation is the transformation of the rendered model
+    view is the camera matrix 
+    */
     static vertexShader = "precision mediump float;"+
 
     "attribute vec3 vertPosition;"+
@@ -19,6 +24,10 @@ export class MainShader{
       "fragPos = vec3(transformation * vec4(vertPosition, 1.0));"+
       "Normal = normal;"+
     "}";
+
+    /*
+    Fragment shader calculates color, lightning and texture
+    */
     static fragmentShader = "precision mediump float;"+
 
     "varying vec2 tex_coords;"+

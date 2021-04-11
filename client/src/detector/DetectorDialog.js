@@ -7,6 +7,7 @@ import DetectorButton from './DetectorButton';
 import MaterialList from './MaterialList';
 import { Vector3 } from '../utils/maths';
 import MaterialTable from '../graphics/MaterialTable';
+import Error from '../utils/Error';
 
 /*
 This dialog pops up when creating a detector. Let's you specify the detector's parameters.
@@ -140,12 +141,17 @@ class DetectorDialog extends Component{
               r.onload = ()=>{
                 var data = r.result;
                 this.setState({modeldata: data});
+                if(this.state.filelabel.split(".")[this.state.filelabel.split(".").length - 1].toUpperCase() !== 'STL'){
+                  this.setState({filelabel: "",modeldata: null});
+                  Error.showError("Bad format","Select an .stl file!");
+                }
               }
               r.readAsBinaryString(evt.target.files[0]);
 
               let path = evt.target.value;
               path = path.split("\\")[path.split("\\").length-1];
               this.setState({filelabel: path});
+              
             }}
           />
             <hr />
@@ -262,7 +268,6 @@ class DetectorDialog extends Component{
           <br/>
           <hr />
           <Row>
-            
           <Form.Group controlId="exampleForm.SelectCustom">
             
             <Form.Label>Material</Form.Label>
@@ -283,13 +288,18 @@ class DetectorDialog extends Component{
         </Row>
           </Container>
         </Form>
-      
+        
+        
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={()=>{this.hideDialog();}}>
             Cancel
           </Button>
           <Button variant="primary" onClick={()=>{
+            if(this.state.modeldata === null){
+              Error.showError("No file selected","Select an .stl file!");
+              return;
+          }
           this.hideDialog();
           this.props.createbutton(this.state.detname, this.state.detposx, this.state.detposy,this.state.detposz,
             this.state.detrotx, this.state.detroty, this.state.detrotz, this.state.detscalex, this.state.detscaley, this.state.detscalez, this.state.detmat, this.state.geomrty,

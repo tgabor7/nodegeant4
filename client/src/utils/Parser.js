@@ -11,6 +11,8 @@ import MaterialList from '../detector/MaterialList';
 import VolumeList from '../volume/VolumeList';
 import UnitConverter from '../utils/UnitConverter';
 
+import Error from '../utils/Error';
+
 //TO-DO
 //position[cm]
 var m = 100;
@@ -184,90 +186,88 @@ class Parser {
                                 }
                                 break;
                             case ('position'):
-                                if (!this.checkFloat(params, detector.model.position, measurement)) alert("position incorrect format");
+                                if (!this.checkFloat(params, detector.model.position, measurement)) Error.showError("Code Error","Position incorrect format, correct format is x, y, z");
                                 break;
                             case ('rotation'):
-                                if (!this.checkFloat(params, detector.model.rotation, measurement)) alert("rotation incorrect format");
+                                if (!this.checkFloat(params, detector.model.rotation, measurement)) Error.showError("Code Error","Rotation incorrect format, correct format is x, y, z");
                                 break;
                             case ('scale'):
-                                if (!this.checkFloat(params, detector.model.scale, measurement)) alert("scale incorrect format");
+                                if (!this.checkFloat(params, detector.model.scale, measurement)) Error.showError("Code Error","Scale incorrect format, correct format is x, y, z");
 
                                 break;
                             case ('material'):
-                                if (!this.checkString(params)) alert("meterial incorrect format");
+                                if (!this.checkString(params)) Error.showError("Code Error","Material incorrect format!");
                                 detector.material = params.trim().substring(1, params.trim().length - 1);
                                 MaterialList.checkMaterial(detector.material, () => {
-                                    alert("No material named: " + detector.material + "\nMaterial set to Lead(Pb)!");
+                                    Error.showError("Code Error","No material named: " + detector.material + "\nMaterial set to Lead(Pb)!");
                                     detector.material = "Pb";
                                 });
                                 break;
                             case ('name'):
-                                if (!this.checkString(params)) alert("name incorrect format");
+                                if (!this.checkString(params)) Error.showError("Code Error","Name incorrect format!");
                                 detector.name = params.trim().substring(1, params.trim().length - 1);
                                 if(detector.name.length > 15){
-                                    this.confirmDialog("Name too long","The name you've given to detector " + detector.name + " was too long, maximum length is 15 characters.",()=>{
+                                    
+                                    Error.showError("Code Error","Name too long!\nThe name you've given to detector " + detector.name + " was too long, maximum length is 15 characters.");
 
-                                    });
                                     return;
                                 }
                                 break;
 
                             default:
-                                alert("No such property: " + attribute);
+                                Error.showError("Code Error", "No such property: " + attribute);
                                 break;
                         }
                     }
                     if (words[0] == 'Source') {
                         switch (attribute) {
                             case ('position'):
-                                if (!this.checkFloat(params, source.model.position, measurement)) alert("position incorrec format");
+                                if (!this.checkFloat(params, source.model.position, measurement)) Error.showError("Code Error","Position incorrect format, correct format is x, y, z");
                                 break;
                             case ('material'):
-                                if (!this.checkString(params)) alert("material incorrect format");
+                                if (!this.checkString(params)) Error.showError("Code Error","Material incorrect format, correct format is x, y, z");
                                 source.material = params.trim().substring(1, params.trim().length - 1);
                                 MaterialList.checkSource(source.material, () => {
-                                    alert("No source named: " + source.material + "\nSource set to Cobalt(Co60)!");
+                                    Error.showError("Code Error", "No source named: " + source.material + "\nSource set to Cobalt(Co60)!");
                                     source.material = "Co60";
                                 });
                                 break;
                             case ('name'):
-                                if (!this.checkString(params)) alert("name incorrect format");
+                                if (!this.checkString(params)) Error.showError("Code Error","Name incorrect format!");
                                 source.name = params.trim().substring(1, params.trim().length - 1);
                                 if(source.name.length > 15){
-                                    this.confirmDialog("Name too long","The name you've given to source " + source.name + " was too long, maximum length is 15 characters.",()=>{
+                                    
+                                    Error.showError("Code Error","Name too long!\nThe name you've given to source " + source.name + " was too long, maximum length is 15 characters.");
 
-                                    });
                                     return;
                                 }
                                 break;
                             default:
-                                alert("No such property: " + attribute);
+                                Error.showError("Code Error", "No such property: " + attribute);
                                 break;
                         }
                     }
                     if (words[0] == 'Gun') {
                         switch (attribute) {
                             case ('position'):
-                                if (!this.checkFloat(params, gun.model.position, measurement)) alert("position incorrect format");
+                                if (!this.checkFloat(params, gun.model.position, measurement)) Error.showError("Code Error","Position incorrect format, correct format is x, y, z");
                                 break;
                             case ('direction'):
-                                if (!this.checkFloat(params, gun.direction, measurement)) alert("direction incorrect format");
+                                if (!this.checkFloat(params, gun.direction, measurement)) Error.showError("Code Error","Direction incorrect format, correct format is x, y, z");
                                 break;
                             case ('energy'):
                                 gun.energy = parseFloat(params) * measurement;
                                 break;
                             case ('name'):
-                                if (!this.checkString(params)) alert("name incorrect format");
+                                if (!this.checkString(params)) Error.showError("Code Error","Name incorrect format!");
                                 gun.name = params.trim().substring(1, params.trim().length - 1);
                                 if(gun.name.length > 15){
-                                    this.confirmDialog("Name too long","The name you've given to gun " + gun.name + " was too long, maximum length is 15 characters.",()=>{
-
-                                    });
+                                    Error.showError("Code Error","Name too long!\nThe name you've given to gun " + gun.name + " was too long, maximum length is 15 characters.");
                                     return;
                                 }
                                 break;
                             default:
-                                alert("No such property: " + attribute);
+                                Error.showError("Code Error", "No such property: " + attribute);
                                 break;
                         }
                     }

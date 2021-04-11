@@ -1,8 +1,9 @@
 import React, { Component, createRef } from 'react';
 import '../App.css';
 
-import {Button, Modal} from 'react-bootstrap';
+import {Button, Modal, Col, Row, Container} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {ExclamationOctagon} from 'react-bootstrap-icons';
 
 class DetectorDialog extends Component{
   constructor(props){
@@ -36,18 +37,38 @@ class DetectorDialog extends Component{
     return <>
         <Modal show={this.state.show} onHide={()=>{this.hideDialog();}}>
         <Modal.Header closeButton>
-          <Modal.Title>{this.state.title}</Modal.Title>
+          <Modal.Title>            
+            {this.state.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        {this.state.content}
-      
+        <Col>
+        <Container>
+          <Row className="justify-content-md-center">
+          <ExclamationOctagon color="red" size={48} />
+
+          </Row>
+
+          <Row className="justify-content-md-center">
+          {this.state.content}
+          </Row>
+        </Container>
+        </Col>
+      <Col>
+    
+      </Col>
         </Modal.Body>
         <Modal.Footer>
+          <Container>
+          <Row className="justify-content-md-center" >
+
           <Button variant="primary" onClick={()=>{
-              this.hideDialog();
+            this.hideDialog();
           }}>
-            OK
+          OK
           </Button>
+          </Row>
+          </Container>
+          
         </Modal.Footer>
       </Modal>
     </> 

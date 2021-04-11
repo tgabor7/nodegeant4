@@ -56,7 +56,7 @@ class App extends Component {
 
     this.state = {
       buttons: [], gunbuttons: [], sourcebuttons: [], volumebuttons: [], spectrum: true, page: 'first',
-      volumebuttonheight: "100%", projectName: "Untitled"
+      volumebuttonheight: "100%"
     }
     this.createDetector = this.createDetector.bind(this);
     this.createSource = this.createSource.bind(this);
@@ -345,6 +345,7 @@ class App extends Component {
       }
 
       var tm = this.canvas.current.addModel(track_data, t_norm);
+      tm.color = new Vector3(1,0,0);
       if (definition == "e-") tm.color = new Vector3(1, 0, 1);
       if (definition == "gamma") tm.color = new Vector3(1, 1, 1);
       if (definition == "e+") tm.color = new Vector3(1, 1, 0);
@@ -568,6 +569,9 @@ class App extends Component {
     this.setState({volumebuttons: []});
     VolumeList.removeAll();
   }
+  /*
+  Remove particle source
+  */
   removeSource(source, buttonid) {
 
     if (this.sources.length == 0 && this.guns.length == 0 && this.detectors.length == 0) this.navbar.current.showClearSetup(false);
@@ -588,6 +592,9 @@ class App extends Component {
       }
     }
   }
+  /*
+  Remove particle gun
+  */
   removeGun(gun, buttonid) {
 
     if (this.sources.length == 0 && this.guns.length == 0 && this.detectors.length == 0) this.navbar.current.showClearSetup(false);
@@ -609,6 +616,9 @@ class App extends Component {
       }
     }
   }
+  /*
+  Remove detector
+  */
   removeDetector(detector, buttonid) {
     if (this.sources.length == 0 && this.guns.length == 0 && this.detectors.length == 0) this.navbar.current.showClearSetup(false);
     RenderSystem.active_id = -1;
@@ -700,18 +710,19 @@ class App extends Component {
       //load project
       await SaveLoad.loadonline(id).then(e=>{
             
-        if(e[0].content != "Created at radsim.inf.elte.hu"){
+        if(e[1][0].content != "Created at radsim.inf.elte.hu"){
           this.errordialog.current.setContent("Invalid project file selected.");
           this.errordialog.current.showDialog();
           return;
         }
         this.removeVolumes();
-        this.codeeditor.current.updateText(e[1].content+""); 
-        for(let i = 2;i<e.length;i++){
-          this.createVolume(e[i].name.split("/")[1].split(".")[0]+"", e[i].content+"", e[i].name+"");
+        this.codeeditor.current.updateText(e[1][1].content+""); 
+        for(let i = 2;i<e[1].length;i++){
+          this.createVolume(e[1][i].name.split("/")[1].split(".")[0]+"", e[1][i].content+"", e[1][i].name+"");
         }
         this.codeeditor.current.run();
-        this.setState({projectname: e.name});
+        alert(e[0]);
+        this.navbar.current.setProjectName(e[0]);
       });
     }  
   }

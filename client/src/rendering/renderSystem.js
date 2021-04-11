@@ -5,6 +5,10 @@ import Model from './model';
 import {Cube} from '../entities/cube';
 import MousePicker from '../utils/mousePicker';
 
+
+/*
+This class handles the rendering of detectors, sources and guns
+*/
 class RenderSystem {
     constructor(gl){
         this.shader = new Shader([[0,'vertPosition'],[1, 'normal']],MainShader,gl);

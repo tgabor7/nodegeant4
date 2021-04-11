@@ -13,6 +13,7 @@ import Model from '../rendering/model';
 import UnitConverter from '../utils/UnitConverter';
 import Logger from '../utils/Logger';
 import VolumeList from '../volume/VolumeList';
+import Error from '../utils/Error';
 
 /*
 This class let's you modify a detector's parameters.
@@ -152,6 +153,10 @@ class DetectorEditDialog extends Component {
                   r.onload = () => {
                     var data = r.result;
                     this.setState({ modeldata: data });
+                    if(this.state.filelabel.split(".")[this.state.filelabel.split(".").length - 1].toUpperCase() !== 'STL'){
+                      this.setState({filelabel: "",modeldata: []});
+                      Error.showError("Bad format","Select an .stl file!");
+                    }
                   }
                   r.readAsBinaryString(evt.target.files[0]);
 
@@ -303,11 +308,14 @@ class DetectorEditDialog extends Component {
           </Button>
           <Button variant="primary" onClick={async () => {
             Logger.log(3, "Modified detector");
-
-            this.hideDialog();
+            
             if (this.state.geomrty == 'stl') {
               //To-DO
               //Create new volume if not in voluems
+              if(this.state.modeldata.length === 0){
+                Error.showError("No file selected","Select an .stl file!");
+                return;
+              }
               this.state.geomrty = this.state.detname + "Volume";
               let modelData = STLParser.parseData(this.state.modeldata);
               this.props.createvolume(this.state.detname + "Volume",this.state.modeldata,this.state.detname + "Volume");
@@ -319,6 +327,7 @@ class DetectorEditDialog extends Component {
               this.props.detector.model = new Model(modeldata.vertices, modeldata.normals, this.props.canvas.current.gl);
               this.props.detector.model.drawLines = false;
             }
+            this.hideDialog();
 
             this.props.detector.name = this.state.detname;
 

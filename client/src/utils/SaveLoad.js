@@ -46,7 +46,7 @@ class SaveLoad {
                 files.push({"name": Object.keys(contents.files)[i], content: data});
             }
         }
-        return files;
+        return [json[0].name,files];
     }
     static saveonline(code, volumes,name){
         var zip = new JSZip();
