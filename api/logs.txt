@@ -2784,3 +2784,1021 @@ Date: 2021-04-11-22-3-41 lvl: 2 message: Ran script: \Detector{
 }
 
 Date: 2021-04-11-22-3-41 lvl: 1 message: Created detector
+Date: 2021-04-13-10-26-44 lvl: 1 message: Created source
+Date: 2021-04-13-10-26-44 lvl: 1 message: Created detector
+Date: 2021-04-13-10-28-40 lvl: 1 message: Created source
+Date: 2021-04-13-10-28-40 lvl: 1 message: Created detector
+Date: 2021-04-13-10-28-43 lvl: 1 message: Started simulation
+Date: 2021-04-13-10-28-46 lvl: 1 message: Started simulation
+Date: 2021-04-13-10-28-49 lvl: 1 message: Finished simulation
+Date: 2021-04-13-10-28-50 lvl: 1 message: Finished simulation
+Date: 2021-04-13-10-28-54 lvl: 1 message: Started simulation
+Date: 2021-04-13-10-28-56 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-51-20 lvl: 1 message: Created source
+Date: 2021-04-13-18-51-20 lvl: 1 message: Created detector
+Date: 2021-04-13-18-52-26 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-52-29 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-52-32 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-52-33 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-52-36 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-52-38 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-52-41 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-52-42 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-52-44 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-52-45 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-54-11 lvl: 1 message: Removed source
+Date: 2021-04-13-18-54-14 lvl: 1 message: Created gun
+Date: 2021-04-13-18-54-16 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-54-18 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-54-22 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-54-23 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-54-26 lvl: 1 message: Cleared setup
+Date: 2021-04-13-18-54-26 lvl: 1 message: Created gun
+Date: 2021-04-13-18-54-26 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: 0, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 100000;
+}
+
+Date: 2021-04-13-18-54-26 lvl: 1 message: Created detector
+Date: 2021-04-13-18-54-28 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-54-30 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-54-38 lvl: 1 message: Cleared setup
+Date: 2021-04-13-18-54-38 lvl: 1 message: Created gun
+Date: 2021-04-13-18-54-38 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 100000;
+}
+
+Date: 2021-04-13-18-54-38 lvl: 1 message: Created detector
+Date: 2021-04-13-18-54-39 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-54-42 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-55-0 lvl: 1 message: Cleared setup
+Date: 2021-04-13-18-55-0 lvl: 1 message: Created gun
+Date: 2021-04-13-18-55-0 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 1000000;
+}
+
+Date: 2021-04-13-18-55-0 lvl: 1 message: Created detector
+Date: 2021-04-13-18-55-2 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-55-3 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-55-5 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-55-6 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-55-9 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-55-10 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-55-13 lvl: 1 message: Cleared setup
+Date: 2021-04-13-18-55-13 lvl: 1 message: Created gun
+Date: 2021-04-13-18-55-13 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 10000000;
+}
+
+Date: 2021-04-13-18-55-13 lvl: 1 message: Created detector
+Date: 2021-04-13-18-55-15 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-55-19 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-55-26 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-55-31 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-55-35 lvl: 1 message: Cleared setup
+Date: 2021-04-13-18-55-35 lvl: 1 message: Created gun
+Date: 2021-04-13-18-55-35 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 100000000;
+}
+
+Date: 2021-04-13-18-55-35 lvl: 1 message: Created detector
+Date: 2021-04-13-18-55-36 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-56-0 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-56-1 lvl: 1 message: Cleared setup
+Date: 2021-04-13-18-56-1 lvl: 1 message: Created gun
+Date: 2021-04-13-18-56-1 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 10000000;
+}
+
+Date: 2021-04-13-18-56-2 lvl: 1 message: Created detector
+Date: 2021-04-13-18-56-3 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-56-7 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-56-12 lvl: 1 message: Cleared setup
+Date: 2021-04-13-18-56-12 lvl: 1 message: Created gun
+Date: 2021-04-13-18-56-12 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 20000000;
+}
+
+Date: 2021-04-13-18-56-12 lvl: 1 message: Created detector
+Date: 2021-04-13-18-56-13 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-56-25 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-56-32 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-56-44 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-57-4 lvl: 1 message: Cleared setup
+Date: 2021-04-13-18-57-4 lvl: 1 message: Created gun
+Date: 2021-04-13-18-57-4 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube";
+	position[cm]: 10, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube";
+	position[cm]: 20, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 20000000;
+}
+
+Date: 2021-04-13-18-57-4 lvl: 1 message: Created detector
+Date: 2021-04-13-18-57-4 lvl: 1 message: Created detector
+Date: 2021-04-13-18-57-4 lvl: 1 message: Created detector
+Date: 2021-04-13-18-57-17 lvl: 1 message: Cleared setup
+Date: 2021-04-13-18-57-17 lvl: 1 message: Created gun
+Date: 2021-04-13-18-57-17 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube";
+	position[cm]: 10, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube";
+	position[cm]: 20, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 1000000;
+}
+
+Date: 2021-04-13-18-57-18 lvl: 1 message: Created detector
+Date: 2021-04-13-18-57-18 lvl: 1 message: Created detector
+Date: 2021-04-13-18-57-18 lvl: 1 message: Created detector
+Date: 2021-04-13-18-57-19 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-57-20 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-57-36 lvl: 1 message: Cleared setup
+Date: 2021-04-13-18-57-36 lvl: 1 message: Created gun
+Date: 2021-04-13-18-57-36 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube";
+	position[cm]: 10, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube";
+	position[cm]: 20, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 10000;
+}
+
+Date: 2021-04-13-18-57-36 lvl: 1 message: Created detector
+Date: 2021-04-13-18-57-36 lvl: 1 message: Created detector
+Date: 2021-04-13-18-57-36 lvl: 1 message: Created detector
+Date: 2021-04-13-18-57-37 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-57-38 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-58-16 lvl: 1 message: Cleared setup
+Date: 2021-04-13-18-58-16 lvl: 1 message: Created gun
+Date: 2021-04-13-18-58-16 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube";
+	position[cm]: 10, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube";
+	position[cm]: 20, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 100000;
+}
+
+Date: 2021-04-13-18-58-16 lvl: 1 message: Created detector
+Date: 2021-04-13-18-58-16 lvl: 1 message: Created detector
+Date: 2021-04-13-18-58-16 lvl: 1 message: Created detector
+Date: 2021-04-13-18-58-17 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-58-18 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-58-25 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-58-26 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-58-45 lvl: 1 message: Cleared setup
+Date: 2021-04-13-18-58-45 lvl: 1 message: Created gun
+Date: 2021-04-13-18-58-45 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube";
+	position[cm]: 10, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube";
+	position[cm]: 20, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 10000000;
+}
+
+Date: 2021-04-13-18-58-45 lvl: 1 message: Created detector
+Date: 2021-04-13-18-58-45 lvl: 1 message: Created detector
+Date: 2021-04-13-18-58-45 lvl: 1 message: Created detector
+Date: 2021-04-13-18-58-46 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-58-47 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-59-14 lvl: 1 message: Cleared setup
+Date: 2021-04-13-18-59-14 lvl: 1 message: Created gun
+Date: 2021-04-13-18-59-14 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube";
+	position[cm]: 10, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube";
+	position[cm]: 20, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube";
+	position[cm]: 30, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube";
+	position[cm]: 40, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube";
+	position[cm]: 50, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 10000000;
+}
+
+Date: 2021-04-13-18-59-14 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-14 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-14 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-14 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-14 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-14 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-28 lvl: 1 message: Cleared setup
+Date: 2021-04-13-18-59-28 lvl: 1 message: Created gun
+Date: 2021-04-13-18-59-28 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube1";
+	position[cm]: 10, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube2";
+	position[cm]: 20, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube3";
+	position[cm]: 30, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube4";
+	position[cm]: 40, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube5";
+	position[cm]: 50, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 10000000;
+}
+
+Date: 2021-04-13-18-59-28 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-28 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-28 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-28 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-28 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-28 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-30 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-59-31 lvl: 1 message: Finished simulation
+Date: 2021-04-13-18-59-48 lvl: 1 message: Cleared setup
+Date: 2021-04-13-18-59-48 lvl: 1 message: Created gun
+Date: 2021-04-13-18-59-48 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube1";
+	position[cm]: 10, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube2";
+	position[cm]: 20, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube3";
+	position[cm]: 30, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube4";
+	position[cm]: 40, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube5";
+	position[cm]: 50, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 100000;
+}
+
+Date: 2021-04-13-18-59-48 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-48 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-48 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-48 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-48 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-48 lvl: 1 message: Created detector
+Date: 2021-04-13-18-59-50 lvl: 1 message: Started simulation
+Date: 2021-04-13-18-59-51 lvl: 1 message: Finished simulation
+Date: 2021-04-13-19-0-7 lvl: 1 message: Started simulation
+Date: 2021-04-13-19-0-7 lvl: 1 message: Finished simulation
+Date: 2021-04-13-19-0-10 lvl: 1 message: Started simulation
+Date: 2021-04-13-19-0-11 lvl: 1 message: Finished simulation
+Date: 2021-04-13-19-0-14 lvl: 1 message: Started simulation
+Date: 2021-04-13-19-0-15 lvl: 1 message: Finished simulation
+Date: 2021-04-13-19-0-18 lvl: 1 message: Started simulation
+Date: 2021-04-13-19-0-19 lvl: 1 message: Finished simulation
+Date: 2021-04-13-19-0-53 lvl: 1 message: Cleared setup
+Date: 2021-04-13-19-0-53 lvl: 1 message: Created gun
+Date: 2021-04-13-19-0-53 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 1, 1;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube1";
+	position[cm]: 0, 10, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 1, 1;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 100000;
+}
+
+Date: 2021-04-13-19-0-53 lvl: 1 message: Created detector
+Date: 2021-04-13-19-0-53 lvl: 1 message: Created detector
+Date: 2021-04-13-19-1-0 lvl: 1 message: Started simulation
+Date: 2021-04-13-19-1-1 lvl: 1 message: Finished simulation
+Date: 2021-04-13-19-1-12 lvl: 1 message: Cleared setup
+Date: 2021-04-13-19-1-12 lvl: 1 message: Created gun
+Date: 2021-04-13-19-1-12 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 1, 1;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube1";
+	position[cm]: 0, 10, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 1, 1;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 10000000;
+}
+
+Date: 2021-04-13-19-1-12 lvl: 1 message: Created detector
+Date: 2021-04-13-19-1-12 lvl: 1 message: Created detector
+Date: 2021-04-13-19-1-13 lvl: 1 message: Started simulation
+Date: 2021-04-13-19-1-14 lvl: 1 message: Finished simulation
+Date: 2021-04-13-19-1-19 lvl: 1 message: Cleared setup
+Date: 2021-04-13-19-1-19 lvl: 1 message: Created gun
+Date: 2021-04-13-19-1-19 lvl: 2 message: Ran script:  \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 1, 1;
+	material: "Pb";
+	geometry: "cube";
+}
+ \Detector{
+	name: "Cube1";
+	position[cm]: 0, 10, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 1, 1, 1;
+	material: "Pb";
+	geometry: "cube";
+}
+\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 100000000;
+}
+
+Date: 2021-04-13-19-1-19 lvl: 1 message: Created detector
+Date: 2021-04-13-19-1-19 lvl: 1 message: Created detector
+Date: 2021-04-13-19-1-21 lvl: 1 message: Started simulation
+Date: 2021-04-13-19-1-22 lvl: 1 message: Finished simulation
+Date: 2021-04-13-19-1-26 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-2-5 lvl: 1 message: Created source
+Date: 2021-04-13-19-2-5 lvl: 1 message: Created detector
+Date: 2021-04-13-19-2-19 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-2-22 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-2-30 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-2-35 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-6-52 lvl: 1 message: Created source
+Date: 2021-04-13-19-6-52 lvl: 1 message: Created detector
+Date: 2021-04-13-19-7-19 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-7-22 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-7-25 lvl: 1 message: Created source
+Date: 2021-04-13-19-7-25 lvl: 1 message: Created detector
+Date: 2021-04-13-19-7-29 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-7-31 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-7-48 lvl: 1 message: Created source
+Date: 2021-04-13-19-7-48 lvl: 1 message: Created detector
+Date: 2021-04-13-19-8-17 lvl: 1 message: Created source
+Date: 2021-04-13-19-8-17 lvl: 1 message: Created detector
+Date: 2021-04-13-19-8-18 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-8-20 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-8-24 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-8-27 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-8-31 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-8-48 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-8-51 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-9-9 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-9-52 lvl: 1 message: Started simulation
+Date: 2021-04-13-19-9-53 lvl: 1 message: Finished simulation
+Date: 2021-04-13-19-9-55 lvl: 1 message: Started simulation
+Date: 2021-04-13-19-9-57 lvl: 1 message: Finished simulation
+Date: 2021-04-13-19-10-39 lvl: 1 message: Created source
+Date: 2021-04-13-19-10-39 lvl: 1 message: Created detector
+Date: 2021-04-13-19-10-41 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-10-56 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-11-2 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-11-18 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-12-5 lvl: 1 message: Created source
+Date: 2021-04-13-19-12-5 lvl: 1 message: Created detector
+Date: 2021-04-13-19-12-8 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-12-11 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-12-36 lvl: 1 message: Created source
+Date: 2021-04-13-19-12-36 lvl: 1 message: Created detector
+Date: 2021-04-13-19-13-4 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-13-6 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-13-13 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-14-18 lvl: 1 message: Created source
+Date: 2021-04-13-19-14-18 lvl: 1 message: Created detector
+Date: 2021-04-13-19-14-32 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-14-35 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-14-39 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-14-53 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-15-24 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-15-56 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-20-30 lvl: 1 message: Created source
+Date: 2021-04-13-19-20-30 lvl: 1 message: Created detector
+Date: 2021-04-13-19-20-33 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-20-46 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-21-14 lvl: 1 message: Cleared setup
+Date: 2021-04-13-19-21-14 lvl: 1 message: Created source
+Date: 2021-04-13-19-21-14 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 10, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Source{
+	name: "GPS";
+	position[cm]: 0, 0, 0;
+	material: "Co60";
+}
+
+Date: 2021-04-13-19-21-14 lvl: 1 message: Created detector
+Date: 2021-04-13-19-21-18 lvl: 1 message: Cleared setup
+Date: 2021-04-13-19-21-18 lvl: 1 message: Created source
+Date: 2021-04-13-19-21-18 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 100, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Source{
+	name: "GPS";
+	position[cm]: 0, 0, 0;
+	material: "Co60";
+}
+
+Date: 2021-04-13-19-21-18 lvl: 1 message: Created detector
+Date: 2021-04-13-19-21-28 lvl: 1 message: Cleared setup
+Date: 2021-04-13-19-21-28 lvl: 1 message: Created source
+Date: 2021-04-13-19-21-28 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 100, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Detector{
+	name: "Cube";
+	position[cm]: 100, 100, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Source{
+	name: "GPS";
+	position[cm]: 0, 0, 0;
+	material: "Co60";
+}
+
+Date: 2021-04-13-19-21-28 lvl: 1 message: Created detector
+Date: 2021-04-13-19-21-28 lvl: 1 message: Created detector
+Date: 2021-04-13-19-21-31 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-21-40 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-21-50 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-22-46 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-22-55 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-23-43 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-24-27 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-25-43 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-28-21 lvl: 1 message: Created source
+Date: 2021-04-13-19-28-21 lvl: 1 message: Created detector
+Date: 2021-04-13-19-28-23 lvl: 1 message: Created source
+Date: 2021-04-13-19-28-23 lvl: 1 message: Created detector
+Date: 2021-04-13-19-28-27 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-28-40 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-28-49 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-13-19-30-47 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-13-19-52-10 lvl: 1 message: Created source
+Date: 2021-04-13-19-52-10 lvl: 1 message: Created detector
+Date: 2021-04-14-21-30-10 lvl: 1 message: Created source
+Date: 2021-04-14-21-30-10 lvl: 1 message: Created detector
+Date: 2021-04-14-21-30-55 lvl: 1 message: Cleared setup
+Date: 2021-04-14-21-30-55 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+Date: 2021-04-14-21-30-55 lvl: 1 message: Created detector
+Date: 2021-04-14-21-31-0 lvl: 1 message: Created gun
+Date: 2021-04-14-21-31-11 lvl: 1 message: Started simulation
+Date: 2021-04-14-21-31-16 lvl: 1 message: Finished simulation
+Date: 2021-04-14-21-31-25 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-14-21-31-27 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-14-21-31-31 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-14-21-31-35 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-14-21-31-41 lvl: 1 message: Started simulation
+Date: 2021-04-14-21-31-43 lvl: 1 message: Finished simulation
+Date: 2021-04-14-21-33-22 lvl: 1 message: Created source
+Date: 2021-04-14-21-33-22 lvl: 1 message: Created detector
+Date: 2021-04-14-21-33-25 lvl: 1 message: Cleared setup
+Date: 2021-04-14-21-33-25 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+Date: 2021-04-14-21-33-25 lvl: 1 message: Created detector
+Date: 2021-04-14-21-33-30 lvl: 1 message: Created gun
+Date: 2021-04-14-21-33-32 lvl: 1 message: Started simulation
+Date: 2021-04-14-21-33-33 lvl: 1 message: Finished simulation
+Date: 2021-04-14-21-33-38 lvl: 1 message: Started simulation
+Date: 2021-04-14-21-33-39 lvl: 1 message: Finished simulation
+Date: 2021-04-14-21-33-42 lvl: 1 message: Cleared setup
+Date: 2021-04-14-21-33-42 lvl: 1 message: Created gun
+Date: 2021-04-14-21-33-42 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 10000;
+}
+
+Date: 2021-04-14-21-33-42 lvl: 1 message: Created detector
+Date: 2021-04-14-21-33-44 lvl: 1 message: Started simulation
+Date: 2021-04-14-21-33-45 lvl: 1 message: Finished simulation
+Date: 2021-04-14-21-33-52 lvl: 1 message: Cleared setup
+Date: 2021-04-14-21-33-52 lvl: 1 message: Created gun
+Date: 2021-04-14-21-33-52 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 100000;
+}
+
+Date: 2021-04-14-21-33-52 lvl: 1 message: Created detector
+Date: 2021-04-14-21-33-53 lvl: 1 message: Started simulation
+Date: 2021-04-14-21-33-54 lvl: 1 message: Finished simulation
+Date: 2021-04-14-21-34-35 lvl: 1 message: Cleared setup
+Date: 2021-04-14-21-34-35 lvl: 1 message: Created gun
+Date: 2021-04-14-21-34-35 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 100, 100, 100;
+	material: "Pb";
+	geometry: "cube";
+}\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 100000;
+}
+
+Date: 2021-04-14-21-34-35 lvl: 1 message: Created detector
+Date: 2021-04-14-21-34-37 lvl: 1 message: Started simulation
+Date: 2021-04-14-21-34-39 lvl: 1 message: Finished simulation
+Date: 2021-04-14-21-34-43 lvl: 1 message: Cleared setup
+Date: 2021-04-14-21-34-43 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 100, 100, 100;
+	material: "Pb";
+	geometry: "cube";
+}\Gun{
+	name: "Gun";
+	position[cm]: -100, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 100000;
+}
+
+Date: 2021-04-14-21-34-43 lvl: 1 message: Created gun
+Date: 2021-04-14-21-34-43 lvl: 1 message: Created detector
+Date: 2021-04-14-21-34-44 lvl: 1 message: Started simulation
+Date: 2021-04-14-21-34-45 lvl: 1 message: Finished simulation
+Date: 2021-04-14-21-34-48 lvl: 1 message: Cleared setup
+Date: 2021-04-14-21-34-48 lvl: 1 message: Created gun
+Date: 2021-04-14-21-34-48 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 100, 100, 100;
+	material: "Pb";
+	geometry: "cube";
+}\Gun{
+	name: "Gun";
+	position[cm]: -100, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 1000000;
+}
+
+Date: 2021-04-14-21-34-48 lvl: 1 message: Created detector
+Date: 2021-04-14-21-34-49 lvl: 1 message: Started simulation
+Date: 2021-04-14-21-34-52 lvl: 1 message: Finished simulation
+Date: 2021-04-14-21-35-0 lvl: 1 message: Cleared setup
+Date: 2021-04-14-21-35-0 lvl: 1 message: Created gun
+Date: 2021-04-14-21-35-0 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}\Gun{
+	name: "Gun";
+	position[cm]: -100, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 1000000;
+}
+
+Date: 2021-04-14-21-35-0 lvl: 1 message: Created detector
+Date: 2021-04-14-21-35-2 lvl: 1 message: Started simulation
+Date: 2021-04-14-21-35-4 lvl: 1 message: Finished simulation
+Date: 2021-04-14-21-35-22 lvl: 1 message: Cleared setup
+Date: 2021-04-14-21-35-22 lvl: 1 message: Created gun
+Date: 2021-04-14-21-35-22 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 1000000;
+}
+
+Date: 2021-04-14-21-35-22 lvl: 1 message: Created detector
+Date: 2021-04-14-21-35-24 lvl: 1 message: Started simulation
+Date: 2021-04-14-21-35-27 lvl: 1 message: Finished simulation
+Date: 2021-04-14-21-36-1 lvl: 1 message: Cleared setup
+Date: 2021-04-14-21-36-1 lvl: 1 message: Created gun
+Date: 2021-04-14-21-36-1 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 10000;
+}
+
+Date: 2021-04-14-21-36-2 lvl: 1 message: Created detector
+Date: 2021-04-14-21-36-3 lvl: 1 message: Started simulation
+Date: 2021-04-14-21-36-4 lvl: 1 message: Finished simulation
+Date: 2021-04-14-21-36-8 lvl: 1 message: Cleared setup
+Date: 2021-04-14-21-36-8 lvl: 1 message: Created gun
+Date: 2021-04-14-21-36-8 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 100;
+}
+
+Date: 2021-04-14-21-36-8 lvl: 1 message: Created detector
+Date: 2021-04-14-21-36-10 lvl: 1 message: Started simulation
+Date: 2021-04-14-21-36-11 lvl: 1 message: Finished simulation
+Date: 2021-04-14-21-36-22 lvl: 1 message: Cleared setup
+Date: 2021-04-14-21-36-22 lvl: 1 message: Created gun
+Date: 2021-04-14-21-36-22 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[cm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}\Gun{
+	name: "Gun";
+	position[cm]: -10, 0, 0;
+	direction: 1, 0, 0;
+	energy[keV]: 1000;
+}
+
+Date: 2021-04-14-21-36-22 lvl: 1 message: Created detector
+Date: 2021-04-14-21-36-23 lvl: 1 message: Started simulation
+Date: 2021-04-14-21-36-24 lvl: 1 message: Finished simulation

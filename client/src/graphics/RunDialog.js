@@ -16,6 +16,7 @@ class RunDialog extends Component {
     hideDialog(){
         this.setState({show: false});
         clearInterval(this.id);
+        
     }
     startProgress(){
       this.setState({progress: 0});
@@ -48,7 +49,7 @@ class RunDialog extends Component {
         </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary" onClick={()=>{
-          Requests.post("gammaAPI/cancel",{id: User.process_id});
+         Requests.post("gammaAPI/cancel",{id: User.process_id});
           this.hideDialog();
           }}>
             Cancel

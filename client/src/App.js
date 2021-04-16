@@ -260,6 +260,8 @@ class App extends Component {
       message += data[i];
       message += ',';
     }
+    let pdata = await Requests.get("gammaAPI/getid");
+    User.process_id = await pdata.json();
     Requests.post("gammaAPI",{data: message}).then(response => response.text()).then(response=>{
       this.processGammaSpectrum(response, binsize);
       hideDialog();
