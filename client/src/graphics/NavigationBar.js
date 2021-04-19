@@ -172,7 +172,9 @@ class NavigationBar extends Component{
       }}>Dashboard</Button>
       <p style={login == undefined ? {"display":"none"}:{"fontSize":"20px","display":"block","position":"absolute","right":"10%"}}>Logged in as {login}! </p>
       <Button style={login == undefined ? {"display":"block","position":"absolute","right":"2%"}:{"display":"none"}} onClick={()=>{window.location = "Login"}}>Login</Button>
-      <Button style={login == undefined ? {"display":"none"}:{"display":"block","backgroundColor":"#ff0000","position":"absolute","right":"2%"}} onClick={()=>{Cookies.remove("login"); window.location.reload()}}>Logout</Button>
+      <Button style={login == undefined ? {"display":"none"}:{"display":"block","backgroundColor":"#ff0000","position":"absolute","right":"2%"}} onClick={()=>{Cookies.remove("login");
+       window.location = "/"
+       }}>Logout</Button>
      
         </Nav>
         

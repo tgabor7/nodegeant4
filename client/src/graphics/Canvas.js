@@ -304,6 +304,9 @@ class Canvas extends Component{
       else delta = -1;
       this.camera.d += (this.camera.d / (delta*100)) * 10;
       }}/>
+      <button className="camerareset" onClick={()=>{
+        this.camera = new Camera(45, -45, 100, new Vector3(0, 0, 0), new Vector3(0, 0, 0));
+      }}>reset</button>
   </div>
     
    

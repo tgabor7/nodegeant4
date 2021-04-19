@@ -128,7 +128,7 @@ function App() {
           <label>Username</label>
         </div>
         <div className="error">{nameError}</div>
-        <div className="text_field" style={emailError != "" ? {"borderBottom":"2px solid #ff0000"}:{}}>
+        {/* <div className="text_field" style={emailError != "" ? {"borderBottom":"2px solid #ff0000"}:{}}>
           <input type="text" required value={email} onChange={e=>{setEmail(e.target.value);}} onBlur={()=>{validateEmail();}} maxLength="20">
           </input>
           <span></span>
@@ -146,7 +146,7 @@ function App() {
           <span></span>
           <label>Confirm e-mail</label>
         </div>
-        <div className="error">{confirmEmailError}</div>
+        <div className="error">{confirmEmailError}</div> */}
         <div className="text_field" style={passwordError != "" ? {"borderBottom": "2px solid #ff0000"}: {}}>
           <input type="password" required value={password} onChange={e=>{setPassword(e.target.value);}} onBlur={()=>{validatePassword();}} maxLength="16">
           </input>

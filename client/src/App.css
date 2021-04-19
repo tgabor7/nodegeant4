@@ -46,3 +46,9 @@
 .saveName:focus {
   border: none;
 }
+.camerareset {
+  position: absolute;
+  left: 20%;
+  bottom: 2%;
+  z-index: 3;
+}

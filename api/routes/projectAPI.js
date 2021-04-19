@@ -21,7 +21,7 @@ router.get("/getNames/:name", async(req,res)=>{
     mongoose.connect(process.env.DB_HOME, {useNewUrlParser: true});
     const name = req.params["name"];
     try{
-        const models = await Project.find({users: name}).select("name");
+        const models = await Project.find({user: name}).select("name");
         res.json(models);
     }catch(err){
         res.json({message: err});

@@ -296,7 +296,7 @@ class DetectorDialog extends Component{
             Cancel
           </Button>
           <Button variant="primary" onClick={()=>{
-            if(this.state.modeldata === null){
+            if(this.state.modeldata === null && this.state.geomrty === 'stl'){
               Error.showError("No file selected","Select an .stl file!");
               return;
           }
