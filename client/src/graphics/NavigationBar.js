@@ -95,7 +95,7 @@ class NavigationBar extends Component{
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-        <Dropdown.Item className='exportoption' onClick={()=>{this.props.save();}}>Export</Dropdown.Item>
+        <Dropdown.Item className='exportoption' onClick={()=>{this.props.save(this.state.projectname);}}>Export</Dropdown.Item>
         <Dropdown.Item className='importoption' onClick={()=>{this.props.load();}}>Import</Dropdown.Item>
         <Dropdown.Item className='saveoption' style={login == undefined ? {"display":"none"}:{"display":"block"}} onClick={()=>{
           this.props.updateproject();

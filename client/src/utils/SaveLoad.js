@@ -62,7 +62,7 @@ class SaveLoad {
                 Requests.post("projectAPI/add",{name: name,data: content, user: Cookies.get("login")});
          });
     }
-    static save(code, volumes){
+    static save(code, volumes, name){
         const JSZip = require("jszip");
         var zip = new JSZip();
         zip.file("signature", "Created at radsim.inf.elte.hu");
@@ -74,7 +74,7 @@ class SaveLoad {
         zip.generateAsync({type:"blob"})
                 .then(function(content) {
                 // see FileSaver.js
-                saveAs(content, "example.zip");
+                saveAs(content, "name.zip");
          });
     }
     static async load(file){

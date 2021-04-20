@@ -667,8 +667,8 @@ class App extends Component {
     // const id = params.get("projectid");
     SaveLoad.update(id, this.codeeditor.current.state.text,this.volumes);
   }
-  save(){
-    SaveLoad.save(this.codeeditor.current.state.text,this.volumes);
+  save(name){
+    SaveLoad.save(this.codeeditor.current.state.text,this.volumes, name);
   }
   async componentDidMount() {
 

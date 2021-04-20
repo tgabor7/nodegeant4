@@ -43,7 +43,6 @@ class DetectorDialog extends Component{
           </Button>
           <Button variant="primary" onClick={()=>{
               this.props.saveonline(this.state.name);
-              alert("ok");
               this.hideDialog();
           }}>
             OK
