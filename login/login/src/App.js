@@ -168,7 +168,7 @@ function App() {
         <div className="error">{confirmPasswordError}</div>
         <div className="pass">Forgot password?</div>
         <input type="button" value="Register" onClick={()=>{
-          fetch(url + 'userAPI/register', {
+          if(validate) fetch(url + 'userAPI/register', {
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
@@ -178,7 +178,8 @@ function App() {
           })
             .then(response => response.text())
             .then(response => {
-              alert(response);
+              if(response !== "Username taken") window.location = "/dashboard";
+              //alert(response);
             });
         }}></input>
         <div className="signup_link">
