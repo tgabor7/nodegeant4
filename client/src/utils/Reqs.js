@@ -1,11 +1,12 @@
 class Requests{
     constructor(){}
-    static url = "http://radsim.inf.elte.hu/"
-    static get = async (route) => {
+    static url = "http://localhost:9000/"
+    static get = async (route, auth) => {
         let response = await fetch(this.url + route, {
             headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'auth-token': auth
             },
             method: 'GET'
         });
@@ -13,7 +14,6 @@ class Requests{
 
         return response;
     }
-
     static post = async (route, parameters) => {
         let response = await fetch(this.url + route, {
             headers: {

@@ -2,7 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useState} from 'react';
 
-const Cookies = require("js-cookie");
+// const Cookies = require("js-cookie");
 
 function App() {
   const [page, setPage] = useState("login");
@@ -16,7 +16,7 @@ function App() {
   const [confirmEmailError, setConfirmEmailError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
-  const url = "http://radsim.inf.elte.hu/";
+  const url = "http://localhost:9000/";
 
   let validateUsername = ()=>{
     if(username == ""){
@@ -54,7 +54,6 @@ function App() {
     if(!validate()) {
       return;
     }
-    
     fetch(url + 'userAPI/login', {
       headers: {
         'Accept': 'application/json',
@@ -65,9 +64,11 @@ function App() {
     })
       .then(response => response.text())
       .then(response => {
-        if(response === "Successfull login!"){
-          Cookies.set('login', username, { expires: 1 });
 
+        if(response !== "Failed to login!" && response !== 'User not found'){
+          //Cookies.set('login', username, { expires: 1 });
+          window.sessionStorage.setItem('auth', response);
+          window.sessionStorage.setItem('user', username);
           window.location = "/";
         } else{
           setPasswordError(response);
@@ -77,7 +78,8 @@ function App() {
   let validate = ()=>{
     return validateUsername() || validatePassword();
   }
-  if(Cookies.get("login") != undefined){
+  if(window.sessionStorage.getItem('auth') != undefined){
+
     return (<div>
       You are already signed in!
     </div>)

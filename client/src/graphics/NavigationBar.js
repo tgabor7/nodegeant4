@@ -12,7 +12,7 @@ import ConfirmDialog from './ConfirmDialog';
 import VolumeDialog from '../volume/VolumeDialog';
 import Logger from '../utils/Logger';
 
-const Cookies = require("js-cookie");
+//const Cookies = require("js-cookie");
 
 class NavigationBar extends Component{
   constructor(props){
@@ -26,7 +26,7 @@ class NavigationBar extends Component{
     this.volumedialog = React.createRef();
     this.showRun = this.showRun.bind(this);
     this.state = {showTracks: true, showParticles: true, showAxes: true, showGrid: false, showrun: "none", showclearsetup: "none",
-     showclearparticles: "none", login: Cookies.get("login"),projectname: this.props.projectname};
+     showclearparticles: "none", login: window.sessionStorage.getItem('user'),projectname: this.props.projectname};
   }
   componentDidMount(){
   }
@@ -167,12 +167,15 @@ class NavigationBar extends Component{
 
         </Dropdown.Menu>
       </Dropdown>
-      <Button onClick={()=>{
+      <Button style={window.sessionStorage.getItem('user') === null ? {"display":"none"}:{"display":"block"}} onClick={()=>{
         window.location = "../Dashboard";
       }}>Dashboard</Button>
       <p style={login == undefined ? {"display":"none"}:{"fontSize":"20px","display":"block","position":"absolute","right":"10%"}}>Logged in as {login}! </p>
       <Button style={login == undefined ? {"display":"block","position":"absolute","right":"2%"}:{"display":"none"}} onClick={()=>{window.location = "Login"}}>Login</Button>
-      <Button style={login == undefined ? {"display":"none"}:{"display":"block","backgroundColor":"#ff0000","position":"absolute","right":"2%"}} onClick={()=>{Cookies.remove("login");
+      <Button style={login == undefined ? {"display":"none"}:{"display":"block","backgroundColor":"#ff0000","position":"absolute","right":"2%"}} onClick={()=>{
+        //Cookies.remove("login");
+        window.sessionStorage.removeItem('user');
+        window.sessionStorage.removeItem('auth');
        window.location = "/"
        }}>Logout</Button>
      

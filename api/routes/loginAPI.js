@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 
 router.post("/login/", async function(req, res, next){
     mongoose.connect(process.env.DB_USER, {useNewUrlParser: true});
-
+    console.log(req.body.name);
     try{
         const user = await UserModel.find({name: req.body.name});
         if(user.length === 0){
@@ -16,9 +16,8 @@ router.post("/login/", async function(req, res, next){
         }
         const validPass = await bcrypt.compare(req.body.password, user[0].password);
         if(validPass){
-            const token = jwt.sign({_id: user[0]._id, role: user[0].role}, process.env.TOKEN_SECRET);
-            res.header('auth-token', token);
-            res.send("Successfull login!");
+            const token = jwt.sign({_id: user[0]._id, role: user[0].role, name: user[0].name}, process.env.TOKEN_SECRET);
+            res.header('auth-token', token).send(token);
         }else{
             res.send("Failed to login!");
         }

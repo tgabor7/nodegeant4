@@ -723,7 +723,7 @@ class App extends Component {
           this.createVolume(e[1][i].name.split("/")[1].split(".")[0]+"", e[1][i].content+"", e[1][i].name+"");
         }
         this.codeeditor.current.run();
-        alert(e[0]);
+        //alert(e[0]);
         this.navbar.current.setProjectName(e[0]);
       });
     }  

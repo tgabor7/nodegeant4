@@ -77,3 +77,19 @@
   padding: 5px;
   top: 100px;
 }
+.deleteProject {
+  display: inline-block;
+  position: absolute;
+  z-index: 3;
+  background-color: red;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  justify-content: center;
+  padding-left: 8px;
+  width: 30px;
+  height: 30px;
+}
+.deleteProject:hover {
+  outline: 1px white solid;
+}

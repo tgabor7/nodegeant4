@@ -4,7 +4,7 @@ import Requests from './Reqs';
 
 
 const request = require('request');
-const Cookies = require("js-cookie");
+ // const Cookies = require("js-cookie");
 const JSZip = require("jszip");
         
 class SaveLoad {
@@ -27,7 +27,7 @@ class SaveLoad {
     static async loadonline(id){
         let files = [];
 
-        let pdata = await Requests.get("projectAPI/get/" + id);
+        let pdata = await Requests.get("projectAPI/get/" + id, window.sessionStorage.getItem('auth'));
         
         let json = await pdata.json();
         for (let i = 0; i < json.length; i++) {
@@ -59,7 +59,8 @@ class SaveLoad {
         zip.generateAsync({type:"base64"})
                 .then(async function(content) {
                 //projectAPI
-                Requests.post("projectAPI/add",{name: name,data: content, user: Cookies.get("login")});
+                
+                Requests.post("projectAPI/add",{name: name,data: content, user: window.sessionStorage.getItem('user')});
          });
     }
     static save(code, volumes, name){

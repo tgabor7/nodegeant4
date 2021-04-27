@@ -4,12 +4,17 @@ const Project = require('../models/ProjectModel');
 const router = express.Router();
 const {verify} = require('../verifyToken');
 
-router.get("/get/:id", async(req, res) =>{
+router.get("/get/:id", verify, async(req, res) =>{
     mongoose.connect(process.env.DB_HOME, {useNewUrlParser: true});
     const name = req.params["id"];
 
     try{
         const models = await Project.find({_id: name});
+        if(models[0].user !== req.user.name){
+            res.status(403).send("Access denied!");
+            mongoose.connection.close();
+            return;
+        }
         res.json(models);
     }catch(err){
         res.json({message: err});
@@ -17,9 +22,14 @@ router.get("/get/:id", async(req, res) =>{
     mongoose.connection.close();
 
 });
-router.get("/getNames/:name", async(req,res)=>{
+router.get("/getNames/:name", verify, async(req,res)=>{
     mongoose.connect(process.env.DB_HOME, {useNewUrlParser: true});
     const name = req.params["name"];
+    if(req.user.name !== name) {
+        res.status(403).send("Acces denied!");
+        mongoose.connection.close();
+        return;
+    }
     try{
         const models = await Project.find({user: name}).select("name");
         res.json(models);
@@ -40,11 +50,17 @@ router.post("/update/", async (req, res, next) =>{
     }
     mongoose.connection.close();
 });
-router.post("/delete/", async (req, res, next)=>{
+router.post("/delete/",verify, async (req, res, next)=>{
     mongoose.connect(process.env.DB_HOME, {useNewUrlParser: true});
+    const project = await Project.find({_id: req.body.id});
+    if(project[0].user !== req.user.name){
+        res.status(403).send("Access denied!");
+        mongoose.connection.close();
 
+        return;
+    }
     try{
-        const models = await Project.deleteMany({name: req.body.name},{user: req.body.user});
+        const models = await Project.deleteMany({_id: req.body.id});
         res.json(models);
         
     }catch(err){
