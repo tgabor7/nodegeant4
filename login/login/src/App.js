@@ -16,7 +16,7 @@ function App() {
   const [confirmEmailError, setConfirmEmailError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
-  const url = "http://localhost:9000/";
+  const url = "http://radsim.inf.elte.hu/";
 
   let validateUsername = ()=>{
     if(username == ""){
