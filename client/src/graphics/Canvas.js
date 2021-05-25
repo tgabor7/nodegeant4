@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import '../App.css';
 import { GridRenderer } from '../rendering/grid.js';
-import { Maths,Camera,Vector3 } from '../utils/maths.js';
+import { Maths,Camera,Vector3 } from '../utils/Maths.js';
 import RenderSystem from '../rendering/renderSystem';
 import Detector from '../detector/Detektor.js';
 import Model from '../rendering/model';
@@ -14,6 +14,10 @@ import ColorSpectrum from '../graphics/ColorSpectrum';
 import AxisRenderer from '../rendering/axisRenderer';
 import STLParser from '../utils/STLParser';
 import VolumeList from '../volume/VolumeList';
+
+/*
+Container component for rendering
+*/
 
 class Canvas extends Component{
   constructor(props){

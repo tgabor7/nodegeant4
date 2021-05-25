@@ -1,4 +1,4 @@
-import Matrix, { Maths } from "../utils/maths.js";
+import Matrix, { Maths } from "../utils/Maths.js";
 import {InstancedShader} from "../shaders/instanceshader";
 
 export class InstanceRenderer {

@@ -5,6 +5,9 @@ import {Modal, Button, Table, Container, Col, FormControl, Row} from 'react-boot
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MaterialList from '../detector/MaterialList';
 
+/*
+React component for showing the table of materials from which the users can choose from
+*/
 class MaterialTable extends Component{
   constructor(props){
     super(props);

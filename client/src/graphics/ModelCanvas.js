@@ -2,7 +2,7 @@ import React, { Component, createRef } from 'react';
 import '../App.css';
 import { Button, Modal } from 'react-bootstrap';
 import RenderSystem from '../rendering/renderSystem';
-import { Maths, Camera, Vector3 } from '../utils/maths.js';
+import { Maths, Camera, Vector3 } from '../utils/Maths.js';
 import Detector from '../detector/Detektor';
 import Model from '../rendering/model';
 

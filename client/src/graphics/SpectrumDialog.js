@@ -83,7 +83,7 @@ class SpectrumDialog extends Component {
         type="number"
         maxLength="10"
         value = {this.state.numberofparticles}
-        onChange={(event)=>{this.setState({numberofparticles: event.target.value});}} />
+        onChange={(event)=>{if(event.target.value.length < 6) this.setState({numberofparticles: event.target.value});}} />
         <hr />
         <Row style={{margin: '5px'}}>
                 Bin size

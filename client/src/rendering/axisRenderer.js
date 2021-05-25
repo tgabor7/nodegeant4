@@ -1,5 +1,5 @@
 import Shader from "./shader.js";
-import Matrix, {Maths, Vector3} from "../utils/maths.js";
+import Matrix, {Maths, Vector3} from "../utils/Maths.js";
 import { Texture } from "./texture.js";
 import {AxisShader} from "../shaders/axisShader";
 import Model from './model';

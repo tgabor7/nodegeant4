@@ -5,7 +5,7 @@ import {Button, Nav, Navbar, FormControl, Container,Col,Row, Form, Dropdown, Ove
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DetectorButton from './DetectorButton';
 import MaterialList from './MaterialList';
-import { Vector3 } from '../utils/maths';
+import { Vector3 } from '../utils/Maths';
 import MaterialTable from '../graphics/MaterialTable';
 import Error from '../utils/Error';
 

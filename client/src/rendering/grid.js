@@ -1,5 +1,5 @@
 import Shader from "./shader.js";
-import Matrix, {Maths, Vector3} from "../utils/maths.js";
+import Matrix, {Maths, Vector3} from "../utils/Maths.js";
 import { Texture } from "./texture.js";
 import { GridShader } from "../shaders/gridshader.js";
 import {InstanceRenderer} from './InstanceRenderer';

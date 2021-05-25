@@ -45,7 +45,7 @@ class Spectrum extends Component {
         });
     }
     render(){
-        return <div>
+        return <div style={{'position':'absolute','width':'90%','height':'90%', 'bottom':'10%','left':'1%','margin':'auto'}}>
             <canvas ref={this.canvas}></canvas>
         </div>
     }
@@ -81,7 +81,7 @@ class Spectrum extends Component {
     sort(bin){
         var list = [];
         let max = this.maximum(this.energies);
-        alert(bin);
+        //alert(bin);
         for(let i = 0;i<max+2*bin;i+=parseInt(bin)){
             this.add(i);
         }

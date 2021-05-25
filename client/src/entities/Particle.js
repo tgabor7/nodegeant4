@@ -1,4 +1,4 @@
-import { Vector3 } from '../utils/maths';
+import { Vector3 } from '../utils/Maths';
 
 class Particle {
     constructor(){

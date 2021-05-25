@@ -8,7 +8,11 @@ import Logger from '../utils/Logger';
 import UnitConverter from '../utils/UnitConverter';
 import { saveAs } from 'file-saver';
 
-class CodeEditor extends Component{
+/*
+
+*/
+
+class CodeEditor extends Component {
     constructor(props){
         super(props);
 

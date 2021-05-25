@@ -1,4 +1,4 @@
-import { Vector3 } from "../utils/maths.js";
+import { Vector3 } from "../utils/Maths.js";
 
 export class ParticleSource {
     constructor(model, position, material){

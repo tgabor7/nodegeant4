@@ -3,7 +3,7 @@ import '../App.css';
 
 import { Button, Nav, Navbar, FormControl, Container, Col, Row, Form, Dropdown, OverlayTrigger, Tooltip, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Vector3 } from '../utils/maths';
+import { Vector3 } from '../utils/Maths';
 import MaterialList from './MaterialList';
 import ConfirmDialog from '../graphics/ConfirmDialog';
 import Parser from '../utils/Parser';

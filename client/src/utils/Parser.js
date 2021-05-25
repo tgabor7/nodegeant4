@@ -2,19 +2,15 @@ import Detector from '../detector/Detektor';
 import Model from '../rendering/model';
 import { Cube } from '../entities/cube';
 import { ParticleSource } from '../source/ParticleSource';
-import { Vector3 } from '../utils/maths';
+import { Vector3 } from '../utils/Maths';
 import { ParticleGun } from '../gun/ParticleGun';
-import GunMesh from '../gun/gun';
-import DetectorButton from '../detector/DetectorButton';
-import React, { Component, createRef } from 'react';
 import MaterialList from '../detector/MaterialList';
 import VolumeList from '../volume/VolumeList';
 import UnitConverter from '../utils/UnitConverter';
 
 import Error from '../utils/Error';
 
-//TO-DO
-//position[cm]
+
 var m = 100;
 var dm = 10;
 var cm = 1;

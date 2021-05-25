@@ -9,7 +9,7 @@ import NavigationBar from './graphics/NavigationBar';
 import GunButton from './gun/GunButton';
 import SourceButton from './source/SourceButton';
 import Particle from './entities/Particle';
-import { Vector3 } from './utils/maths';
+import { Vector3 } from './utils/Maths';
 import Model from './rendering/model';
 import Spectrum from './graphics/spectrum';
 import STLParser from './utils/STLParser';
@@ -24,7 +24,6 @@ import VolumeSelectDialog from './volume/VolumeSelectDialog';
 import { Element } from 'react-scroll';
 import UnitConverter from './utils/UnitConverter';
 import Logger from './utils/Logger';
-import CodeTests from './utils/codeTests';
 import MousePicker from './utils/mousePicker';
 import RenderSystem from './rendering/renderSystem';
 import NumberSpinner from './graphics/NumberSpinner';
@@ -708,6 +707,7 @@ class App extends Component {
     // const params = new URLSearchParams(windowUrl);
     // const id = params.get("projectid");
     const id = WindowParams.get("projectid");
+    this.navbar.current.setProjectName("Geant4");
     if(id != null){
       //load project
       await SaveLoad.loadonline(id).then(e=>{

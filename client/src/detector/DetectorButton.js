@@ -7,7 +7,6 @@ import image from '../images/editicon.png';
 import DetectorEditDialog from './DetectorEditDialog';
 import RenderSystem from '../rendering/renderSystem';
 import UnitConverter from '../utils/UnitConverter';
-import { Vector3 } from '../utils/maths';
 
 /*
 Class handling detector buttons, clicking it shows an accordion containing the detectors parameters.

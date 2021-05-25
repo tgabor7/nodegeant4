@@ -1,6 +1,6 @@
 import Shader from './shader.js'
 import {MainShader} from '../shaders/mainshader.js';
-import {Maths, Vector3, Vector4} from '../utils/maths.js';
+import {Maths, Vector3, Vector4} from '../utils/Maths.js';
 import Model from './model';
 import {Cube} from '../entities/cube';
 import MousePicker from '../utils/mousePicker';

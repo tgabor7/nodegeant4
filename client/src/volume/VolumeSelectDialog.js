@@ -23,6 +23,7 @@ class VolumeSelectDialog extends Component {
     }
     componentDidMount() {
     }
+    /*Updates label of volume */
     updateVolume(v, l){
         let res = this.state.fixed;
         for(let i = 0;i<this.state.fixed.length;i++){

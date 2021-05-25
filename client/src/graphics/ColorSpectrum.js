@@ -1,6 +1,6 @@
 import Shader from "../rendering/shader.js";
 import {SpectrumShader} from "../shaders/spectrumshader";
-import {Maths} from "../utils/maths";
+import {Maths} from "../utils/Maths";
 
 class ColorSpectrum {
     constructor(gl){

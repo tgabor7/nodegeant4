@@ -1,4 +1,4 @@
-import {Maths, Vector3,Vector4} from './maths.js';
+import {Maths, Vector3,Vector4} from './Maths.js';
 
 class Ray {
     constructor(o, d){

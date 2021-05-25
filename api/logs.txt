@@ -6224,3 +6224,219 @@ Date: 2021-04-29-13-36-24 lvl: 1 message: Created source
 Date: 2021-04-29-13-36-24 lvl: 1 message: Created detector
 Date: 2021-04-29-13-36-28 lvl: 1 message: Created source
 Date: 2021-04-29-13-36-28 lvl: 1 message: Created detector
+Date: 2021-04-30-18-44-5 lvl: 1 message: Created source
+Date: 2021-04-30-18-44-5 lvl: 1 message: Created detector
+Date: 2021-04-30-18-44-8 lvl: 1 message: Started simulation
+Date: 2021-04-30-18-44-11 lvl: 1 message: Finished simulation
+Date: 2021-04-30-18-44-56 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-44-58 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-46-52 lvl: 1 message: Created source
+Date: 2021-04-30-18-46-52 lvl: 1 message: Created detector
+Date: 2021-04-30-18-46-56 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-46-59 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-48-1 lvl: 1 message: Created source
+Date: 2021-04-30-18-48-1 lvl: 1 message: Created detector
+Date: 2021-04-30-18-48-3 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-48-4 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-48-10 lvl: 1 message: Created source
+Date: 2021-04-30-18-48-10 lvl: 1 message: Created detector
+Date: 2021-04-30-18-48-18 lvl: 1 message: Created source
+Date: 2021-04-30-18-48-18 lvl: 1 message: Created detector
+Date: 2021-04-30-18-48-20 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-48-22 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-49-3 lvl: 1 message: Created source
+Date: 2021-04-30-18-49-3 lvl: 1 message: Created detector
+Date: 2021-04-30-18-49-7 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-49-9 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-49-22 lvl: 1 message: Cleared setup
+Date: 2021-04-30-18-49-22 lvl: 1 message: Created source
+Date: 2021-04-30-18-49-22 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[mm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Source{
+	name: "GPS";
+	position[cm]: 0, 0, 0;
+	material: "Co60";
+}
+
+Date: 2021-04-30-18-49-22 lvl: 1 message: Created detector
+Date: 2021-04-30-18-49-24 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-49-25 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-49-29 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-49-33 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-49-58 lvl: 1 message: Created source
+Date: 2021-04-30-18-49-58 lvl: 1 message: Created detector
+Date: 2021-04-30-18-50-0 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-50-1 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-50-12 lvl: 1 message: Created source
+Date: 2021-04-30-18-50-12 lvl: 1 message: Created detector
+Date: 2021-04-30-18-50-13 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-50-15 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-50-30 lvl: 1 message: Created source
+Date: 2021-04-30-18-50-31 lvl: 1 message: Created detector
+Date: 2021-04-30-18-51-15 lvl: 1 message: Created source
+Date: 2021-04-30-18-51-15 lvl: 1 message: Created detector
+Date: 2021-04-30-18-51-16 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-51-18 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-51-25 lvl: 1 message: Created source
+Date: 2021-04-30-18-51-25 lvl: 1 message: Created detector
+Date: 2021-04-30-18-51-26 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-51-28 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-51-45 lvl: 1 message: Created source
+Date: 2021-04-30-18-51-45 lvl: 1 message: Created detector
+Date: 2021-04-30-18-51-47 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-51-48 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-52-59 lvl: 1 message: Created source
+Date: 2021-04-30-18-52-59 lvl: 1 message: Created detector
+Date: 2021-04-30-18-53-0 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-53-2 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-56-42 lvl: 1 message: Created source
+Date: 2021-04-30-18-56-43 lvl: 1 message: Created detector
+Date: 2021-04-30-18-56-46 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-56-48 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-57-10 lvl: 1 message: Created source
+Date: 2021-04-30-18-57-10 lvl: 1 message: Created detector
+Date: 2021-04-30-18-57-11 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-57-13 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-57-37 lvl: 1 message: Created source
+Date: 2021-04-30-18-57-37 lvl: 1 message: Created detector
+Date: 2021-04-30-18-57-39 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-57-40 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-57-55 lvl: 1 message: Created source
+Date: 2021-04-30-18-57-56 lvl: 1 message: Created detector
+Date: 2021-04-30-18-57-57 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-57-59 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-58-28 lvl: 1 message: Created source
+Date: 2021-04-30-18-58-28 lvl: 1 message: Created detector
+Date: 2021-04-30-18-58-32 lvl: 1 message: Created source
+Date: 2021-04-30-18-58-32 lvl: 1 message: Created detector
+Date: 2021-04-30-18-58-33 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-58-35 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-58-43 lvl: 1 message: Created source
+Date: 2021-04-30-18-58-43 lvl: 1 message: Created detector
+Date: 2021-04-30-18-58-45 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-58-47 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-59-12 lvl: 1 message: Created source
+Date: 2021-04-30-18-59-12 lvl: 1 message: Created detector
+Date: 2021-04-30-18-59-13 lvl: 1 message: Created source
+Date: 2021-04-30-18-59-14 lvl: 1 message: Created detector
+Date: 2021-04-30-18-59-15 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-59-17 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-18-59-51 lvl: 1 message: Created source
+Date: 2021-04-30-18-59-51 lvl: 1 message: Created detector
+Date: 2021-04-30-18-59-52 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-18-59-54 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-0-5 lvl: 1 message: Created source
+Date: 2021-04-30-19-0-5 lvl: 1 message: Created detector
+Date: 2021-04-30-19-0-7 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-0-8 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-0-20 lvl: 1 message: Created source
+Date: 2021-04-30-19-0-20 lvl: 1 message: Created detector
+Date: 2021-04-30-19-0-21 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-0-23 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-0-37 lvl: 1 message: Created source
+Date: 2021-04-30-19-0-37 lvl: 1 message: Created detector
+Date: 2021-04-30-19-0-44 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-0-46 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-0-56 lvl: 1 message: Created source
+Date: 2021-04-30-19-0-56 lvl: 1 message: Created detector
+Date: 2021-04-30-19-0-58 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-1-0 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-1-8 lvl: 1 message: Created source
+Date: 2021-04-30-19-1-8 lvl: 1 message: Created detector
+Date: 2021-04-30-19-1-9 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-1-11 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-1-20 lvl: 1 message: Created source
+Date: 2021-04-30-19-1-20 lvl: 1 message: Created detector
+Date: 2021-04-30-19-1-21 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-1-23 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-1-36 lvl: 1 message: Created source
+Date: 2021-04-30-19-1-37 lvl: 1 message: Created detector
+Date: 2021-04-30-19-1-38 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-1-40 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-2-10 lvl: 1 message: Created source
+Date: 2021-04-30-19-2-11 lvl: 1 message: Created detector
+Date: 2021-04-30-19-2-12 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-2-14 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-2-33 lvl: 1 message: Created source
+Date: 2021-04-30-19-2-33 lvl: 1 message: Created detector
+Date: 2021-04-30-19-2-35 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-2-36 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-2-57 lvl: 1 message: Created source
+Date: 2021-04-30-19-2-57 lvl: 1 message: Created detector
+Date: 2021-04-30-19-2-59 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-3-0 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-3-16 lvl: 1 message: Created source
+Date: 2021-04-30-19-3-17 lvl: 1 message: Created detector
+Date: 2021-04-30-19-3-18 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-3-20 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-3-30 lvl: 1 message: Created source
+Date: 2021-04-30-19-3-30 lvl: 1 message: Created detector
+Date: 2021-04-30-19-3-31 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-3-32 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-3-41 lvl: 1 message: Created source
+Date: 2021-04-30-19-3-41 lvl: 1 message: Created detector
+Date: 2021-04-30-19-3-43 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-3-44 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-3-56 lvl: 1 message: Created source
+Date: 2021-04-30-19-3-56 lvl: 1 message: Created detector
+Date: 2021-04-30-19-3-58 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-3-59 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-4-18 lvl: 1 message: Created source
+Date: 2021-04-30-19-4-18 lvl: 1 message: Created detector
+Date: 2021-04-30-19-4-20 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-4-22 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-4-54 lvl: 1 message: Created source
+Date: 2021-04-30-19-4-54 lvl: 1 message: Created detector
+Date: 2021-04-30-19-4-56 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-4-58 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-5-7 lvl: 1 message: Created source
+Date: 2021-04-30-19-5-7 lvl: 1 message: Created detector
+Date: 2021-04-30-19-5-9 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-5-10 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-5-20 lvl: 1 message: Created source
+Date: 2021-04-30-19-5-20 lvl: 1 message: Created detector
+Date: 2021-04-30-19-5-21 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-5-23 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-5-32 lvl: 1 message: Created source
+Date: 2021-04-30-19-5-32 lvl: 1 message: Created detector
+Date: 2021-04-30-19-5-33 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-5-35 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-6-2 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-6-4 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-6-15 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-6-18 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-6-24 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-6-37 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-19-6-51 lvl: 1 message: Cleared setup
+Date: 2021-04-30-19-6-51 lvl: 1 message: Created source
+Date: 2021-04-30-19-6-51 lvl: 2 message: Ran script: \Detector{
+	name: "Cube";
+	position[cm]: 0, 0, 0;
+	rotation[rad]: 0, 0, 0;
+	scale[mm]: 10, 10, 10;
+	material: "Pb";
+	geometry: "cube";
+}
+\Source{
+	name: "GPS";
+	position[cm]: 0, 0, 0;
+	material: "Co60";
+}
+
+Date: 2021-04-30-19-6-51 lvl: 1 message: Created detector
+Date: 2021-04-30-19-6-53 lvl: 1 message: Started spectrum simulation
+Date: 2021-04-30-19-7-35 lvl: 1 message: Finished spectrum simulation
+Date: 2021-04-30-21-57-28 lvl: 1 message: Created source
+Date: 2021-04-30-21-57-28 lvl: 1 message: Created detector
+Date: 2021-04-30-21-57-40 lvl: 1 message: Created source
+Date: 2021-04-30-21-57-40 lvl: 1 message: Created detector
+Date: 2021-05-01-20-29-18 lvl: 1 message: Created source
+Date: 2021-05-01-20-29-18 lvl: 1 message: Created detector
+Date: 2021-05-01-20-29-22 lvl: 1 message: Created source
+Date: 2021-05-01-20-29-22 lvl: 1 message: Created detector
