@@ -10,7 +10,7 @@ import ConfirmDialog from './ConfirmDialog';
 function App() {
     const user = window.sessionStorage.getItem('user');
     const [projects, setProjects] = useState([]);    
-    const url = "http://radsim.inf.elte.hu/";
+    const url = "https://radsim.inf.elte.hu/";
     const dialog = useRef(null);
     
     const updateProjects = async ()=>{
