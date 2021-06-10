@@ -12,7 +12,7 @@ var geometryRouter = require("./routes/geometryAPI");
 var compundRouter = require("./routes/CompoundAPI");
 var sourceRouter = require("./routes/SourceAPI");
 var elementRouter = require("./routes/ElementAPI");
-var userRouter = require("./routes/loginAPI");
+var userRouter = require("./routes/userAPI");
 var projectRouter = require("./routes/projectAPI");
 var logRouter = require("./routes/log");
 
