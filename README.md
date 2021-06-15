@@ -5,6 +5,46 @@ The webapplication provides a web interface for Geant4 simulations. The applicat
 
 ### 1. User interface
 
+<figure class="image">
+  <img src="images/mainpage.jpg" alt="">
+  <figcaption>The userinterface</figcaption>
+</figure>
+
+The UI consists of the following parts:
+    - Sidebar for handling detectors and particle sources
+    - Canvas the simulation is rendered on
+    - Code editor
+    - Navigation bar
+
+#### 1.1 Creating detectors
+
+Detectors can be created by choosing the 'Add' option on the navigation bar. The shape of the detector can be of one of the predefined shapes (cube, cone, cylinder ... ) or the user can upload an .STL file. The material of the detector can be choosen from the Geant4 database, it contains both elements and compounds.
+
+<figure class="image">
+  <img src="images/materialdialog.PNG" alt="">
+  <figcaption>Dialog for choosing the detectors material</figcaption>
+</figure>
+
+<figure class="image">
+  <img src="images/detectordialog.PNG" alt="">
+  <figcaption>Dialog for creating detectors</figcaption>
+</figure>
+
+
+#### 1.2 Defining source
+
+Particle sources can be created with particle guns and radioactive sources, both of them can be found in the 'Add' option on the navigation bar. You can define a particle guns position, the direction of the primary particle and its energy. Radioactive sources' materials can be choosen from the Geant4 database.
+
+<figure class="image">
+  <img src="images/gun.PNG" alt="">
+  <figcaption>Dialog for creating a particle gun</figcaption>
+</figure>
+
+<figure class="image">
+  <img src="images/gps.PNG" alt="">
+  <figcaption>Dialog for creating a radioactive source</figcaption>
+</figure>
+
 
 
 ## Changelog
