@@ -29,7 +29,7 @@ class VolumeButton extends Component{
   render(){
     return <div>
     <ModelCanvas modeldata={this.props.modeldata} ref={this.canvas}></ModelCanvas>
-    <VolumeEditDialog detectors={this.props.detectors} setname={this.setName} ref={this.editdialog} volume={this.props.volume} name={this.props.name} modeldata={this.props.modeldata} filelabel={this.props.filelabel}></VolumeEditDialog>
+    <VolumeEditDialog codeeditor={this.props.codeeditor} detectors={this.props.detectors} setname={this.setName} ref={this.editdialog} volume={this.props.volume} name={this.props.name} modeldata={this.props.modeldata} filelabel={this.props.filelabel}></VolumeEditDialog>
     <Card className='button'>
       <Card.Header>
         <Accordion.Toggle as={Button} variant="link" eventKey={this.id} onClick={()=>{

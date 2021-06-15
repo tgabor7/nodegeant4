@@ -4,6 +4,7 @@ import '../App.css';
 import { Button, Nav, Navbar, FormControl, Container, Col, Row, Form, Dropdown, OverlayTrigger, Tooltip, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import VolumeList from '../volume/VolumeList';
+import Parser from '../utils/Parser';
 
 class VolumeEditDialog extends Component {
   constructor(props) {

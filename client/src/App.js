@@ -435,7 +435,7 @@ class App extends Component {
     VolumeList.addVolume({ name: name, data: data });
     let vol = { name: name, data: data };
     this.volumes.push(vol);
-    bs.push(<VolumeButton detectors={this.detectors} name={name} volumes={this.volumes} modeldata={modeldata} filelabel={label} volume={vol}></VolumeButton>);
+    bs.push(<VolumeButton codeeditor={this.codeeditor} detectors={this.detectors} name={name} volumes={this.volumes} modeldata={modeldata} filelabel={label} volume={vol}></VolumeButton>);
     this.setState({ volumebuttons: bs });
   }
   async createSource(n, x, y, z, mat, code, posu) {

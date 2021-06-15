@@ -76,7 +76,7 @@ class RunDialog extends Component {
         <Form.Control required
         type="number"
         value={this.state.numberOfParticles}
-        onChange={(evt)=>{if(evt.target.value.length < 6) this.setState({numberOfParticles: evt.target.value});}}>
+        onChange={(evt)=>{if(evt.target.value.length < 10) this.setState({numberOfParticles: evt.target.value});}}>
         </Form.Control>
     </Form>
     </Modal.Body>

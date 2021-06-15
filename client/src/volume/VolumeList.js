@@ -37,6 +37,7 @@ class VolumeList {
         });
         if(newdata != undefined && newdata.length > 0) v.data = newdata;
         VolumeList.editor.renameGeometry(name, newname, detectors);
+
     }
     static editor = null;
     static volumes = [];

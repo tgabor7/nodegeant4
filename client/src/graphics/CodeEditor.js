@@ -63,7 +63,7 @@ class CodeEditor extends Component {
     }
     renameGeometry(name, newname, detectors){
         for(let i = 0;i<detectors.length;i++){
-            if(detectors[i].geometry == name){
+            if(detectors[i].geometry == newname){
                 let tmp = Parser.removeChunk(detectors[i].id);
                 this.updateText(tmp);
                 this.setState({text: tmp + Parser.addDetectorCode(detectors[i].id, detectors[i].name, detectors[i].model.position,
@@ -74,7 +74,6 @@ class CodeEditor extends Component {
             }
         }
         // detectors.forEach(e =>{
-            
         // });
        
     }
