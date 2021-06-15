@@ -1,4 +1,10 @@
 # Radsim
+The webapplication provides a web interface for Geant4 simulations. The application only requires a browser with WebGL capabilities. The application is deployed at https://radsim.inf.elte.hu/ .
+
+## User documentation
+
+### 1. User interface
+
 
 
 ## Changelog
